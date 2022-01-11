@@ -41,6 +41,7 @@ void solve()
         p = (((n + 1) / 2) - 1);
         jhbhbjhbjh
     }
+    knknkuhkubn
     else
     {
         p = (n + 1) / 2;
