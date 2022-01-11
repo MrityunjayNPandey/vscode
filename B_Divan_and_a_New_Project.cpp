@@ -39,6 +39,7 @@ void solve()
     if ((n + 1) % 2 == 0)
     {
         p = (((n + 1) / 2) - 1);
+        jhbhbjhbjh
     }
     else
     {
