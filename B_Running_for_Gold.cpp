@@ -126,9 +126,10 @@ void solve()
     // debug(vv);
     vector<int> vt1;
     int p = 0, temp = -1;
+    vector<int> vt;
     while (temp != 1 && temp != 0)
     {
-        vector<int> vt(vt1);
+        debug(vt);
         if (p == 0)
         {
             for (int i = 1; i < n; i++)
@@ -136,7 +137,7 @@ void solve()
                 int t = 0;
                 for (int j = 0; j < 5; j++)
                 {
-                    if (vv[i][j] > vv[0][j])
+                    if (vv[i][j] < vv[0][j])
                     {
                         t++;
                     }
@@ -149,10 +150,10 @@ void solve()
                 }
             }
             p++;
-            debug(vt);
+            // debug(vt);
             if (temp == -1)
             {
-                potans = 1;
+                ans = 1;
                 break;
             }
             if (temp == 0)
@@ -170,49 +171,64 @@ void solve()
             int t = 0;
             for (int j = 0; j < 5; j++)
             {
-                if (vv[vt[i]][j] > vv[vt[0]][j])
+                if (vv[vt[i]][j] < vv[vt[0]][j])
                 {
                     t++;
                 }
                 if (t == 3)
                 {
-                    vt1.pb(i);
+                    vt1.pb(vt[i]);
                     temp++;
                     break;
                 }
             }
         }
-        // debug(vt);
+        vt.clear();
+        vector<int> vt(vt1);
+        debug(vt1);
+        vt1.clear();
         if (temp == 0)
         {
+            potans = p + 1;
+            debug(temp);
+            break;
+        }
+        if (temp == 1)
+        {
             potans = vt[0] + 1;
+            debug(temp);
             break;
         }
     }
     debug(potans);
-    ans = potans;
-    // debug(vv)
-    for (int i = 0; i < n; i++)
+    debug(ans);
+    if (temp != -1)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
+        ans = potans;
+        // debug(vv)
+        for (int i = 0; i < n; i++)
         {
-            if (vv[i][j] > vv[potans - 1][j])
+            int t = 0;
+            for (int j = 0; j < 5; j++)
             {
-                t++;
+                if (vv[i][j] < vv[potans - 1][j])
+                {
+                    t++;
+                }
+                if (t == 3)
+                {
+                    ans = -1;
+                    break;
+                }
             }
-            if (t == 3)
+            if (ans == -1)
             {
-                ans = -1;
+                debug(i);
                 break;
             }
         }
-        if (ans == -1)
-        {
-            debug(i);
-            break;
-        }
     }
+    debug(ans);
     cout << ans;
 }
 
