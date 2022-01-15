@@ -26,7 +26,7 @@ int I;
 
 void solve()
 {
-    int n, a, time=0;
+    int n, a, time = 0;
     cin >> n;
     vector<pii> vp, vp1;
     for (int i = 0; i < n; i++)
@@ -59,24 +59,24 @@ void solve()
             k++;
             l++;
         }
-            time+=2*l*vp[i].ff;
+        time += 2 * l * vp[i].ff;
     }
-    cout<<time<<endl;
-    cout<<p<<" ";
-    for(int i=0; i<n; i++)
-        {
-            cout<<i;
-        }
+    cout << time << endl;
+    cout << p << " ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << i;
+    }
 }
 
 int32_t main()
 {
     ios;
     int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        solve();
-        cout << endl;
+        // solve();
+        cout << "hkhn" << endl;
     }
 }

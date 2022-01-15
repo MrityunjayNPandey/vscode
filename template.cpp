@@ -50,7 +50,8 @@ int I;
 
 void solve()
 {
-    
+    int n=0, ans=0;
+
 }
 
 int32_t main()
