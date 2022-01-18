@@ -46,60 +46,84 @@ const long long INF = 1ll << 32;
 const long long MAX_N = 1e6 + 7;
 const long long MOD = 998244353;
 const long long mod = 998244353;
-#define int long long
+// #define int long long
 int I;
 // clang-format on
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> vv;
-    for (int i = 0; i < n; i++)
+    string str;
+    int p = 0, maxa = 0, t = 0, max2 = 0, potans = 0, max1 = 0, start = 0, met = 0;
+    cin >> str;
+    // debug((int)(str[0]-'0'));
+
+    for (int i = 0; i < str.length(); i++)
     {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
+        if (str[i] != 0)
+            p++;
+        if (p != 0)
         {
-            int temp;
-            cin >> temp;
-            v.pb(temp);
+            if (met == 0)
+            {
+                start = i;
+                met++;
+            }
+            maxa += str[i] - '0';
+            // debug(maxa);
+            if (t == 1)
+            {
+                max1 = maxa;
+                if (max1 / 10 > 0)
+                {
+                    potans = i;
+                    debug(max1);
+                    break;
+                }
+            }
+            if (t >= 2)
+            {
+                maxa -= (int)str[i - 2] - '0';
+                debug(maxa);
+                if (maxa / 10 > 0)
+                {
+                    int maxtemp = max2;
+                    max2 = max(max2, maxa);
+                    debug(max2);
+                    if (maxtemp != max2)
+                    {
+                        potans = i;
+                        //
+                    }
+                }
+            }
+            t++;
         }
-        vv.pb(v);
     }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
+    max1 = (max1, max2);
+    if (max1 == 0)
+        max1 = maxa;
+    if (potans == 0)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
-        }
+        potans = 1;
     }
-    for (int i = 0; i < n; i++)
+    debug(maxa);
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                cout << -1;
-                return;
-            }
-        }
+        str[potans - 1] = (char)(max1 / 10) + '0';
+        str[potans] = (char)(max1 % 10) + '0';
     }
-    cout << potwin + 1;
+    debug(str[potans - 1]);
+    debug(str[potans]);
+    debug(str);
+    int p1 = 0;
+    for (int i = start; i < str.length(); i++)
+    {
+        if (str[start] == '0' && p1 == 0)
+        {
+            p1++;
+            continue;
+        }
+        cout << str[i];
+    }
 }
 
 int32_t main()

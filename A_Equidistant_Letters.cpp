@@ -52,54 +52,31 @@ int I;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> vv;
-    for (int i = 0; i < n; i++)
+    string str;
+    cin >> str;
+    map<char, int> mp;
+    for (int i = 0; i < str.length(); i++)
     {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
-        {
-            int temp;
-            cin >> temp;
-            v.pb(temp);
-        }
-        vv.pb(v);
+        mp[str[i]]++;
     }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
+    vector<char> v;
+    for (auto i : mp)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
+        if (i.ss == 2)
         {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
+            v.pb(i.ff);
         }
     }
-    for (int i = 0; i < n; i++)
+    for (auto i : mp)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                cout << -1;
-                return;
-            }
-        }
+        if (i.ss == 2)
+            continue;
+        cout << i.ff;
     }
-    cout << potwin + 1;
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << v[i];
+    }
 }
 
 int32_t main()
