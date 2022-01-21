@@ -52,8 +52,38 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int N, d;
+    cin >> N >> d;
+
+    int ds[10];
+
+    for (int i = 1; i <= 10; i++)
+    {
+        ds[i - 1] = i * d;
+    }
+
+    int arr[N];
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
+        int as = 0;
+        for (int j = 0; j < 10; j++)
+        {
+            if ((arr[i] % 10 == ds[j] % 10) && arr[i] >= ds[j])
+            {
+                as = 1;
+                break;
+            }
+        }
+        if (as || d == 1 || (arr[i] >= d * 10))
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
+    }
 }
 
 int32_t main()
@@ -64,6 +94,6 @@ int32_t main()
     for (I = 1; I <= Test; I++)
     {
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }
