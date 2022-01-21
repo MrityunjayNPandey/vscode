@@ -52,8 +52,23 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int k = 0, ans = 0;
+    cin>>k;
+    if(k%2==1)
+        {
+            cout<<0;
+            return;
+        }
+    else
+        {
+            int t=0;
+            while(k%2!=1)
+                {
+                    t++;
+                    k/=2;
+                }
+            cout<<t;
+        }
 }
 
 int32_t main()

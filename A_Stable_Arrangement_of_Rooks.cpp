@@ -53,7 +53,28 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    if (((n + 1) / 2) < k)
+    {
+        cout << -1 << endl;
+        return;
+    }
+    else
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (i == j && i % 2 == 0 && k > 0)
+                {
+                    cout << "R";
+                    debug(k);
+                    k--;
+                }
+                else
+                    cout << ".";
+            }
+            cout << endl;
+        }
 }
 
 int32_t main()
@@ -64,6 +85,6 @@ int32_t main()
     for (I = 1; I <= Test; I++)
     {
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }

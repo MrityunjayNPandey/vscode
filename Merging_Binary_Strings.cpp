@@ -52,7 +52,7 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    int n = 0, ans = 0;
     
 }
 

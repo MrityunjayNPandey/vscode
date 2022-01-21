@@ -53,6 +53,14 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
+    cin >> n;
+    vector<vector<int>> v;
+    for(int i = 0; i < n; i++)
+        {
+            int temp;
+            cin>>temp;
+            v.pb(temp);
+        }
     
 }
 

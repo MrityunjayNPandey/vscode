@@ -53,7 +53,71 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    string str;
+    vector<int> v;
+    cin >> str;
+    for (int i = 0; i < n; i++)
+    {
+        if (str[i] == '2')
+        {
+            k++;
+            v.pb(i);
+        }
+    }
+    debug(k);
+    if (k < 3 && k != 0)
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    else
+        cout << "YES" << endl;
+    char a[n][n];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            a[i][j] = '0';
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int p = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (a[i][j] == '0')
+            {
+                if (i == j)
+                    a[i][j] = 'X';
+                else if (str[i] == '1' || str[j] == '1')
+                    a[i][j] = '=';
+                else
+                {
+                    if (p == 0 )
+                    {
+                        p++;
+                        a[i][j] = '+';
+                        a[j][i] = '-';
+                    }
+                    else
+                    {
+                        a[i][j] = '-';
+                        a[j][i] = '+';
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << a[i][j];
+            debug(a[i][j]);
+        }
+        cout << endl;
+    }
 }
 
 int32_t main()
@@ -64,6 +128,6 @@ int32_t main()
     for (I = 1; I <= Test; I++)
     {
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }
