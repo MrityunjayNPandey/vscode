@@ -1,5 +1,4 @@
-// clang-format off
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
 #define all(x) x.begin(), x.end()
@@ -52,64 +51,53 @@ int I;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> vv;
-    for (int i = 0; i < n; i++)
+    int n = 0, k = 0, ans = 0;
+    cin >> n >> k;
+    vector<pii> vp;
+    vector<int> v, v1;
+    for (int i = 0; i < 2 * n; i++)
     {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
+        if (i < n)
         {
             int temp;
             cin >> temp;
             v.pb(temp);
         }
-        vv.pb(v);
-    }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
-    {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
+        else
         {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
+            int temp;
+            cin >> temp;
+            v1.pb(temp);
         }
     }
     for (int i = 0; i < n; i++)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                cout << -1;
-                return;
-            }
-        }
+        vp.pb(make_pair(v[i], v1[i]));
     }
-    cout << potwin + 1;
+    sort(all(vp));
+    int i=0;
+    while(k>=vp[i].ff && i < n)
+    {
+        k+=vp[i].ss;
+        i++;
+    }
+    cout<<k;
 }
 
 int32_t main()
 {
+ #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    freopen("error.txt", "w", stderr);
+#endif
+
     ios;
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        // solve();
+        solve();
         cout << endl;
     }
 }

@@ -54,37 +54,51 @@ void solve()
 {
     int n = 0, k = 0, ans = 0;
     cin >> n >> k;
-    if (((n + 1) / 2) < k)
+    vector<pii> vp;
+    vector<int> v, v1;
+    for (int i = 0; i < 2 * n; i++)
     {
-        cout << -1 << endl;
-        return;
-    }
-    else
-        for (int i = 0; i < n; i++)
+        if (i < n)
         {
-            for (int j = 0; j < n; j++)
-            {
-                if (i == j && i % 2 == 0 && k > 0)
-                {
-                    cout << "R";
-                    debug(k);
-                    k--;
-                }
-                else
-                    cout << ".";
-            }
-            cout << endl;
+            int temp;
+            cin >> temp;
+            v.pb(temp);
         }
+        else
+        {
+            int temp;
+            cin >> temp;
+            v1.pb(temp);
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        vp.pb(make_pair(v[i], v1[i]));
+    }
+    sort(all(vp));
+    int i=0;
+    while(k>=vp[i].ff && i < n)
+    {
+        k+=vp[i].ss;
+        i++;
+    }
+    cout<<k;
 }
 
 int32_t main()
 {
     ios;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    freopen("error.txt", "w", stderr);
+    #endif
     int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for (I = 1; I <= Test; I++)
     {
+        debug(I)
         solve();
-        // cout << endl;
+        cout<< "kgjhgkjh"<<endl;
     }
 }

@@ -24,6 +24,15 @@ const long long mod = 998244353;
 
 int I;
 
+void init_code()
+{
+    ios;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif 
+}
+
 void solve()
 {
     int n, t = 0;
@@ -57,6 +66,7 @@ void solve()
 int32_t main()
 {
     ios;
+    // init_code();
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)

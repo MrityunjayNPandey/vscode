@@ -127,7 +127,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        solve();
-        // cout << endl;
+        // solve();
+        cout << "ddaiduasy"<<endl;
     }
 }

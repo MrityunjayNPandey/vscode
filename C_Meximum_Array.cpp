@@ -1,5 +1,5 @@
 // clang-format off
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
 #define all(x) x.begin(), x.end()
@@ -52,54 +52,59 @@ int I;
 
 void solve()
 {
-    int n;
+    int n = 0, k = 0, ans = 0;
     cin >> n;
-    vector<vector<int>> vv;
+    vector<int> v;
+    map<int, int> mp;
     for (int i = 0; i < n; i++)
     {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
-        {
-            int temp;
-            cin >> temp;
-            v.pb(temp);
-        }
-        vv.pb(v);
+        int temp;
+        cin >> temp;
+        v.pb(temp);
     }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
-    {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
-        }
-    }
+    debug(v)
+    int max1 = 0;
+            int k1=0;
     for (int i = 0; i < n; i++)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
+        // debug(i)
+        if (v[i] == k)
         {
-            if (vv[i][j] < vv[potwin][j])
+            int p=0;
+            for (int i = k+1; i <= max1; i++)
             {
-                t++;
+                if(mp[i]>0)
+                {
+                    
+                }
+                else
+                {
+                    k++; 
+                    p++;
+                    break;
+                }
             }
-            if (t >= 3)
+            if(p==0)
+            k=max1+1;
+            if(k>v[i])
             {
-                cout << -1;
+                debug(i)
+                debug(k)
+                debug(v[i+1])
+                cout<<1<<endl;
+                cout<<k;
+                k1++;
                 return;
             }
         }
+        else
+        {
+            mp[v[i]]++;
+            max1 = max(max1, v[i]);
+        }
     }
-    cout << potwin + 1;
+    if(k1==0)
+    cout<<max1+1;
 }
 
 int32_t main()
@@ -109,7 +114,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        // solve();
+        solve();
         cout << endl;
     }
 }

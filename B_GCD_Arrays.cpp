@@ -1,5 +1,5 @@
 // clang-format off
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
 #define all(x) x.begin(), x.end()
@@ -52,54 +52,29 @@ int I;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<vector<int>> vv;
-    for (int i = 0; i < n; i++)
+    int l = 0, r = 0, k = 0;
+    cin>>l>>r>>k;
+    if (l == r && l > 1)
     {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
-        {
-            int temp;
-            cin >> temp;
-            v.pb(temp);
-        }
-        vv.pb(v);
+        cout << "YES";
     }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
+    else if (l == r && l == 1)
     {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
+        cout << "NO";
+    }
+    else
+    {
+        int g = r - l + 1;
+        int p = (r / 2) - ceil((float)l / 2) + 1;
+        if (k >= g - p)
         {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
+            cout << "YES";
+        }
+        else
+        {
+            cout << "NO";
         }
     }
-    for (int i = 0; i < n; i++)
-    {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                cout << -1;
-                return;
-            }
-        }
-    }
-    cout << potwin + 1;
 }
 
 int32_t main()
@@ -109,7 +84,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        // solve();
+        solve();
         cout << endl;
     }
 }
