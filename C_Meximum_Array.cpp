@@ -21,7 +21,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lld;
 #ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
+#define debug(x) cerr << #x<<" = ";  _print(x); cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -52,59 +52,51 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    long long i,j,k,l,r,n,m,t,x,y,z,p;
     cin >> n;
-    vector<int> v;
-    map<int, int> mp;
-    for (int i = 0; i < n; i++)
+    long long a[n], b[n];
+    vector<long long> v[n];
+    vector<long long> u;
+    for (i = 0; i < n; i++)
     {
-        int temp;
-        cin >> temp;
-        v.pb(temp);
-    }
-    debug(v)
-    int max1 = 0;
-            int k1=0;
-    for (int i = 0; i < n; i++)
-    {
-        // debug(i)
-        if (v[i] == k)
+        cin >> a[i];
+        b[i] = 0;
+        if (a[i] < n)
         {
-            int p=0;
-            for (int i = k+1; i <= max1; i++)
-            {
-                if(mp[i]>0)
-                {
-                    
-                }
-                else
-                {
-                    k++; 
-                    p++;
-                    break;
-                }
-            }
-            if(p==0)
-            k=max1+1;
-            if(k>v[i])
-            {
-                debug(i)
-                debug(k)
-                debug(v[i+1])
-                cout<<1<<endl;
-                cout<<k;
-                k1++;
-                return;
-            }
-        }
-        else
-        {
-            mp[v[i]]++;
-            max1 = max(max1, v[i]);
+            v[a[i]].push_back(i);
         }
     }
-    if(k1==0)
-    cout<<max1+1;
+    z = -1;
+    p = 0;
+    while (p < n)
+    {
+        y = z;
+        for (i = 0; i < n; i++)
+        {
+            j = b[i];
+            while (j < v[i].size() && v[i][j] <= z)
+            {
+                j++;
+            }
+            if (j >= v[i].size())
+                break;
+            y = max(y, v[i][j]);
+            j++;
+            b[i] = j;
+        }
+        if (i == 0)
+            y++;
+        z = y;
+        p = z + 1;
+        if (p == 0)
+            p = 1;
+        u.push_back(i);
+    }
+    cout << u.size() << "\n";
+    for (i = 0; i < u.size(); i++)
+    {
+        cout << u[i] << " ";
+    }
 }
 
 int32_t main()
@@ -114,6 +106,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
+        cerr << "----" << I << "----" << nl;
         solve();
         cout << endl;
     }

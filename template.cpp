@@ -63,6 +63,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
+        cerr << "----" << I << "----" << nl;
         solve();
         cout << endl;
     }
