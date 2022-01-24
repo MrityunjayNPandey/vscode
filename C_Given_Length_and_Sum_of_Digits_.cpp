@@ -16,7 +16,7 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lld;
 #ifndef ONLINE_JUDGE
-#define debug(x...) cerr << __LINE__ <<" "<< #x <<" = "; _print(x);
+#define debug(x...) cerr<< "[" << __LINE__ <<"] "<< #x <<" = "; _print(x);
 #else
 #define debug(x...)
 #endif
@@ -44,71 +44,45 @@ const long long mod = 998244353;
 // #define int long long
 int I;
 // clang-format on
-
+int ans[110];
 void solve()
 {
-    int a[102400],b[102400],n,m,i,j,t,g;
-    char o[102400],c;
-    scanf("%d%d", &n, &m);
-    for (i = 2; i <= n; ++i)
-        if (!a[i])
-            for (j = i; j <= n; j += i)
-                a[j] = i;
-    while (m--)
+    // debug(ans)
+    int len, s, ts, i;
+    while (~scanf("%d%d", &len, &s))
     {
-        scanf(" %c%d", &c, &i);
-        if (c == '+')
+        if (len > 1 && s == 0 || len * 9 < s)
         {
-            if (o[i])
-            {
-                puts("Already on");
-                continue;
-            }
-            g = 1;
-            for (j = i; j > 1;)
-            {
-                t = a[j];
-                if (b[t])
-                {
-                    printf("Conflict with %d\n", b[t]);
-                    g = 0;
-                    break;
-                }
-                do
-                {
-                    j /= t;
-                } while (j % t == 0);
-            }
-            if (g)
-            {
-                puts("Success");
-                o[i] = 1;
-                for (j = i; j > 1;)
-                {
-                    b[t = a[j]] = i;
-                    do
-                        j /= t;
-                    while (j % t == 0);
-                }
-            }
+            printf("-1 -1\n");
+            continue;
         }
-        else
+        else if (len == 1 && s == 0)
         {
-            if (!o[i])
-            {
-                puts("Already off");
-                continue;
-            }
-            for (j = i; j > 1;)
-            {
-                b[t = a[j]] = 0;
-                do
-                    j /= t;
-                while (j % t == 0);
-            }
-            o[i] = 0;
-            puts("Success");
+            printf("0 0\n");
+            continue;
         }
+        memset(ans, 0, sizeof(ans));
+        ans[1] = 1;
+        ts = s - 1;
+        for (i = len; i >= 1; i--)
+        {
+            ans[i] += min(9, ts);
+            ts -= min(9, ts);
+        }
+        for (i = 1; i <= len; i++)
+            printf("%c", ans[i] + '0');
+        printf(" ");
+
+        memset(ans, 0, sizeof(ans));
+        ts = s;
+        for (i = 1; i <= len; i++)
+        {
+            ans[i] += min(9, ts);
+            ts -= min(9, ts);
+        }
+        for (i = 1; i <= len; i++)
+            printf("%c", ans[i] + '0');
+        printf("\n");
     }
 }
 
@@ -118,7 +92,7 @@ int32_t main()
     int Test = 1;
     // cin >> Test;
     for (I = 1; I <= Test; I++)
-    {
+    {   debug(I)
         cerr << "-------" << I << "-------" << nl;
         solve();
         cout << endl;
