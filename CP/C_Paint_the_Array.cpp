@@ -20,19 +20,24 @@ int I;
 void solve()
 {
     int n = 0, a = 0, b = 0, k = 0, ans = 0;
-    cin >> n >> a >> b;
-    debug(a,b);
-    int gcd1 = a, gcd2 = b;
+    cin >> n;
+    // debug(a, b);
     map<int, int> mp1, mp2;
-    for (int i = 2; i < n; i++)
+    vector<int> temp;
+    for (int i = 0; i < n; i++)
     {
-        int temp;
-        cin >> temp;
+        int temp1;
+        cin >> temp1;
+        temp.push_back(temp1);
+    }
+    int gcd1 = temp[0], gcd2 = temp[1];
+    for (int i = 0; i < n; i++)
+    {
         if (i % 2 == 0)
         {
-            gcd1 = __gcd(gcd1, temp);
-            mp1[temp]++;
-            if (mp2[temp])
+            gcd1 = __gcd(gcd1, temp[i]);
+            mp1[temp[i]]++;
+            if (mp2[temp[i]])
             {
                 cout << 0;
                 return;
@@ -40,26 +45,41 @@ void solve()
         }
         else
         {
-            gcd2 = __gcd(gcd2, temp);
-            mp2[temp]++;
-            if (mp1[temp])
+            gcd2 = __gcd(gcd2, temp[i]);
+            mp2[temp[i]]++;
+            if (mp1[temp[i]])
             {
                 cout << 0;
                 return;
             }
         }
     }
-    debug(gcd1, gcd2, a, b);
-    if (__gcd(gcd1, gcd2) != 1 && gcd1 == gcd2)
+    debug(temp, mp1, mp2, gcd1, gcd2);
+
     {
-        cout << 0;
-    }
-    else
-    {
-        if (n == 2)
-            cout << __gcd(a, b);
-        else
+        {
+            for (int i = 1; i < n; i += 2)
+            {
+                if (temp[i] % gcd1 == 0)
+                {
+                    gcd1 = 0;
+                    break;
+                }
+            }
+            //test
+            for (int i = 0; i < n; i += 2)
+            {
+                if (temp[i] % gcd2 == 0)
+                {
+                    gcd2 = 0;
+                    break;
+                }
+            }
+        }
+        if (gcd1 > 0 || gcd2 > 0)
             cout << max(gcd1, gcd2);
+        else
+            cout << 0;
     }
 }
 
