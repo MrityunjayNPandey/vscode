@@ -1,69 +1,139 @@
-// clang-format off
 #include <bits/stdc++.h>
-using namespace std;
-#define pb push_back
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
-#define LOG(n) 31 - __builtin_clz(n)
-#define nl "\n"
-#define ok cout << "OK\n"
-#define ios                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
-#define free                          \
-    freopen("input.txt", "r", stdin); \
-    freopen("output.txt", "w", stdout)
-#define ff first
-#define ss second
-typedef pair<int, int> pii;
-typedef long long ll;
-typedef unsigned long long ull;
-typedef long double lld;
-#ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
-#else
-#define debug(x)
-#endif
-void _print(ll t) {cerr << t;}
-void _print(int t) {cerr << t;}
-void _print(string t) {cerr << t;}
-void _print(char t) {cerr << t;}
-void _print(lld t) {cerr << t;}
-void _print(double t) {cerr << t;}
-void _print(ull t) {cerr << t;}
-template <class T, class V> void _print(pair <T, V> p);
-template <class T> void _print(vector <T> v);
-template <class T> void _print(set <T> v);
-template <class T, class V> void _print(map <T, V> v);
-template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
-template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-const long long INF = 1ll << 32;
-const long long MAX_N = 1e6 + 7;
-const long long MOD = 998244353;
-const long long mod = 998244353;
-#define int long long
-int I;
-// clang-format on
 
-void solve()
+constexpr int Maxn = 2e5 + 7;
+
+struct Node
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int Max, Maxc, Maxr;
+} seg[Maxn << 2];
+
+long long val[Maxn], sum[Maxn];
+int n, q;
+
+void update(int p, int k)
+{
+    for (int i = p; i <= n; i += i & -i)
+    {
+        val[i] += k;
+        sum[i] += 1LL * p * k;
+    }
 }
 
-int32_t main()
+void update(int l, int r, int k)
 {
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
+    update(l, k), update(r + 1, -k);
+}
+
+long long query(int p)
+{
+    long long res = 0;
+
+    for (int i = p; i > 0; i -= i & -i)
+        res += 1LL * (p + 1) * val[i] - sum[i];
+
+    return res;
+}
+
+inline void pushup(int p)
+{
+    seg[p].Maxr = -1;
+
+    if (seg[p << 1].Max > seg[p << 1 | 1].Max)
     {
-        solve();
-        cout << endl;
+        seg[p].Max = seg[p << 1].Max;
+        seg[p].Maxc = seg[p << 1].Maxc;
+        seg[p].Maxr = seg[p << 1 | 1].Max;
+    }
+    else if (seg[p << 1].Max < seg[p << 1 | 1].Max)
+    {
+        seg[p].Max = seg[p << 1 | 1].Max;
+        seg[p].Maxc = seg[p << 1 | 1].Maxc;
+        seg[p].Maxr = seg[p << 1].Max;
+    }
+    else
+    {
+        seg[p].Max = seg[p << 1].Max;
+        seg[p].Maxc = seg[p << 1].Maxc + seg[p << 1 | 1].Maxc;
+    }
+
+    seg[p].Maxr = std::max(seg[p].Maxr, std::max(seg[p << 1].Maxr, seg[p << 1 | 1].Maxr));
+}
+
+inline void pushdown(int p)
+{
+    if (seg[p].Max < seg[p << 1].Max)
+        seg[p << 1].Max = seg[p].Max;
+    if (seg[p].Max < seg[p << 1 | 1].Max)
+        seg[p << 1 | 1].Max = seg[p].Max;
+}
+
+void update(int p, int l, int r, int x, int k)
+{
+    if (l == r)
+    {
+        update(1, seg[p].Max, -1);
+        update(1, k, 1);
+        seg[p].Max = k, seg[p].Maxc = 1, seg[p].Maxr = -1;
+        return;
+    }
+
+    pushdown(p);
+    int mid = (l + r) >> 1;
+
+    if (x <= mid)
+        update(p << 1, l, mid, x, k);
+    else
+        update(p << 1 | 1, mid + 1, r, x, k);
+
+    pushup(p);
+}
+
+void update(int p, int l, int r, int L, int R, int k)
+{
+    if (k >= seg[p].Max)
+        return;
+
+    if (L <= l && r <= R && k > seg[p].Maxr)
+    {
+        update(k + 1, seg[p].Max, -seg[p].Maxc);
+        seg[p].Max = k;
+        return;
+    }
+
+    pushdown(p);
+    int mid = (l + r) >> 1;
+
+    if (L <= mid)
+        update(p << 1, l, mid, L, R, k);
+    if (R > mid)
+        update(p << 1 | 1, mid + 1, r, L, R, k);
+
+    pushup(p);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &q);
+
+    for (int i = 1; i <= n; ++i)
+    {
+        update(1, 1, n, i, i);
+        update(1, i - 1, -1);
+    }
+
+    while (q--)
+    {
+        int opt, x, y;
+        scanf("%d%d%d", &opt, &x, &y);
+
+        if (opt == 1)
+        {
+            update(1, 1, n, x, y);
+
+            if (x > 1)
+                update(1, 1, n, 1, x - 1, x - 1);
+        }
+        else
+            printf("%lld\n", query(y) - query(x - 1));
     }
 }

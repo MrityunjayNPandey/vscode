@@ -100,7 +100,7 @@ vector<string> vec_splitter(string s)
 void debug_out(
     vector<string> __attribute__((unused)) args,
     __attribute__((unused)) int idx,
-    __attribute__((unused)) int LINE_NUM) { cerr << endl; }
+    __attribute__((unused)) int LINE_NUM) { cerr << nl; }
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
@@ -113,8 +113,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
     debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__);
-
-// void debug_out() { cerr << endl; }
+// void debug_out() { cerr << nl; }
 
 // template <typename Head, typename... Tail>
 // void debug_out(Head H, Tail... T) {
