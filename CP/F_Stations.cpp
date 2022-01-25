@@ -1,56 +1,139 @@
 #include <bits/stdc++.h>
-using namespace std;
-#define pb push_back
-#define int long long
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
-#define LOG(n) 31 - __builtin_clz(n)
-#define nl "\n"
-#define ok cout << "OK\n"
-#define ios                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
-#define free                          \
-    freopen("input.txt", "r", stdin); \
-    freopen("output.txt", "w", stdout)
-#define ff first
-#define ss second
-typedef pair<int, int> pii;
-const long long INF = 1ll << 32;
-const long long MAX_N = 1e6 + 7;
-const long long MOD = 998244353;
-const long long mod = 998244353;
 
-int I;
+constexpr int Maxn = 2e5 + 7;
 
-void solve()
+struct Node
 {
-    int a[3], m, minpair, maxpair;
-    for (int i = 0; i < 3; i++)
+    int Max, Maxc, Maxr;
+} seg[Maxn << 2];
+
+long long val[Maxn], sum[Maxn];
+int n, q;
+
+void update(int p, int k)
+{
+    for (int i = p; i <= n; i += i & -i)
     {
-        cin >> a[i];
+        val[i] += k;
+        sum[i] += 1LL * p * k;
     }
-    cin >> m;
-    sort(a, a + 3);
-    minpair = a[2] - a[1];
-    maxpair = (a[0] / 2) + (a[1] / 2) + (a[2] / 2);
-    if (m >= minpair && m <= maxpair)
-    {
-        cout << "yes";
-    }
-    else
-        cout << "no";
 }
 
-int32_t main()
+void update(int l, int r, int k)
 {
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
+    update(l, k), update(r + 1, -k);
+}
+
+long long query(int p)
+{
+    long long res = 0;
+
+    for (int i = p; i > 0; i -= i & -i)
+        res += 1LL * (p + 1) * val[i] - sum[i];
+
+    return res;
+}
+
+inline void pushup(int p)
+{
+    seg[p].Maxr = -1;
+
+    if (seg[p << 1].Max > seg[p << 1 | 1].Max)
     {
-        solve();
-        cout<<endl;
+        seg[p].Max = seg[p << 1].Max;
+        seg[p].Maxc = seg[p << 1].Maxc;
+        seg[p].Maxr = seg[p << 1 | 1].Max;
+    }
+    else if (seg[p << 1].Max < seg[p << 1 | 1].Max)
+    {
+        seg[p].Max = seg[p << 1 | 1].Max;
+        seg[p].Maxc = seg[p << 1 | 1].Maxc;
+        seg[p].Maxr = seg[p << 1].Max;
+    }
+    else
+    {
+        seg[p].Max = seg[p << 1].Max;
+        seg[p].Maxc = seg[p << 1].Maxc + seg[p << 1 | 1].Maxc;
+    }
+
+    seg[p].Maxr = std::max(seg[p].Maxr, std::max(seg[p << 1].Maxr, seg[p << 1 | 1].Maxr));
+}
+
+inline void pushdown(int p)
+{
+    if (seg[p].Max < seg[p << 1].Max)
+        seg[p << 1].Max = seg[p].Max;
+    if (seg[p].Max < seg[p << 1 | 1].Max)
+        seg[p << 1 | 1].Max = seg[p].Max;
+}
+
+void update(int p, int l, int r, int x, int k)
+{
+    if (l == r)
+    {
+        update(1, seg[p].Max, -1);
+        update(1, k, 1);
+        seg[p].Max = k, seg[p].Maxc = 1, seg[p].Maxr = -1;
+        return;
+    }
+
+    pushdown(p);
+    int mid = (l + r) >> 1;
+
+    if (x <= mid)
+        update(p << 1, l, mid, x, k);
+    else
+        update(p << 1 | 1, mid + 1, r, x, k);
+
+    pushup(p);
+}
+
+void update(int p, int l, int r, int L, int R, int k)
+{
+    if (k >= seg[p].Max)
+        return;
+
+    if (L <= l && r <= R && k > seg[p].Maxr)
+    {
+        update(k + 1, seg[p].Max, -seg[p].Maxc);
+        seg[p].Max = k;
+        return;
+    }
+
+    pushdown(p);
+    int mid = (l + r) >> 1;
+
+    if (L <= mid)
+        update(p << 1, l, mid, L, R, k);
+    if (R > mid)
+        update(p << 1 | 1, mid + 1, r, L, R, k);
+
+    pushup(p);
+}
+
+int main()
+{
+    scanf("%d%d", &n, &q);
+
+    for (int i = 1; i <= n; ++i)
+    {
+        update(1, 1, n, i, i);
+        update(1, i - 1, -1);
+    }
+
+    while (q--)
+    {
+        int opt, x, y;
+        scanf("%d%d%d", &opt, &x, &y);
+
+        if (opt == 1)
+        {
+            update(1, 1, n, x, y);
+
+            if (x > 1)
+                update(1, 1, n, 1, x - 1, x - 1);
+        }
+        else
+            printf("%lld\n", query(y) - query(x - 1));
     }
 }
