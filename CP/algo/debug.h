@@ -94,6 +94,7 @@ string to_string(tuple<A, B, C, D> p)
 vector<string> vec_splitter(string s)
 {
     s += ',';
+    remove(s.begin(), s.end(), ' ');
     vector<string> res;
     while (!s.empty())
     {
@@ -110,7 +111,7 @@ template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
     if (idx > 0)
-        cerr << ",";
+        cerr << nl << "[" << LINE_NUM << "] ";
     else
         cerr << "[" << LINE_NUM << "] ";
     // stringstream ss; ss << H;
