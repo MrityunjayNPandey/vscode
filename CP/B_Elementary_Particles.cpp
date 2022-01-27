@@ -30,7 +30,20 @@ void solve()
         vp.push_back({temp, i});
     }
     sort(all(vp));
-    
+    debug(vp);
+    for (int i = 0; i < vp.size() - 1; i++)
+    {
+        if (vp[i].first == vp[i + 1].first)
+        {
+            k = vp[i].second + vp.size() - vp[i + 1].second;
+            ans = max(ans, k);
+            debug(ans, k, i, vp[i].second, vp[i + 1].second)
+        }
+    }
+    if (ans == 0)
+        cout << -1;
+    else
+        cout << ans;
 }
 
 // clang-format off
