@@ -1,52 +1,59 @@
-// clang-format off
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define nl "\n"
-#ifdef LOCAL
-#include "algo/debug.h"
-#else
-#define debug(...) 42
-#endif
-#define all(x) x.begin(), x.end()
-#define rall(x) x.rbegin(), x.rend()
-#define LOG(n) 31 - __builtin_clz(n)
-#define ios ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
-const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
-const long long MOD = 998244353; const long long mod = 998244353;
-#define int long long
-int I;
-// clang-format on
-
-void solve()
-{
-    int n = 0, k = 0, ans = 0;
-    string str;
-    cin >> str;
-    map<char, int> mp;
-    for (int i = 0; i < str.length(); i++)
-    {
-        mp[str[i]]++;
-        if (mp[str[i]] == 1)
-            k++;
-    }
-    if (k % 2 != 0)
-        cout << "IGNORE HIM!";
-    else
-        cout << "CHAT WITH HER!";
+#define fo(i,n) for(i=0;i<n;i++)
+#define Fo(i,k,n) for(i=k;k<n?i<n:i>n;k<n?i+=1:i-=1)
+#define ll long long
+#define PI 3.1415926535897932384626
+const int mod = 1'000'000'007;
+const int N = 3e5, M = N;
+ 
+ 
+void solve() {
+int i, j, n, m;
+   string s;
+   cin>>s;
+   n=s.length();
+   string str;
+   fo(i,n){
+int count=0;
+       int x=str.length();
+        if(i==0){
+           str=str+s[i];
+       }
+       else{
+           for(j=0;j<x;j++){
+               if(str[j]==s[i]){
+                  count++; 
+               }
+           }
+           if(count==0){
+                   str=str+s[i];
+               }
+       }
+   }
+   
+   m=str.length();
+ 
+   if(m%2==0){
+       cout<<"CHAT WITH HER!"<<endl;
+   }
+   else{
+       cout<<"IGNORE HIM!"<<endl;
+   }
+    
 }
-
-// clang-format off
-int32_t main()
-{
-    ios;
-    int Test = 1;
-    // cin >> Test;
-    for (I = 1; I <= Test; I++)
-    {
-        #ifdef LOCAL
-        cerr << "-------" << I << "-------" << nl;
-        #endif
-        solve();
-        cout << endl;
-    }
+ 
+int main() {
+ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+ 
+ 
+int t = 1;
+// cin >> t;
+ 
+while(t--) {
+solve();
+}
+ 
+return 0;
 }
