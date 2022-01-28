@@ -106,12 +106,12 @@ vector<string> vec_splitter(string s)
 void debug_out(
     vector<string> __attribute__((unused)) args,
     __attribute__((unused)) int idx,
-    __attribute__((unused)) int LINE_NUM) { cerr << nl; }
+    __attribute__((unused)) int LINE_NUM) { cerr << endl; }
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
     if (idx > 0)
-        cerr << nl << "[" << LINE_NUM << "] ";
+        cerr << endl << "[" << LINE_NUM << "] ";
     else
         cerr << "[" << LINE_NUM << "] ";
     // stringstream ss; ss << H;
@@ -122,7 +122,7 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 
 // ____________________________________________________________________________________________________________________________________
 
-// void debug_out() { cerr << nl; }
+// void debug_out() { cerr << endl; }
 
 // template <typename Head, typename... Tail>
 // void debug_out(Head H, Tail... T) {

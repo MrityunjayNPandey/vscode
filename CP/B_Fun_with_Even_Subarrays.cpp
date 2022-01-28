@@ -1,13 +1,12 @@
 // clang-format off
 #include <bits/stdc++.h>
 using namespace std;
-#define endl "\n"
+#define nl "\n"
 #ifdef LOCAL
 #include "algo/debug.h"
 #else
 #define debug(...) 
 #endif
-#define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define LOG(n) 31 - __builtin_clz(n)
@@ -20,8 +19,42 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    int n = 0, k = 0,k1=0, ans = 0;
+    cin>>n;
+    vector<int> v;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        v.push_back(temp);
+    }
+    for(int i= 0; i < n; i++)
+    {
+        if(v[i]!=v[n-1])
+        break;
+        else
+        {
+            k++;
+        }
+    }
+    for (int i = n-1; i >=0; i--)
+    {
+        if(v[i]==v[n-1])
+        {
+            k1++;
+        }
+        if(v[i]!=v[n-1])
+        {
+            i-=k1;
+            k1+=k1;
+            ans++;
+            i++;
+            debug(v[i]);
+
+        }
+    }
     
+    cout<<ans;
 }
 
 // clang-format off
@@ -33,9 +66,9 @@ int32_t main()
     for (I = 1; I <= Test; I++)
     {
         #ifdef LOCAL
-        cerr << "-------" << I << "-------" << endl;
+        cerr << "-------" << I << "-------" << nl;
         #endif
         solve();
-        cout << endl;
+        cout << nl;
     }
 }
