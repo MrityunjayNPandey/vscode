@@ -4,14 +4,18 @@ using namespace std;
 #ifdef LOCAL
 #include "algo/debug.h"
 #else
-#define debug(...) 
+#define debug(...)
 #endif
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define LOG(n) 31 - __builtin_clz(n)
-#define ios ios_base::sync_with_stdio(false); cin.tie(0);
-const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
-const long long MOD = 1e9+7; const long long mod = 998244353;
+#define ios                           \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(0);
+const long long INF = 1ll << 32;
+const long long MAX_N = 1e6 + 7;
+const long long MOD = 1e9 + 7;
+const long long mod = 998244353;
 #define int long long
 int I;
 // clang-format on
@@ -23,7 +27,7 @@ void solve()
     string str;
     cin >> str;
     vector<pair<int, int>> vp, vp1;
-    vp2i for (int i = 0; i < str.length(); i++)
+    for (int i = 0; i < str.length(); i++)
     {
         if (str[i] == '1')
         {

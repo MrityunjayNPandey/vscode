@@ -18,11 +18,46 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 #define int long long
 int I;
 // clang-format on
+int checker(int mid, string str, int k)
+{
+    int sum = 0;
+    for (int i = mid - 1; i >= 0; i--)
+    {
+        int z = (sum + (int)str[i] - 48) % 10;
+        if (z == 0)
+            continue;
+        else
+        {
+            sum += (10 - z);
+        }
+    }
+    if (sum <= k)
+        return 1;
+    return 0;
+}
 
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    string str;
+    cin >> str;
+    int l = 0, h = n, mid = 0;
+    while(l<=h)
+    {
+        mid = (l + h) / 2;
+
+        if (checker(mid, str, k))
+        {
+            l = mid + 1;
+            ans = mid;
+        }
+        else
+        {
+            h = mid - 1;
+        }
+    }
+    cout << ans;
 }
 
 // clang-format off

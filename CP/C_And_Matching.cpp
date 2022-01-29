@@ -21,7 +21,43 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    if (k == 0)
+    {
+        for (int i = 0; i < n / 2; ++i)
+        {
+            cout << i << ' ' << n - i - 1 << endl;
+        }
+        return;
+    }
+    if (k != n - 1)
+    {
+        cout << 0 << ' ' << n - k - 1 << endl;
+        cout << k << ' ' << n - 1 << endl;
+        for (int i = 1; i < n / 2; ++i)
+        {
+            if (i != k && i != n - k - 1)
+            {
+                cout << i << ' ' << n - i - 1 << endl;
+            }
+        }
+        return;
+    }
+    if (n == 4)
+    {
+        cout << -1 << endl;
+    }
+    else
+    {
+        cout << n - 2 << ' ' << n - 1 << endl;
+        cout << 1 << ' ' << 3 << endl;
+        cout << 0 << ' ' << n - 4 << endl;
+        cout << 2 << ' ' << n - 3 << endl;
+        for (int i = 4; i < n / 2; ++i)
+        {
+            cout << i << ' ' << n - i - 1 << endl;
+        }
+    }
 }
 
 // clang-format off
@@ -36,6 +72,6 @@ int32_t main()
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }

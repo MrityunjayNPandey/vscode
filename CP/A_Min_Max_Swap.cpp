@@ -90,9 +90,6 @@ void solve()
 // clang-format off
 int32_t main()
 {
-	#ifndef LOCAL
-	free;
-	#endif
     ios;
     int Test = 1;
     cin >> Test;

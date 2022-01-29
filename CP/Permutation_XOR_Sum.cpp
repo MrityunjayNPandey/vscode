@@ -19,10 +19,35 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 int I;
 // clang-format on
 
+int flip(int n)
+{
+    int num = 0, cnt = 0;
+    while (n)
+    {
+        if (n % 2 == 0)
+            num += (1LL << cnt);
+        n /= 2, cnt++;
+        if (n <= 0)
+            break;
+    }
+    return num;
+}
+
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    while (n > 0)
+    {
+        int a = flip(n);
+        int b = n;
+        if ((b & (b + 1)) == 0)
+            b--;
+        int val = ((b * (b + 1)) / 2) - ((a * (a - 1)) / 2);
+        ans += (val * 2);
+        n = a - 1;
+    }
+    cout << ans;
 }
 
 // clang-format off

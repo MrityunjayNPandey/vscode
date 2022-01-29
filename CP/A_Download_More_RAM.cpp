@@ -86,18 +86,13 @@ void solve()
 
 int32_t main()
 {
- #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-    freopen("error.txt", "w", stderr);
-#endif
 
     ios;
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        solve();
+        // solve();
         cout << endl;
     }
 }

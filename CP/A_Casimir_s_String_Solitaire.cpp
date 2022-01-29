@@ -23,7 +23,6 @@ const long long MOD = 998244353;
 const long long mod = 998244353;
 
 int I;
-
 void solve()
 {
     int i,a=0,b=0,c=0;

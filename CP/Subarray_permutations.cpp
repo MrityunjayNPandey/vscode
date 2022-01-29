@@ -22,7 +22,28 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    if (k == 1)
+    {
+        if (n == 1)
+            cout << 1;
+        else
+            cout << -1;
+        return;
+    }
+    vector<int> v;
+    for(int i = 0; i < n; i++)
+    v.pb(i+1);
+    k=n-k;
+    for(int i = 1; i <= k; i++)
+    {
+        v[i]=v[i+1];
+    }
+    v[k+1]=2;
+    for(int i = 0; i<n; i++)
+    {
+        cout<<v[i]<<" ";
+    }
 }
 
 // clang-format off

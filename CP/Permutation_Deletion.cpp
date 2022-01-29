@@ -22,7 +22,30 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin>>n;
+    vector<int> v, max, min, bet;
+    for(int i = 0; i < n; i++)
+    {
+        int temp;
+        cin>>temp;
+        v.pb(temp);
+    }
+    for(int i = 1; i < v.size()-1; i++)
+    {
+        if(v[i-1]<v[i] && v[i]>v[i+1])
+        {
+            max.pb(v[i]);
+        }
+        else if(v[i-1]>v[i] && v[i]<v[i+1])
+        {
+            min.pb(v[i]);
+        }
+        else
+        {
+            bit.pb(v[i]);
+        }
+        
+    }
 }
 
 // clang-format off
