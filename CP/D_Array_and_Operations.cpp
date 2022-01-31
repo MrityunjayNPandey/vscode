@@ -17,30 +17,32 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9+7; const long long mod = 998244353;
 #define int long long
 int I;
-
-        // do something, stay focused
-        // look for stupid bugs
-        // guess, slow, stress
-        // don't overgeneralize
-        // don't rush
-            
-        // 1. Understand the problem
-        // 2. Devise a plan
-        // 3. Carry out the plan
-        // 4. Look back
-            
-        // don't waste time on standings
-            
-        // SOLVE THE PROBLEM OR DIE TRYING
-        // THE SOLUTION IS ALWAYS SIMPLE
-        // THE CODE IS ALWAYS SHORT
-
 // clang-format on
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int n = 0, k = 0, ans = 0, ans1 = 0;
+    cin >> n >> k;
+    vector<int> v;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        v.pb(temp);
+    }
+    sort(v.begin(), v.end());
+    for (int i = 0; i < k; i++)
+    {
+        int temp = v[v.size() - (2 * k) + i] / v[v.size() - k + i];
+        ans += temp;
+        debug(v[v.size() - (2 * k) + i - 1],v[v.size() - k + i - 1] )
+    }
+    debug(ans)
+    for(int i=0; i<(v.size() - (2 * k)); i++)
+    {
+        ans+=v[i];
+    }
+    cout << ans;
 }
 
 // clang-format off

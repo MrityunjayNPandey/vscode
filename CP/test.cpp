@@ -32,13 +32,13 @@ void str(int l, int n)
     {
         for (int j = 0; j < l; ++j)
         {
-            int v = rand(1, 150);
-            if (v % 3 == 0)
-                cout << (char)rand('a', 'z');
-            else if (v % 3 == 1)
-                cout << (char)rand('A', 'Z');
-            else
-                cout << rand(0, 9);
+            // int v = rand(1, 150);
+            // if (v % 3 == 0)
+            //     cout << (char)rand('a', 'z');
+            // else if (v % 3 == 1)
+            //     cout << (char)rand('A', 'Z');
+            // else
+                cout << rand(0, 1000)<<" ";
         }
         cout << " ";
     }
@@ -51,13 +51,13 @@ void strmx(int mxlen, int n)
         int l = rand(1, mxlen);
         for (int j = 0; j < l; ++j)
         {
-            // int v = rand(1, 150);
-            // if (3 % 3 == 0)
+            int v = rand(1, 150);
+            if (3 % 3 == 0)
                 cout << (char)rand('a', 'z');
-            // else if (v % 3 == 1)
-            //     cout << (char)rand('A', 'Z');
-            // else
-            //     cout << rand(0, 9);
+            else if (v % 3 == 1)
+                cout << (char)rand('A', 'Z');
+            else
+                cout << rand(0, 9);
         }
         cout << " ";
     }
@@ -106,13 +106,13 @@ void tree(int n)
 }
 signed main()
 {
-    int t = 10;
+    int t = 20;
     cout << t << endl;
     while (t--)
     {
-        int temp = rand(5000, 10000);
+        int temp = rand(1, 50);
         cout << temp << " ";
-        cout << rand(1, temp) << endl;
+        cout << rand(1, temp/2) << endl;
         str(temp, 1);
         cout << endl;
     }

@@ -40,7 +40,41 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    unordered_map<int, int> mp, mp2;
+    vector<int> v, v1;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        mp[temp]++;
+        if (temp > n || mp[temp] > 1)
+        {
+            v1.pb(temp);
+            mp[temp]--;
+        }
+        else
+            v.pb(temp);
+    }
+    sort(all(v));
+    sort(all(v1));
+    debug(v1);
+    int t = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        if (mp[i] == 0)
+        {
+            if (v1[t] % (v1[t] - i) == i)
+                ans++;
+            else
+            {
+                cout << -1;
+                return;
+            }
+            t++;
+        }
+    }
+    cout << ans;
 }
 
 // clang-format off

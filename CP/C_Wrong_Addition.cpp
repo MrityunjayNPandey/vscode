@@ -20,39 +20,30 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, j = 0, ans = 0;
-    string str1, str2;
-    cin >> str1 >> str2;
-    vector<int> v;
-    debug(str1,  str2)
-    for (int i = min(str1.size(), str2.size()) - 1; i >= 0; i--)
     {
-        if (str2[j] < str1[k])
+        int a, s, x, y;
+        int b = 0, p = 1;
+        cin >> a >> s;
+        while (a > 0)
         {
-            if (str2[--j] != '1')
+            x = a % 10;
+            y = s % 10;
+            if (y < x)
             {
-                int temp = 10 + (int)(str2[j + 1] - '0') - (int)(str1[k] - '0');
-                v.push_back(temp);
-                debug(temp)
+                s /= 10;
+                y += s % 10 * 10;
             }
-            else
+            if (x > y or (y - x) > 9)
             {
-                cout << -1;
-                return;
+                b = -1;
+                break;
             }
+            b += p * (y - x);
+            a /= 10, s /= 10, p *= 10;
         }
-        else
-        {
-            int temp = (int)(str2[j] - '0') - (int)(str1[k] - '0');
-            v.push_back(temp);
-            debug(temp);
-        }
-        j--;
-        k--;
-    }
-    for (int i = v.size() - 1; i >= 0; i--)
-    {
-        cout << v[i];
+        if (b != -1)
+            b += p * s;
+        cout << b ;
     }
 }
 

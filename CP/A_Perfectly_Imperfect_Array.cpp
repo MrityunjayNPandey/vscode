@@ -36,17 +36,44 @@ int I;
         // THE CODE IS ALWAYS SHORT
 
 // clang-format on
+unordered_map<int, int> mp;
+void square()
+{
+    int t=MAX_N, i=1;
+    while(i*i<MAX_N)
+    {
+        mp[i*i]++;
+        i++;
+    }
+}
 
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin>>n;
+    vector<int> v;
+    for(int i = 0; i < n; i++)
+    {
+        int temp;
+        cin>>temp;
+        v.pb(temp);
+    }
+    for(int i = 0; i < n; i++)
+    {
+        if(mp[v[i]]==0)
+        {
+            cout<<"YES";
+            return;
+        }
+    }
+    cout<<"NO";
 }
 
 // clang-format off
 int32_t main()
 {
     ios;
+    square();
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)

@@ -40,6 +40,17 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
+    cin>>n;
+    string str;
+    cin>>str;
+    if(n==2 && str[0]==str[1])
+    cout<<"NO";
+    else if(n>2)
+        cout<<"NO";
+    else
+    {
+        cout<<"YES";
+    }
     
 }
 
