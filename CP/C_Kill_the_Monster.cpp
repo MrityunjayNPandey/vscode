@@ -40,7 +40,21 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    int hc, ac, hm, am, hk, ak;
+    cin >> hc >> ac >> hm >> am >> k >> ak >> hk;
+
+    for (int i = 0; i <= k; i++)
+    {
+        int wina = (hm + (ac + ((k - i) * (ak)) -1)) / (ac + ((k - i) * (ak)));
+        int winh = (hc + (i * (hk))+ am -1) / am;
+        debug(wina, winh);
+        if (winh >= wina)
+        {
+            cout << "YES";
+            return;
+        }
+    }
+    cout << "NO";
 }
 
 // clang-format off

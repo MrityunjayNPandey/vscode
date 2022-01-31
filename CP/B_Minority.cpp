@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
-#ifdef joKer
+#ifdef LOCAL
 #include "algo/debug.h"
 #else
 #define debug(...) 
@@ -39,8 +39,26 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int n = 0, k = 0, ans = 0, one = 0, zero = 0;
+    string str;
+    cin >> str;
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (str[i] == '1')
+            one++;
+        else
+        {
+            zero++;
+        }
+    }
+    if (one == 0 || zero == 0)
+        cout << 0;
+    else if (one != zero)
+        cout << min(one, zero);
+    else
+    {
+        cout << one - 1;
+    }
 }
 
 // clang-format off
@@ -51,7 +69,7 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        #ifdef joKer
+        #ifdef LOCAL
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();

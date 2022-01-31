@@ -37,10 +37,43 @@ int I;
 
 // clang-format on
 
+// DFS, time complexity of O(V+E)
+unordered_map<int, bool> visited;
+unordered_map<int, vector<int>> adj_list;
+int parent = 0, ktd = 0;
+void DFS(int current)
+{
+
+    visited[current] = true;
+    for (int next_vertex : adj_list[current])
+        if (!visited[next_vertex])
+        {
+            DFS(next_vertex);
+        }
+}
+
 void solve()
 {
+    bool f = 1;
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    for (int i = 0; i < k; i++)
+    {
+        int t, p;
+        cin >> t >> p;
+        adj_list[t].push_back(p);
+        adj_list[p].push_back(t);
+    }
+    if (k != n - 1)
+        f = 0;
+    debug(f, adj_list);
+    DFS(1);
+    debug(visited) for (int i = 1; i <= n; ++i) if (!visited[i])
+        f = 0;
+    if (f)
+        cout << "yes" << endl;
+    else
+        cout << "no" << endl;
 }
 
 // clang-format off
@@ -48,7 +81,7 @@ int32_t main()
 {
     ios;
     int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef joKer

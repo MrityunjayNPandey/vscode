@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
-#ifdef joKer
+#ifdef LOCAL
 #include "algo/debug.h"
 #else
 #define debug(...) 
@@ -40,7 +40,60 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    vector<vector<int>> adj_list;
+    vector<pair<int, int>> v;
+    vector<int> v1;
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        v.pb({temp, i});
+        mp[temp]++;
+    }
+    debug(v, mp);
+    if (mp[v[0].first] == n)
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    cout << "YES" << endl;
+    int t = 0;
+    v1.pb(v[0].second);
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i].first == v[0].first)
+            continue;
+        t = v[i].second;
+        v1.pb(v[i].second);
+    }
+    adj_list.pb(v1);
+    v1.clear();
+    debug(adj_list);
+    debug(t);
+    debug(v[0].first);
+    if (mp[v[0].first] > 1)
+    {
+        v1.pb(t);
+        for (int i = 1; i < n; i++)
+        {
+            if (v[i].first == v[0].first)
+                v1.pb(v[i].second);
+        }
+        adj_list.pb(v1);
+    }
+    debug(adj_list) for (int i = 1; i < adj_list[0].size(); i++)
+    {
+        cout << adj_list[0][0] + 1 << " " << adj_list[0][i] + 1 << endl;
+    }
+    if (mp[v[0].first] > 1)
+    {
+        for (int i = 1; i < adj_list[1].size(); i++)
+        {
+            cout << adj_list[1][0] + 1 << " " << adj_list[1][i] + 1 << endl;
+        }
+    }
 }
 
 // clang-format off
@@ -51,10 +104,10 @@ int32_t main()
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        #ifdef joKer
+        #ifdef LOCAL
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }

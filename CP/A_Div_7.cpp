@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
-#ifdef joKer
+#ifdef LOCAL
 #include "algo/debug.h"
 #else
 #define debug(...) 
@@ -36,22 +36,59 @@ int I;
         // THE CODE IS ALWAYS SHORT
 
 // clang-format on
+map<int, int> mp, mp1;
+void pref()
+{
+    int i = 7, t = 1;
+    while (t < 200)
+    {
+        
+        mp[i * (t++)]++;
+    }
+    i = 7, t = 1;
+    while (t < 200)
+    {
+       
+        mp1[i * (t++)]++;
+    }
+    // debug(mp)
+}
 
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    if (mp[n]>0)
+    {
+        cout << n;
+        return;
+    }
+    else
+    {
+        for (auto i : mp1)
+        {
+            int t=n - (n % 10);
+            debug(t, i.first)
+            int x=i.first;
+            if (x > t)
+            {
+                cout << i.first;
+                return;
+            }
+        }
+    }
 }
 
 // clang-format off
 int32_t main()
 {
     ios;
+    pref();
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        #ifdef joKer
+        #ifdef LOCAL
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();
