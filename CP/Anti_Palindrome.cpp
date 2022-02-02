@@ -40,7 +40,49 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n;
+    string str;
+    cin >> str;
+    if (n % 2 != 0)
+    {
+        cout << "NO";
+        return;
+    }
+    unordered_map<char, int> mp;
+    for (int i = 0; i < str.length(); i++)
+    {
+        mp[str[i]]++;
+        if (mp[str[i]] > str.length() / 2)
+        {
+            cout << "NO";
+            debug(mp) return;
+        }
+    }
+    vector<pair<char, int>> values(mp.begin(), mp.end());
+    auto cmp = [](const pair<char, int> &l, pair<char, int> &r)
+    { return l.second < r.second; };
+    sort(values.begin(), values.end(), cmp);
+    debug(values);
+    cout << "YES" << endl;
+    string s;
+    for (auto i : values)
+    {
+        for (int j = 0; j < i.second; j++)
+        {
+            s+=i.first;
+        }
+    }
+    int j=n/2;
+    int i=0;
+    j--;
+    char c;
+    while(i<j){
+        c=s[i];
+        s[i]=s[j];
+        s[j]=c;
+        i++;j--;
+    }
+    cout<<s;
 }
 
 // clang-format off

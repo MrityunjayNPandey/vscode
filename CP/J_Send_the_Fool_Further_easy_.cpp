@@ -37,10 +37,41 @@ int I;
 
 // clang-format on
 
+int ans = 0, maxans=0;
+
+// DFS, time complexity of O(V+E)
+// Remember to clear the maps in main() if multiple test cases exist.
+unordered_map<int, bool> visited;
+unordered_map<int, vector<int>> adj_list; // adjacency list
+map<pair<int, int>, int> adj_weight;      // to add weights on edges
+void DFS(int current)
+{
+    visited[current] = true;
+    for (int next_vertex : adj_list[current])
+        if (!visited[next_vertex])
+        {
+            ans += adj_weight[{current, next_vertex}];
+            maxans=max(ans, maxans);
+            DFS(next_vertex);
+            ans=0;
+        }
+}
+
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int n = 0, k = 0;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int p, q, r;
+        cin >> p >> q >> r;
+        adj_list[p].push_back(q);
+        adj_list[q].push_back(p);
+        adj_weight[{p, q}] = r;
+        adj_weight[{q, p}] = r;
+    }
+    DFS(0);
+    cout << maxans;
 }
 
 // clang-format off
@@ -48,7 +79,7 @@ int32_t main()
 {
     ios;
     int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef joKer

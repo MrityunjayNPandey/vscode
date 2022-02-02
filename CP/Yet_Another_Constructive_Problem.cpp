@@ -39,8 +39,49 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    
+    int x = 0, k = 0, ans = 0, a = 0, b = 0, c = 0;
+    cin >> x;
+    string number;
+    long i;
+    for (i = 1 << 30; i > 0; i = i / 2)
+    {
+        if ((x & i) != 0)
+        {
+            number.push_back('1');
+        }
+        else
+        {
+            number.push_back('0');
+        }
+    }
+    int t = 0;
+    for (int i = number.size() - 1; i >= 0; i--)
+    {
+        if (number[i] == '1')
+            break;
+        t++;
+    }
+    debug(t);
+    a = x - pow(2, t);
+    b = x;
+    c = pow(2, t);
+    if (a == 0)
+    {
+        if (b == 1)
+        {
+            a = 0;
+            b = 1;
+            c = 5;
+        }
+        else
+        {
+            a = b;
+            b = b + 1;
+            c = b + 1;
+        }
+    }
+    cout << a << " " << b << " " << c;
+    debug((a | b) & (b | c) & (c | a))
 }
 
 // clang-format off

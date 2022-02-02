@@ -40,7 +40,12 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    cin >> n >> k;
+    int onn = n - k;
+    ans = onn + (2 * k);
+    if(n==k)
+    ans--;
+    cout << ans;
 }
 
 // clang-format off

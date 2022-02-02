@@ -40,7 +40,33 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
+    int x = 0, a = 0, b = 0;
+    cin >> x >> a >> b;
+    if (x % a == 0)
+    {
+        int p = x / a;
+        int d = b * p;
+        int sum = 0;
+        for (int i = 1; i <= sqrtl(d); i++)
+        {
+            if (sum > x)
+                break;
+            if (d % i == 0)
+            {
+                sum = sum + i;
+                if (d / i != i)
+                    sum = sum + d / i;
+            }
+        }
+        if (sum != x)
+        {
+            cout << -1 ;
+        }
+        else
+            cout << d ;
+    }
+    else
+        cout << -1 ;
 }
 
 // clang-format off

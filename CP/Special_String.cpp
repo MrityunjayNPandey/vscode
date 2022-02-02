@@ -39,8 +39,34 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    int n = 0, k = 0, ans = 0, p = 0, q = 0;
+    cin >> n;
+    string str;
+    cin >> str;
+    cin >> k;
+    char d = 'a';
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (str[i] == d)
+        {
+            if (str[i] == 'a')
+            {
+                q++;
+            }
+            d++;
+            p++;
+            continue;
+        }
+        if (q != 0)
+            ans++;
+        if (d == 'z' || p==k)
+            break;
+    }
     
+    if(p<k)
+    cout<<-1;
+    else
+    cout << ans-1;
 }
 
 // clang-format off
