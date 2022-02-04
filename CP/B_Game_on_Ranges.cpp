@@ -39,36 +39,11 @@ int I;
 
 void solve()
 {
-    int i, n, x;
-    cin >> n;
-    int a[n], b[n];
-    for (i = 0; i < n; i++)
-    {
-        cin >> a[i];
-        b[i] = 0;
-    }
-    for (i = n - 1; i >= 0; i--)
-    {
-        x = a[i];
-        while (x > 0)
-        {
-            if (x <= n)
-            {
-                if (b[x - 1] == 0)
-                {
-                    b[x - 1] = 1;
-                    break;
-                }
-            }
-            x = x / 2;
-        }
-        if (x == 0)
-            break;
-    }
-    if (i < 0)
-        cout << "YES";
-    else
-        cout << "NO";
+    int n = 0, k = 0, ans = 0;
+    vector<int> v;
+    vector<pair<int, int>> vp;
+    unordered_map<int, int> mp;
+    
 }
 
 // clang-format off
