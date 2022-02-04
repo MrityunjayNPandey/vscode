@@ -38,7 +38,7 @@ void str(int l, int n)
             // else if (v % 3 == 1)
             //     cout << (char)rand('A', 'Z');
             // else
-                cout << rand(0, 1000)<<" ";
+            cout << rand(0, 90) << " ";
         }
         cout << " ";
     }
@@ -106,14 +106,16 @@ void tree(int n)
 }
 signed main()
 {
-    int t = 20;
-    cout << t << endl;
+    int t = 1;
+    // cout << t << endl;
     while (t--)
     {
-        int temp = rand(1, 50);
-        cout << temp << " ";
-        cout << rand(1, temp/2) << endl;
-        str(temp, 1);
-        cout << endl;
+        int temp = 50;
+        cout << temp << endl;
+        for (int i = 0; i < temp; i++)
+        {
+            str(3, 1);
+            cout << endl;
+        }
     }
 }

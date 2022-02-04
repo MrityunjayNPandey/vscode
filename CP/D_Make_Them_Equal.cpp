@@ -39,31 +39,51 @@ int I;
 
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> z[n + 1];
-    map<pair<int, int>, int> mp;
-    for (int i = 0; i < n - 1; i++)
+    int n = 0, k = 0, ans = 0;
+    cin >> n >> k;
+    vector<pair<int, int>> v;
+    for (int i = 0; i < 2 * n; i++)
     {
-        int u, v, c;
-        cin >> u >> v >> c;
-        z[u].pb(v);
-        z[v].pb(u);
-        mp[{u, v}] = c;
-        mp[{v, u}] = c;
-    }
-    function<int(int, int)> dfs = [&](int t, int p)
-    {
-        int ans = 0;
-        for (auto it : z[t])
+        int temp;
+        cin >> temp;
+        if (i < n)
         {
-            if (it == p)
-                continue;
-            ans = max(ans, dfs(it, t) + mp[{t, it}]);
+            v.pb({temp, 0});
         }
-        return ans;
-    };
-    cout << dfs(0, -1);
+        else
+        {
+            v[i - n].second = temp;
+        }
+    }
+    sort(all(v));
+    debug(v);
+    for (int i = 0; i < v.size(); i++)
+    {
+        for (int j = 1; j <= v[i].first; j++)
+        {
+            {
+                debug(v[i].first, k);
+                if (v[i].first == 1)
+                {
+                    ans += v[i].second;
+                    break;
+                }
+                if (v[i].first <= pow(2, j) && k > 0)
+                {
+                    ans += v[i].second;
+                    k--;
+                    break;
+                }
+                else
+                    k--;
+                debug(v[i].first, k, ans);
+                if (k <= 0)
+                    break;
+            }
+        }
+        debug(k, ans)
+    }
+    cout << ans;
 }
 
 // clang-format off
@@ -71,7 +91,7 @@ int32_t main()
 {
     ios;
     int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef joKer

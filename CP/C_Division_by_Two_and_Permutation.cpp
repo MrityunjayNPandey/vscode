@@ -39,31 +39,42 @@ int I;
 
 void solve()
 {
-    int n;
+    int n = 0, k = 0, ans = 0, maxa = 0;
     cin >> n;
-    vector<int> z[n + 1];
-    map<pair<int, int>, int> mp;
-    for (int i = 0; i < n - 1; i++)
+    vector<int> v;
+    map<int, int> mp;
+    for (int i = 0; i < n; i++)
     {
-        int u, v, c;
-        cin >> u >> v >> c;
-        z[u].pb(v);
-        z[v].pb(u);
-        mp[{u, v}] = c;
-        mp[{v, u}] = c;
+        int temp;
+        cin >> temp;
+        v.pb(temp);
+        mp[temp]++;
+        maxa = max(temp, maxa);
     }
-    function<int(int, int)> dfs = [&](int t, int p)
+    for (int i = 1; i <= n; i++)
     {
-        int ans = 0;
-        for (auto it : z[t])
+        if (mp[i] == 0)
         {
-            if (it == p)
-                continue;
-            ans = max(ans, dfs(it, t) + mp[{t, it}]);
+            int temp = i;
+            debug(i) for (int j = 0; temp <= maxa; j++)
+            {
+                temp *= 2;
+                debug(temp);
+                if (mp[temp] != 0 && (temp > n || mp[temp] >= 2) && mp[temp] > 0)
+                {
+                    mp[i]++;
+                    mp[temp]--;
+                    break;
+                }
+            }
+            if (mp[i] == 0)
+            {
+                cout << "NO";
+                return;
+            }
         }
-        return ans;
-    };
-    cout << dfs(0, -1);
+    }
+    cout << "YES";
 }
 
 // clang-format off
@@ -71,7 +82,7 @@ int32_t main()
 {
     ios;
     int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef joKer

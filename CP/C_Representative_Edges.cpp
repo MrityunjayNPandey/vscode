@@ -39,31 +39,23 @@ int I;
 
 void solve()
 {
-    int n;
+    int n, ans = 1;
     cin >> n;
-    vector<int> z[n + 1];
-    map<pair<int, int>, int> mp;
-    for (int i = 0; i < n - 1; i++)
+    int a[100];
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    for (int i = 1; i <= n; i++)
     {
-        int u, v, c;
-        cin >> u >> v >> c;
-        z[u].pb(v);
-        z[v].pb(u);
-        mp[{u, v}] = c;
-        mp[{v, u}] = c;
-    }
-    function<int(int, int)> dfs = [&](int t, int p)
-    {
-        int ans = 0;
-        for (auto it : z[t])
+        for (int j = i + 1; j <= n; j++)
         {
-            if (it == p)
-                continue;
-            ans = max(ans, dfs(it, t) + mp[{t, it}]);
+            int x = 0;
+            for (int k = 1; k <= n; k++)
+                if (k == i || k == j || (a[k] - a[i]) * (k - j) == (a[k] - a[j]) * (k - i))
+                    x++;
+            ans = max(ans, x);
         }
-        return ans;
-    };
-    cout << dfs(0, -1);
+    }
+    cout << n - ans ;
 }
 
 // clang-format off
@@ -71,7 +63,7 @@ int32_t main()
 {
     ios;
     int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef joKer
