@@ -46,7 +46,6 @@ void solve()
         cout << b ;
     }
 }
-
 // clang-format off
 int32_t main()
 {

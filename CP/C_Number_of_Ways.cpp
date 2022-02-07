@@ -8,7 +8,7 @@ using namespace std;
 #define debug(...) 
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
-#define all(x) x.begin(), x.end() 
+#define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
@@ -18,37 +18,38 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 #define int long long
 int I;
 // clang-format on
-
+const int MAXN = 5e5 + 10;
+ 
+int a[MAXN];
+long long sum[MAXN];
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0, x = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    unordered_map<int, int> mp;
-    cin >> k >> x;
-    int i = 1, t = 0;
-    while (ans < x)
+    int n;
+    cin>>n;
+    for (int i = 1; i <= n; i++)
     {
-        if (i <= 0)
-            break;
-        if (i == k)
-        {
-            t++;
-        }
-        if (t != 0)
-        {
-            ans += i;
-            i--;
-        }
-        else
-        {
-            ans += i;
-            i++;
-        }
-        l++;
-        debug(ans, i)
+        cin>> a[i];
+        sum[i] = sum[i - 1] + a[i];
     }
-    cout << l;
+    if (sum[n] % 3 != 0)
+    {
+        printf("0\n");
+        return;
+    }
+    long long value = sum[n] / 3, ans = 0, cnt = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (sum[i] != 2 * value)
+        {
+            if (sum[i] == value)
+                cnt++;
+            continue;
+        }
+        ans += cnt;
+        if (sum[i] == value)
+            cnt++;
+    }
+    cout <<ans;
 }
 
 // clang-format off
@@ -59,7 +60,7 @@ int32_t main()
     free
     #endif
     int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef DEBUG

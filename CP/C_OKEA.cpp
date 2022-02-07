@@ -8,7 +8,7 @@ using namespace std;
 #define debug(...) 
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
-#define all(x) x.begin(), x.end() 
+#define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
@@ -21,34 +21,50 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0, x = 0;
-    vector<int> v;
+    int n = 0, k = 0, l = 0, r = 0, ans = 0;
     vector<pair<int, int>> vp;
     unordered_map<int, int> mp;
-    cin >> k >> x;
-    int i = 1, t = 0;
-    while (ans < x)
+    cin >> n >> k;
+    vector<int> v[n];
+    int t = 1, p = 2;
+    for (int i = 0; i < n; i++)
     {
-        if (i <= 0)
-            break;
-        if (i == k)
+        if (i % 2 == 0)
         {
-            t++;
-        }
-        if (t != 0)
-        {
-            ans += i;
-            i--;
+            for (int j = 0; j < k; j++)
+            {
+                if (t > n * k)
+                {
+                    cout << "NO" << endl;
+                    return;
+                }
+                v[i].pb(t);
+                t += 2;
+            }
+            debug(v[i], i);
         }
         else
         {
-            ans += i;
-            i++;
+            for (int j = 0; j < k; j++)
+            {
+                if (p > n * k)
+                {
+                    cout << "NO" << endl;
+                    return;
+                }
+                v[i].pb(p);
+                p += 2;
+            }
+            debug(v[i], i);
         }
-        l++;
-        debug(ans, i)
     }
-    cout << l;
+    cout << "YES" << endl;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < k; j++)
+            cout << v[i][j] << " ";
+        cout << endl;
+    }
 }
 
 // clang-format off
@@ -66,7 +82,7 @@ int32_t main()
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }
 

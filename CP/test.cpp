@@ -38,7 +38,7 @@ void str(int l, int n)
             // else if (v % 3 == 1)
             //     cout << (char)rand('A', 'Z');
             // else
-            cout << rand(0, 90) << " ";
+            cout << rand(0, 10000) << " ";
         }
         cout << " ";
     }
@@ -110,11 +110,11 @@ signed main()
     // cout << t << endl;
     while (t--)
     {
-        int temp = 50;
+        int temp = 1000;
         cout << temp << endl;
         for (int i = 0; i < temp; i++)
         {
-            str(3, 1);
+            str(2, 1);
             cout << endl;
         }
     }

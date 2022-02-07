@@ -2,13 +2,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl "\n"
-#ifdef DEBUG
+#ifdef joKer
 #include "algo/debug.h"
 #else
 #define debug(...) 
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
-#define all(x) x.begin(), x.end() 
+#define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
@@ -18,55 +18,49 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 #define int long long
 int I;
 // clang-format on
-
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0, x = 0;
+    int n = 0, k = 0, l = 0, r = 0, ans = 0;
     vector<int> v;
     vector<pair<int, int>> vp;
     unordered_map<int, int> mp;
-    cin >> k >> x;
-    int i = 1, t = 0;
-    while (ans < x)
+    cin >> n >> k;
+    string str;
+    cin >> str;
+    l = 0, r = str.length()-1;
+    while (l <= r)
     {
-        if (i <= 0)
-            break;
-        if (i == k)
+        if (str[l] != str[r])
         {
-            t++;
-        }
-        if (t != 0)
-        {
-            ans += i;
-            i--;
-        }
-        else
-        {
-            ans += i;
-            i++;
+            ans++;
         }
         l++;
-        debug(ans, i)
+        r--;
     }
-    cout << l;
+    if (k - ans >= 0 && (k - ans) % 2 == 0)
+    {
+        cout << "YES";
+    }
+    else if (k - ans >= 0 && n % 2 == 1)
+    {
+        cout << "YES";
+    }
+    else
+        cout << "NO";
 }
 
 // clang-format off
 int32_t main()
 {
     ios;
-    #ifdef SUBLIME
-    free
-    #endif
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        #ifdef DEBUG
+        #ifdef joKer
         cerr << "-------" << I << "-------" << endl;
         #endif
         solve();
         cout << endl;
     }
 }
-

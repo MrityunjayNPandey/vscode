@@ -8,7 +8,7 @@ using namespace std;
 #define debug(...) 
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
-#define all(x) x.begin(), x.end() 
+#define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
@@ -21,34 +21,42 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0, x = 0;
+    int n = 0, k = 0, l = 0, r = 0, ans = 0;
     vector<int> v;
     vector<pair<int, int>> vp;
     unordered_map<int, int> mp;
-    cin >> k >> x;
-    int i = 1, t = 0;
-    while (ans < x)
+    int x, cnt = 0;
+    cin >> n >> x >> k;
+    int w1 = x, w2 = x + 3;
+    for (int i = 0; i < n; i++)
     {
-        if (i <= 0)
-            break;
-        if (i == k)
+        int temp;
+        cin >> temp;
+        v.pb(temp);
+        if (temp % 2 != 0)
         {
-            t++;
+            cnt++;
         }
-        if (t != 0)
-        {
-            ans += i;
-            i--;
-        }
-        else
-        {
-            ans += i;
-            i++;
-        }
-        l++;
-        debug(ans, i)
     }
-    cout << l;
+    if (cnt % 2 != 0)
+    {
+        w1++;
+        w2++;
+    }
+    if (k % 2 == 0)
+    {
+        if (w1 % 2 == 0)
+            cout << "Alice";
+        else
+            cout << "Bob";
+    }
+    else
+    {
+        if (w1 % 2 != 0)
+            cout << "Alice";
+        else
+            cout << "Bob";
+    }
 }
 
 // clang-format off

@@ -37,71 +37,21 @@ int I;
 
 // clang-format on
 
-// DFS, time complexity of O(V+E)
-// Remember to clear the maps in main() if multiple test cases exist.
-unordered_map<int, bool> visited;
-unordered_map<int, vector<int>> adj_list; // adjacency list
-map<pair<int, int>, int> adj_weight;      // to add weights on edges
-unordered_map<int, int> mp;
-void DFS(int l, int r)
-{
-    if (l <= r)
-    {
-        if (l == r)
-        {
-            adj_weight[{l, r}] = l;
-            return;
-        }
-        for (int i = l; i <= r; i++)
-        {
-            if (mp[i] == 0 || mp[i] == 1)
-            {
-                if (l != 1)
-                {
-                    adj_weight[{l + 1, r}] = i;
-                }
-                else
-                {
-                    adj_weight[{l, r - 1}] = i;
-                }
-                DFS(1, i - 1);
-                DFS(i + 1, r);
-                break;
-            }
-            mp[i]--;
-        }
-    }
-}
-
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    cin >> n;
-    for (int i = 0; i < n; i++)
+    int l, r;
+    cin >> l >> r;
+    int ans = INT_MAX;
+    for (int i = 0; i < 20; ++i)
     {
-        int p, q;
-        cin >> p >> q;
-        adj_list[p].pb(q);
-        adj_list[q].pb(p);
-        sort(all(adj_list[p]));
-        sort(all(adj_list[q]));
-        v.pb(q - p);
-        mp[p]++;
-        mp[q]++;
+        int d = (1 << i);
+        int b = (r / (2 * d)) * d;
+        b += min(d, 1 + r % (2 * d));
+        int a = ((l - 1) / (2 * d)) * d;
+        a += min(d, 1 + (l - 1) % (2 * d));
+        ans = min(ans, b - a);
     }
-    for (int i = 1; i <= n; i++)
-    {
-        if (mp[i] == 0)
-        {
-            adj_weight[{1, 6}] = i;
-            DFS(1, i - 1);
-            DFS(i + 1, n);
-            break;
-        }
-    }
-    debug(adj_weight)
+    cout << ans;
 }
 
 // clang-format off

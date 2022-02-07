@@ -1,39 +1,41 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+#include <algorithm>
+#include <map>
+#include <vector>
+#include <set>
+#include <string>
+
 using namespace std;
-#ifdef joKer
-#include "algo/debug.h"
-#else
-#define debug(...) 
-#endif
 
-vector<vector<pair<int, int>>> d(110);
-vector<bool> u(100, 0);
+const int maxn = 5050;
 
-int max_dfs(int v)
-{
-    u[v] = 1;
-    int sum = 0;
-    for (int i = 0; i < d[v].size(); i++)
-        if (!u[d[v][i].first])
-        {
-            sum = max(sum, max_dfs(d[v][i].first) + d[v][i].second);
-            debug(sum);
-        }
-    return sum;
-}
+pair <int, int> v[maxn];
 
-int main()
-{
-    int n, m, k, c;
+int main() {
+  int n;
+  scanf("%d", &n);
 
-    cin >> n;
-    for (int i = 0; i < n - 1; i++)
-    {
-        cin >> m >> k >> c;
-        d[m].push_back(make_pair(k, c));
-        d[k].push_back(make_pair(m, c));
+  for (int i = 0; i < n; i++) {
+    int x, y;
+    scanf("%d%d", &x, &y);
+    v[i] = make_pair(x, y);
+  }
+
+  sort(v, v + n);
+
+  int h = -1;
+
+  for (int i = 0; i < n; i++) {
+    if (v[i].second < h) {
+      h = v[i].first;
+    } else {
+      h = v[i].second;
     }
+  }
 
-    cout << max_dfs(0) << endl;
-    return 0;
+  cout << h;
+
+  return 0;
 }

@@ -8,7 +8,7 @@ using namespace std;
 #define debug(...) 
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
-#define all(x) x.begin(), x.end() 
+#define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
@@ -21,34 +21,27 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0, x = 0;
+    int n = 0, k = 0, l = 0, r = 0, ans = 0;
     vector<int> v;
     vector<pair<int, int>> vp;
     unordered_map<int, int> mp;
-    cin >> k >> x;
-    int i = 1, t = 0;
-    while (ans < x)
+    cin >> n >> k;
+    string str;
+    cin >> str;
+    if (k == 0)
     {
-        if (i <= 0)
-            break;
-        if (i == k)
-        {
-            t++;
-        }
-        if (t != 0)
-        {
-            ans += i;
-            i--;
-        }
-        else
-        {
-            ans += i;
-            i++;
-        }
-        l++;
-        debug(ans, i)
+        cout << 1;
+        return;
     }
-    cout << l;
+    for (int i = 0; i < str.length() / 2; i++)
+    {
+        if (str[i] != str[str.length() - i - 1])
+        {
+            cout << 2;
+            return;
+        }
+    }
+    cout << 1;
 }
 
 // clang-format off

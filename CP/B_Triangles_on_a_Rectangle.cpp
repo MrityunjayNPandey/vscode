@@ -22,17 +22,58 @@ int I;
 void solve()
 {
     int n = 0, k = 0, l = 0, r = 0, ans = 0;
-    vector<int> v;
+    vector<int> v[4];
     vector<pair<int, int>> vp;
     unordered_map<int, int> mp;
-    
+    int w = 0, h = 0, v1, v2, h1, h2, maxb = 0, maxh = 0;
+    cin >> w >> h;
+    cin >> v1;
+    for (int i = 0; i < v1; i++)
+    {
+        int x;
+        cin >> x;
+        v[0].pb(x);
+    }
+    debug(w, h)
+    maxb = max(maxb, v[0][v1 - 1] - v[0][0]);
+    debug(maxb);
+    cin >> v2;
+    for (int i = 0; i < v2; i++)
+    {
+        int x;
+        cin >> x;
+        v[1].pb(x);
+    }
+    maxb = max(maxb, v[1][v2 - 1] - v[1][0]);
+    int maxa = maxb * h;
+    debug(maxb, maxa);
+    cin >> h1;
+    for (int i = 0; i < h1; i++)
+    {
+        int x;
+        cin >> x;
+        v[2].pb(x);
+    }
+    maxh = max(maxh, v[2][h1 - 1] - v[2][0]);
+    debug(maxh);
+    cin >> h2;
+    for (int i = 0; i < h2; i++)
+    {
+        int x;
+        cin >> x;
+        v[3].pb(x);
+    }
+    maxh = max(maxh, v[3][h2 - 1] - v[3][0]);
+    int maxa1 = maxh * w;
+    debug(maxh, maxa1);
+    cout << max(maxa, maxa1);
 }
 
 // clang-format off
 int32_t main()
 {
     ios;
-    #ifdef SUBLIME
+    #ifdef LOCALSUBLIME
     free
     #endif
     int Test = 1;
