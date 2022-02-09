@@ -18,28 +18,39 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 #define int long long
 int I;
 // clang-format on
-
+#define ll long long
+#define vll vector <long long>
 void solve()
 {
-    int n = 0, k = 0, l = 0, ans = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    unordered_map<int, int> mp;
-    int r = 0, g = 0, b = 0;
-    cin >> r >> g >> b;
-    int maxc = max(max(r, g), b);
-    int minc = min(min(r, g), b);
-    int midc = r + b + g - maxc - minc;
-    debug(minc, maxc, midc);
-    if (maxc / 2 <= (minc + midc))
+    string s;
+    cin >> s;
+    ll a, b;
+    cin >> a >> b;
+    ll n = s.length();
+    vll mda(n, -1), mdb(n);
+    ll rem = 0, p = 1;
+    for (ll i = 0; i < n; i++)
     {
-        ans += (maxc + minc + midc) / 3;
+        rem = ((rem * 10) + s[i] - '0') % a;
+        mda[i] = rem;
     }
-    else
+    rem = 0;
+    for (ll i = n - 1; i > 0; i--)
     {
-        ans = minc + midc;
+        rem = (rem + (s[i] - '0') * p) % b;
+        p = (p * 10) % b;
+        if (rem == 0 && mda[i - 1] == 0 && s[i] != '0')
+        {
+            cout << "YES" << endl
+                 << s.substr(0, i) << endl
+                 << s.substr(i, n - i);
+            return;
+        }
     }
-    cout<<ans;
+
+
+    
+    cout << "NO";
 }
 
 // clang-format off

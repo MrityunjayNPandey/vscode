@@ -37,33 +37,30 @@ int I;
 
 // clang-format on
 
-void solve()
-{
-    int n;
-    cin >> n;
-    vector<int> z[n + 1];
-    map<pair<int, int>, int> mp;
-    for (int i = 0; i < n - 1; i++)
-    {
-        int u, v, c;
-        cin >> u >> v >> c;
-        z[u].pb(v);
-        z[v].pb(u);
-        mp[{u, v}] = c;
-        mp[{v, u}] = c;
+void solve() {
+  int n;
+  cin >> n;
+  vector<int> z[n + 1];
+  map<pair<int, int>, int> mp;
+  for (int i = 0; i < n - 1; i++) {
+    int u, v, c;
+    cin >> u >> v >> c;
+    z[u].pb(v);
+    z[v].pb(u);
+    mp[{u, v}] = c;
+    mp[{v, u}] = c;
+  }
+
+  function<int(int, int)> dfs = [&](int t, int p) {
+    int ans = 0;
+    for (auto it : z[t]) {
+      if (it == p)
+        continue;
+      ans = max(ans, dfs(it, t) + mp[{t, it}]);
     }
-    function<int(int, int)> dfs = [&](int t, int p)
-    {
-        int ans = 0;
-        for (auto it : z[t])
-        {
-            if (it == p)
-                continue;
-            ans = max(ans, dfs(it, t) + mp[{t, it}]);
-        }
-        return ans;
-    };
-    cout << dfs(0, -1);
+    return ans;
+  };
+  cout << dfs(0, -1);
 }
 
 // clang-format off

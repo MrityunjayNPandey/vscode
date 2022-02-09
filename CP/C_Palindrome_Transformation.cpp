@@ -21,25 +21,45 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, ans = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    unordered_map<int, int> mp;
-    int r = 0, g = 0, b = 0;
-    cin >> r >> g >> b;
-    int maxc = max(max(r, g), b);
-    int minc = min(min(r, g), b);
-    int midc = r + b + g - maxc - minc;
-    debug(minc, maxc, midc);
-    if (maxc / 2 <= (minc + midc))
+    int n = 0, k = 0, ans = 0, k1 = 0;
+    cin >> n >> k;
+    string str;
+    cin >> str;
+    k = k - 1;
+    if (k > (n - 1) / 2)
+        k = n - k - 1;
+    if (n % 2 == 1)
+        k++;
+    debug(k);
+    for (int i = k; i < n / 2; i++)
     {
-        ans += (maxc + minc + midc) / 3;
+        if (str[i] != str[n - i - 1])
+        {
+            ans += min(26 - abs(str[i] - str[n - i - 1]), abs(str[i] - str[n - i - 1]));
+            k1 = i;
+        }
+        debug(ans, str[i], str[n - i - 1])
     }
+    int t = 0;
+    if (k1 != 0)
+        ans += 2 * (k1 - k);
+    k1 = 0;
+    for (int i = k - 1; i >= 0; i--)
+    {
+        if (str[i] != str[n - i - 1])
+        {
+            debug(ans, i, str[i], str[n - i - 1], k1);
+            ans += min(26 - abs(str[i] - str[n - i - 1]), abs(str[i] - str[n - i - 1]));
+            k1 = i;
+            t = 1;
+            debug(ans, i, str[i], str[n - i - 1], k1);
+        }
+    }
+    if(t!=0)
+    ans += k - k1 - 1 + t;
     else
-    {
-        ans = minc + midc;
-    }
-    cout<<ans;
+    ans--;
+    cout << ans;
 }
 
 // clang-format off

@@ -21,10 +21,7 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, r = 0, ans = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    unordered_map<int, int> mp;
+    int n = 0, k = 0, ans = 0;
     
 }
 

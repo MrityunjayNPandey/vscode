@@ -21,25 +21,19 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, l = 0, ans = 0;
-    vector<int> v;
-    vector<pair<int, int>> vp;
-    unordered_map<int, int> mp;
-    int r = 0, g = 0, b = 0;
-    cin >> r >> g >> b;
-    int maxc = max(max(r, g), b);
-    int minc = min(min(r, g), b);
-    int midc = r + b + g - maxc - minc;
-    debug(minc, maxc, midc);
-    if (maxc / 2 <= (minc + midc))
+    int n, m, k, c, t = 1;
+    cin >> n >> m >> k;
+    c = k - 1;
+    for (int i = 0; i < n * m; i++)
     {
-        ans += (maxc + minc + midc) / 3;
+        if (k - 1 && !(i % 2))
+            k--, cout << "2 ";
+        if (t && i >= 2 * c)
+            t--, cout << n * m - 2 * c << ' ';
+        cout << i / m + 1 << ' ' << (i / m % 2 ? m - i % m : i % m + 1) << ' ';
+        if (!((i + 1) % 2) && i <= 2 * c)
+            cout << endl;
     }
-    else
-    {
-        ans = minc + midc;
-    }
-    cout<<ans;
 }
 
 // clang-format off
