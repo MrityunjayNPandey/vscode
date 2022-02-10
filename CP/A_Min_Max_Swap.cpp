@@ -22,6 +22,7 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
+
     cin >> n;
     vector<int> v, v1;
     int max1 = 0, max1n = 0, max2 = 0, max2n = 0;
@@ -41,14 +42,14 @@ void solve()
         int temp;
         cin >> temp;
         v1.push_back(temp);
+
         if (max2 < temp)
         {
             max2n = i;
         }
         max2 = max(max2, temp);
     }
-    debug(v1)
-    if (max1 == max2 && (v[max1n] == v1[max1n] || v[max2n] == v1[max2n]))
+    debug(v1) if (max1 == max2 && (v[max1n] == v1[max1n] || v[max2n] == v1[max2n]))
     {
         debug(max1n, max2n, v[max1n], v1[max1n], v[max2n], v1[max2n]);
         cout << max1 * max2;

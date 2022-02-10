@@ -17,7 +17,7 @@ const long long MOD = 1e9+7; const long long mod = 998244353;
 int I;
 // clang-format on
 
-//Sieve of Eratosthenes, time complexity of O(N*log(logN))
+// Sieve of Eratosthenes, time complexity of O(N*log(logN))
 unordered_map<int, int> mprime;
 vector<int> primetemp(MAX_N, 1), prime;
 void SIEVE()
@@ -46,7 +46,6 @@ void SIEVE()
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-    
 }
 
 // clang-format off

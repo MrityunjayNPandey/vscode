@@ -25,24 +25,24 @@ const long long mod = 998244353;
 int I;
 void solve()
 {
-    int i,a=0,b=0,c=0;
+    int i, a = 0, b = 0, c = 0;
     string str;
-    cin>>str;
-    for(i=0;i<str.length();i++) 
-        {
-            if(str[i]=='A')
-                a++;
-            if(str[i]=='B')
-                b++;
-            if(str[i]=='C')
-                c++; 
-        }  
-    if(a+c==b)
-        {
-            cout<<"YES";
-        }
+    cin >> str;
+    for (i = 0; i < str.length(); i++)
+    {
+        if (str[i] == 'A')
+            a++;
+        if (str[i] == 'B')
+            b++;
+        if (str[i] == 'C')
+            c++;
+    }
+    if (a + c == b)
+    {
+        cout << "YES";
+    }
     else
-        cout<<"NO";
+        cout << "NO";
 }
 
 int32_t main()

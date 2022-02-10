@@ -21,35 +21,28 @@ int I;
 
 void solve()
 {
-	int n;
-	cin >> n;
-	int arr[n][n], d1[2 * n + 5] = {0}, d2[2 * n + 5] = {0};
+	int n = 0, k = 0, ans = 1;
+	cin >> n >> k;
+	string str[n];
+	unordered_map<int, int> mp;
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < n; j++)
-		{
-			cin >> arr[i][j];
-			d1[i + j] += arr[i][j];
-			d2[n - i + j] += arr[i][j];
-		}
+		cin >> str[i];
+		debug(str[i])
 	}
-	vector<int> ans(2, -1);
-	map<int, pair<int, int>> mp;
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < k; i++)
 	{
+		unordered_set<char> s;
 		for (int j = 0; j < n; j++)
 		{
-			int p = (i + j) % 2;
-			if (ans[p] < d1[i + j] + d2[n - i + j] - arr[i][j])
-			{
-				ans[p] = d1[i + j] + d2[n - i + j] - arr[i][j];
-				mp[p] = {i, j};
-			}
+			s.insert(str[j][i]);
 		}
+		ans *= s.size();
+		ans%= MOD;
 	}
-	cout << ans[0] + ans[1] << "\n";
-	cout << mp[0].first + 1 << " " << mp[0].second + 1 << " " << mp[1].first + 1 << " " << mp[1].second + 1;
+	cout << ans;
 }
+
 // clang-format off
 int32_t main()
 {

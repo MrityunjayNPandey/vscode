@@ -21,35 +21,19 @@ int I;
 
 void solve()
 {
-	int n;
-	cin >> n;
-	int arr[n][n], d1[2 * n + 5] = {0}, d2[2 * n + 5] = {0};
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			cin >> arr[i][j];
-			d1[i + j] += arr[i][j];
-			d2[n - i + j] += arr[i][j];
-		}
-	}
-	vector<int> ans(2, -1);
-	map<int, pair<int, int>> mp;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			int p = (i + j) % 2;
-			if (ans[p] < d1[i + j] + d2[n - i + j] - arr[i][j])
-			{
-				ans[p] = d1[i + j] + d2[n - i + j] - arr[i][j];
-				mp[p] = {i, j};
-			}
-		}
-	}
-	cout << ans[0] + ans[1] << "\n";
-	cout << mp[0].first + 1 << " " << mp[0].second + 1 << " " << mp[1].first + 1 << " " << mp[1].second + 1;
+    int n = 0, k = 0, ans = 0;
+    cin>>n>>k;
+    int i=0;
+    while(k--)
+    {
+        debug(k)
+        if(pow(2, i)>=n)
+        break;
+        i++;
+    }
+    cout<<k+1;
 }
+
 // clang-format off
 int32_t main()
 {
@@ -58,7 +42,7 @@ int32_t main()
     free
     #endif
     int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for (I = 1; I <= Test; I++)
     {
         #ifdef DEBUG

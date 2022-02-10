@@ -21,35 +21,37 @@ int I;
 
 void solve()
 {
-	int n;
-	cin >> n;
-	int arr[n][n], d1[2 * n + 5] = {0}, d2[2 * n + 5] = {0};
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			cin >> arr[i][j];
-			d1[i + j] += arr[i][j];
-			d2[n - i + j] += arr[i][j];
-		}
-	}
-	vector<int> ans(2, -1);
-	map<int, pair<int, int>> mp;
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			int p = (i + j) % 2;
-			if (ans[p] < d1[i + j] + d2[n - i + j] - arr[i][j])
-			{
-				ans[p] = d1[i + j] + d2[n - i + j] - arr[i][j];
-				mp[p] = {i, j};
-			}
-		}
-	}
-	cout << ans[0] + ans[1] << "\n";
-	cout << mp[0].first + 1 << " " << mp[0].second + 1 << " " << mp[1].first + 1 << " " << mp[1].second + 1;
+    int n = 0, k = 0, ans = 0, ans1=0;
+    cin >> n;
+    int i = 0;
+    while (i <= n && ans1 > -1)
+    {
+        k = n / 4;
+        ans1 = n - (i * 4);
+        if (ans1 % 7 == 0)
+        {
+            debug(ans1);
+            for (int j = 0; j < i; j++)
+                cout << 4;
+            for (int j = 0; j < ans1 / 7; j++)
+                cout << 7;
+            return;
+        }
+        ans = n - (i * 7);
+        if (ans % 7 == 0)
+        {
+            debug(ans);
+            for (int j = 0; j < i; j++)
+                cout << 7;
+            for (int j = 0; j < ans / 4; j++)
+                cout << 4;
+            return;
+        }
+        i++;
+    }
+    cout << -1;
 }
+
 // clang-format off
 int32_t main()
 {
