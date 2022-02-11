@@ -17,10 +17,27 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 int I;
 
+int n, m, k;
+char ch[501][501];
+int vis[501][501];
+void dfs(int x, int y)
+{
+    if(x<1 || x>n || y<1 || y>m || ch[x][y] != '.' || vis[x][y]) return;
+    vis[x][y] = 1;
+    dfs(x + 1, y);dfs(x - 1, y);
+    dfs(x, y + 1);dfs(x, y - 1);
+    if(k) ch[x][y] = 'X', k--;
+}
+
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-
+    cin >> n >> m >> k;
+    for(int i = 1;i <= n;i++)
+        cin >> ch[i] + 1;
+    for(int i = 1;i <= n;i++)
+        for(int j = 1;j <= m;j++)
+            if(ch[i][j] == '.' && k) dfs(i, j);
+    for(int i = 1;i <= n;i++) cout << ch[i] + 1 << endl;
 }
 
 int32_t main()
@@ -30,7 +47,7 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
         cerr << "-------" << I << "-------" << endl;

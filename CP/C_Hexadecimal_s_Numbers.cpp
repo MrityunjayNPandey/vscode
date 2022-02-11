@@ -19,8 +19,27 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    int n;
 
+    cin >> n;
+
+    queue < int> q;
+
+    q.push(1);
+    vector<int>an;
+    int t = 0, c = 0;
+
+    while(!q.empty())
+    {
+        t = q.front();
+        debug(t)
+        if(t > n)break;
+        q.pop();
+        c++;
+        q.push(t * 10);
+        q.push(t * 10 + 1);
+    }
+    cout << c;
 }
 
 int32_t main()
@@ -30,10 +49,12 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
+#ifdef DEBUG
         cerr << "-------" << I << "-------" << endl;
+#endif
         solve();
         cout << endl;
     }

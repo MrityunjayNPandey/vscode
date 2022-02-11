@@ -19,8 +19,23 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-
+    int n = 0, k = 0, ans = 0, d = 0, v[2000];
+    cin >> n >> k >> d;
+    v[n - 1] = n - 1;
+    for(int i = 0;i < d;i++)
+        v[n - 1] /= k;
+    if(v[n - 1])
+    {
+        cout << -1; return;
+    }
+    for(int i = 0;i < n;i++)
+        v[i] = i;
+    for(int i = 0;i < d;i++)
+    {
+        for(int j = 0;j < n;j++)
+            cout << v[j] % k + 1 << ' ', v[j] /= k;
+        cout << '\n';
+    }
 }
 
 int32_t main()
@@ -30,7 +45,7 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
         cerr << "-------" << I << "-------" << endl;

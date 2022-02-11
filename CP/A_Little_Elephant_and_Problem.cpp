@@ -20,7 +20,27 @@ int I;
 void solve()
 {
     int n = 0, k = 0, ans = 0;
-
+    cin >> n;
+    vector<int> v, v1;
+    for(int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.pb(x);
+        v1.pb(x);
+    }
+    sort(all(v1));
+    for(int i = 0; i < n; i++)
+    {
+        if(v[i] != v1[i])
+            k++;
+        if(k > 2)
+        {
+            cout << "NO";
+            return;
+        }
+    }
+    cout << "YES";
 }
 
 int32_t main()
@@ -30,7 +50,7 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
         cerr << "-------" << I << "-------" << endl;

@@ -19,8 +19,16 @@ int I;
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
-
+    int n, ans = 0;
+    cin >> n;
+    int a[n];
+    for(int i = 0;i < n;i++)
+        cin >> a[i];
+    sort(a, a + n);
+    for(int i = 0;i < n;i++)
+        if(ans * (a[i] + 1) <= i)
+            ans++;
+    cout << ans;
 }
 
 int32_t main()
@@ -30,10 +38,12 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
+#ifdef DEBUG
         cerr << "-------" << I << "-------" << endl;
+#endif
         solve();
         cout << endl;
     }

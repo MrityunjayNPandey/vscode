@@ -16,10 +16,35 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 int I;
+int n;
+string st;
+int m, a[1005];
+bool dfs(int p, int s)
+{
+    if(p > m) return true;
+
+    for(int i = s + 1; i <= 10; i++) if(i != a[p - 1] && st[i - 1] - '0')
+    {
+        a[p] = i;
+        if(dfs(p + 1, i - s)) return true;
+    }
+
+    return false;
+}
 
 void solve()
 {
-    int n = 0, k = 0, ans = 0;
+    cin >> st; cin >> m;
+    a[0] = 0;
+    if(dfs(1, 0))
+    {
+        cout << "YES\n";
+        for(int i = 1; i <= m; i++) cout << a[i] << " ";
+    } else
+    {
+        cout << "NO";
+    }
+    return;
 
 }
 
@@ -30,10 +55,12 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
+#ifdef DEBUG
         cerr << "-------" << I << "-------" << endl;
+#endif
         solve();
         cout << endl;
     }
