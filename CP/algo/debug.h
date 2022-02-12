@@ -1,3 +1,4 @@
+unordered_map<int, int> kjhhgffsasd;
 template <typename A, typename B>
 string to_string(pair<A, B> p);
 
@@ -7,17 +8,17 @@ string to_string(tuple<A, B, C> p);
 template <typename A, typename B, typename C, typename D>
 string to_string(tuple<A, B, C, D> p);
 
-string to_string(const string &s)
+string to_string(const string& s)
 {
     return '"' + s + '"';
 }
 
 string to_string(char t)
 {
-    return "'" + string({t}) + "'";
+    return "'" + string({ t }) + "'";
 }
 
-string to_string(const char *s)
+string to_string(const char* s)
 {
     return to_string((string)s);
 }
@@ -31,9 +32,9 @@ string to_string(vector<bool> v)
 {
     bool first = true;
     string res = "{";
-    for (int i = 0; i < static_cast<int>(v.size()); i++)
+    for(int i = 0; i < static_cast<int>(v.size()); i++)
     {
-        if (!first)
+        if(!first)
         {
             res += ",";
         }
@@ -48,7 +49,7 @@ template <size_t N>
 string to_string(bitset<N> v)
 {
     string res = "";
-    for (size_t i = 0; i < N; i++)
+    for(size_t i = 0; i < N; i++)
     {
         res += static_cast<char>('0' + v[i]);
     }
@@ -60,9 +61,9 @@ string to_string(A v)
 {
     bool first = true;
     string res = "{";
-    for (const auto &x : v)
+    for(const auto& x : v)
     {
-        if (!first)
+        if(!first)
         {
             res += ",";
         }
@@ -96,7 +97,7 @@ vector<string> vec_splitter(string s)
     s += ',';
     remove(s.begin(), s.end(), ' ');
     vector<string> res;
-    while (!s.empty())
+    while(!s.empty())
     {
         res.push_back(s.substr(0, s.find(',')));
         s = s.substr(s.find(',') + 1);
@@ -106,14 +107,17 @@ vector<string> vec_splitter(string s)
 void debug_out(
     vector<string> __attribute__((unused)) args,
     __attribute__((unused)) int idx,
-    __attribute__((unused)) int LINE_NUM) { cerr << endl; }
+    __attribute__((unused)) int LINE_NUM)
+{
+    cerr << endl;
+}
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
-    if (idx > 0)
-        cerr << endl << "[" << LINE_NUM << "] ";
+    if(idx > 0)
+        cerr << endl << "[" << LINE_NUM << "]" << "[" << kjhhgffsasd[LINE_NUM] << "] ";
     else
-        cerr << "[" << LINE_NUM << "] ";
+        cerr << "[" << LINE_NUM << "]" << "[" << ++kjhhgffsasd[LINE_NUM] << "] ";
     // stringstream ss; ss << H;
     cerr << args[idx] << ":" << to_string(H);
     debug_out(args, idx + 1, LINE_NUM, T...);
