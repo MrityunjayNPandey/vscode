@@ -21,7 +21,28 @@ int I;
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0;
-
+    cin >> n;
+    vector<int> v, v1, v2, v3;
+    map<int, int> mp;
+    for(int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.pb(x);
+        v1.pb(x);
+        mp[x]++;
+    }
+    sort(all(v1));
+    if(v == v1)
+    {
+        cout << "NO";
+    } else if(v[0] >= v[n - 1])
+    {
+        cout << "YES";
+    } else
+    {
+        cout << "YES";
+    }
 }
 
 int32_t main()

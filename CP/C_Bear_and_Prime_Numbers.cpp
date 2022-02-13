@@ -47,7 +47,7 @@ void SIEVE()
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0;
-    cin >> n ;
+    cin >> n;
     vector<int> v;
     for(int i = 0; i < n; i++)
     {
@@ -55,29 +55,29 @@ void solve()
         cin >> x;
         v.pb(x);
     }
-    debug(v)
+    debug(v);
     cin >> m;
     for(int i = 0; i < m; i++)
     {
         int x;
         int y;
         cin >> x >> y;
-        ans=0;
-        auto p=lower_bound(prime.begin(), prime.end(), x);
-        auto q= upper_bound(v.begin(), v.end(), y);
-        debug(ans, x, y, *p, *q)
-        for(auto j = lower_bound(prime.begin(), prime.end(), x); j <= upper_bound(v.begin(), v.end(), y); j++)
+        ans = 0;
+        auto p = lower_bound(prime.begin(), prime.end(), x);
+        auto q = upper_bound(prime.begin(), prime.end(), y);
+        debug(ans, x, y, *p, *q);
+        for(auto j = p; j < q; j++)
         {
-            debug(ans)
+            debug(*j);
+            int temp1 = (*j);
             for(int k = 0; k < n; k++)
             {
-                if(v[k]%prime[j-prime.begin()]==0)
-                ans++;
+                if(v[k] % temp1 == 0)
+                    ans++;
             }
         }
-        cout<<ans<<endl;
+        cout << ans << endl;
     }
-
 }
 
 int32_t main()
