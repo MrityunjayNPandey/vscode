@@ -21,7 +21,26 @@ int I;
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0;
-
+    cin >> n;
+    vector<int> v;
+    for(int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.pb(x);
+    }
+    for(int i = 0; i < n; i++)
+    {
+        int x = 0, temp = 0;
+        for(int j = i; j < n; j++)
+        {
+            if(v[j] == 0) x++;
+            temp += (j - i + 1);
+            temp += x;
+        }
+        ans += temp;
+    }
+    cout << ans;
 }
 
 int32_t main()

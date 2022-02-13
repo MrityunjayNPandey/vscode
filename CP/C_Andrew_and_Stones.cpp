@@ -20,8 +20,21 @@ int I;
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = 0;
-
+    int t,n,a[100005],cnt,ans;
+    ans = 0;
+    cnt = 0;
+    cin >> n;
+    for(int i = 1;i <= n;i++)
+    {
+        cin >> a[i];
+        if(i > 1 && i < n)
+        {
+            ans += (a[i] + 1) / 2;
+            if(a[i] >= 2) cnt++;
+        }
+    }
+    if(cnt == 0 || (n == 3 && (a[2] & 1))) cout << -1 << endl;
+    else cout << ans << endl;
 }
 
 int32_t main()
@@ -36,7 +49,7 @@ int32_t main()
     {
         cerr << "-------" << I << "-------" << endl;dclear();
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }
 

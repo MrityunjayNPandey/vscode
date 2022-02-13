@@ -1,4 +1,4 @@
-unordered_map<int, int> kjhhgffsasd;
+unordered_map<int,int> kjhhgffsasd;
 template <typename A, typename B>
 string to_string(pair<A, B> p);
 
@@ -123,6 +123,11 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
     debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__);
+#define dclear() dclear_out();
+void dclear_out()
+{
+    kjhhgffsasd.clear();
+}
 
 // ____________________________________________________________________________________________________________________________________
 
