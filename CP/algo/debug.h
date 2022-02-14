@@ -109,17 +109,17 @@ void debug_out(
     __attribute__((unused)) int idx,
     __attribute__((unused)) int LINE_NUM)
 {
-    cerr << endl;
+    clog << endl;
 }
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
     if(idx > 0)
-        cerr << endl << "[" << LINE_NUM << "]" << "[" << kjhhgffsasd[LINE_NUM] << "] ";
+        clog << endl << "[" << LINE_NUM << "]" << "[" << kjhhgffsasd[LINE_NUM] << "] ";
     else
-        cerr << "[" << LINE_NUM << "]" << "[" << ++kjhhgffsasd[LINE_NUM] << "] ";
+        clog << "[" << LINE_NUM << "]" << "[" << ++kjhhgffsasd[LINE_NUM] << "] ";
     // stringstream ss; ss << H;
-    cerr << args[idx] << ":" << to_string(H);
+    clog << args[idx] << ":" << to_string(H);
     debug_out(args, idx + 1, LINE_NUM, T...);
 }
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__);
@@ -131,15 +131,15 @@ void dclear_out()
 
 // ____________________________________________________________________________________________________________________________________
 
-// void debug_out() { cerr << endl; }
+// void debug_out() { clog << endl; }
 
 // template <typename Head, typename... Tail>
 // void debug_out(Head H, Tail... T) {
-//   cerr << to_string(H)<<"";
+//   clog << to_string(H)<<"";
 //   debug_out(T...);
 // }
 
-// #define debug(...) cerr << "[" << __LINE__ <<"] "<< #__VA_ARGS__<<" : |" , debug_out(__VA_ARGS__);
+// #define debug(...) clog << "[" << __LINE__ <<"] "<< #__VA_ARGS__<<" : |" , debug_out(__VA_ARGS__);
 
 // template<typename T>
 // int SIZE(T (&t)){

@@ -15,14 +15,29 @@ using namespace std;
 #define ios ios_base::sync_with_stdio(false); cin.tie(0);
 const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
-#define int int_fast32_t
+#define int long long
 int I;
 
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0;
-
+    string str;
+    cin >> str;
+    debug(str);
+    double pos = 1, idx = 0;
+    vector < pair<double, int>> v;
+    for(int i = 0; i < str.length(); i++)
+    {
+        if(str[i] == 'r')
+            cout << i + 1 << endl;
+    }
+    for(int i = str.length(); i >= 0; i--)
+    {
+        if(str[i] == 'l')
+            cout << i + 1 << endl;
+    }
 }
+
 
 int32_t main()
 {
@@ -31,12 +46,10 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
-#ifdef DEBUG
-        clog << "-------" << I << "-------" << endl;dclear();
-#endif
+        cerr << "-------" << I << "-------" << endl;dclear();
         solve();
         cout << endl;
     }
