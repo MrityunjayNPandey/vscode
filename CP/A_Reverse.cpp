@@ -17,20 +17,48 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 int I;
-//C_Inversion_Graph.cpp
+//A_Reverse.cpp
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = 0, x = 0;
+    int n = 0, m = 0, k = 0, ans = 0;
     cin >> n;
-    int maxa = 0;
+    vector<pair<int, int> >v, v1;
     for(int i = 0; i < n; i++)
     {
-        cin >> x;
-        maxa = max(x, maxa);
-        if(i + 1 == maxa)
-            {ans++;}
+        int x; cin >> x;
+        v1.pb({ x, i });
+        v.pb({ x, i });
     }
-    cout << ans;
+    sort(all(v));
+    debug(v, v1)
+    int p = 0, q = 0;
+    for(int i = 0; i < v.size(); i++)
+    {
+        if(v[i].first != v1[i].first)
+        {
+            p = v[i].second;
+            q = v1[i].second;
+            break;
+        }
+    }
+    debug(p, q)
+    vector<int> va;
+    for(int i = 0; i < q; i++)
+    {
+        va.pb(v1[i].first);
+    }
+    for(int i = p; i >= q; i--)
+    {
+        va.pb(v1[i].first);
+    }
+    for(int i = p + 1; i <= n; i++)
+    {
+        va.pb(v1[i].first);
+    }
+    for(int i = 0; i < n; i++)
+    {
+        cout << va[i] << " ";
+    }
 }
 
 int32_t main()
@@ -43,7 +71,7 @@ int32_t main()
     cin >> Test;
     for(I = 1; I <= Test; I++)
     {
-        // cerr << "-------" << I << "-------" << endl;dclear();
+        cerr << "-------" << I << "-------" << endl;dclear();
         solve();
         cout << endl;
     }

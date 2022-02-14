@@ -17,20 +17,37 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 int I;
-//C_Inversion_Graph.cpp
+
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = 0, x = 0;
-    cin >> n;
-    int maxa = 0;
+    int n = 0, m = 0, k = 0, ans = 0, p = 0, q = 0;
+    cin >> n>>m;
+    vector<int> tor(n), tol(n), v;
     for(int i = 0; i < n; i++)
     {
+        int x;
         cin >> x;
-        maxa = max(x, maxa);
-        if(i + 1 == maxa)
-            {ans++;}
+        v.pb(x);
     }
-    cout << ans;
+    iota(tol.begin(), tol.end(), 0);
+    iota(tor.begin(), tor.end(), 0);
+
+    tol[0] = 0;
+    for (int i = 1; i < n; ++i)
+        if (v[i - 1] >= v[i])
+            tol[i] = tol[i - 1];
+
+    tor[n - 1] = n - 1;
+    for (int i = n - 2; i >= 0; --i)
+        if (v[i] <= v[i + 1])
+            tor[i] = tor[i + 1];
+    for(int j = 0; j < m; j++)
+    {
+        int l, r;
+        cin >> l >> r;
+        l--;r--;
+        cout << (tol[r] <= tor[l] ? "Yes" : "No") << '\n';
+    }
 }
 
 int32_t main()
@@ -40,10 +57,10 @@ int32_t main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
-        // cerr << "-------" << I << "-------" << endl;dclear();
+        cerr << "-------" << I << "-------" << endl;dclear();
         solve();
         cout << endl;
     }

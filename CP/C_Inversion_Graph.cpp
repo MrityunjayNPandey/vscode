@@ -17,7 +17,7 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 int I;
-//C_Inversion_Graph.cpp
+
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, x = 0;
@@ -28,7 +28,7 @@ void solve()
         cin >> x;
         maxa = max(x, maxa);
         if(i + 1 == maxa)
-            {ans++;}
+            ans++;
     }
     cout << ans;
 }
@@ -43,7 +43,9 @@ int32_t main()
     cin >> Test;
     for(I = 1; I <= Test; I++)
     {
-        // cerr << "-------" << I << "-------" << endl;dclear();
+#ifdef DEBUG
+        clog << "-------" << I << "-------" << endl;dclear();
+#endif
         solve();
         cout << endl;
     }
