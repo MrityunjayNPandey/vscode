@@ -21,7 +21,7 @@
     {
       "type": "shell",
       "label": "CF-Submit",
-      "command": "clear&&cf submit -f ${fileBasename} ${input:CFURL}",
+      "command": "clear&&cf submit -f ${fileBasename} $(egrep -o 'https?://[^ ]+' .cph/.${fileBasename}*.prob)",
       "options": {
         "cwd": "${fileDirname}"
       },
@@ -71,7 +71,7 @@
   "inputs": [
     {
       "id": "CFURL",
-      "description": "Enter codeforces problem URL",
+      "description": "Enter codeforces problem URL to submit the current file in focus.",
       "type": "promptString"
     },
     {

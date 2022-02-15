@@ -39,9 +39,9 @@ void solve()
     for(int i = 0; i < v.size(); i++)
     {
         if(i % 2 == 0)
-            t1.pb(v[i].second+1);
+            t1.pb(v[i].second + 1);
         else
-            t2.pb(v[i].second+1);
+            t2.pb(v[i].second + 1);
     }
     cout << t1.size() << endl;
     for(int i = 0; i < t1.size(); i++)

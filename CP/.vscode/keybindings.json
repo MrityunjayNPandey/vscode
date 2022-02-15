@@ -1,6 +1,6 @@
 [
   {
-    "key": "ctrl+4",
+    "key": "ctrl+1",
     "command": "workbench.action.tasks.runTask",
     "args": "CF-Menu"
   },
@@ -21,7 +21,7 @@
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+1",
+    "key": "ctrl+alt+f",
     "command": "workbench.action.tasks.runTask",
     "args": "CF-Submit",
     "when": "editorTextFocus"
