@@ -11,8 +11,17 @@
     },
     {
       "type": "shell",
+      "label": "CF-LastSubmission",
+      "command": "clear&&cf sid",
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
       "label": "CF-Submit",
-      "command": "clear&&cf submit ${fileBasename}",
+      "command": "clear&&cf submit -f ${fileBasename} ${input:CFURL}",
       "options": {
         "cwd": "${fileDirname}"
       },
@@ -60,6 +69,11 @@
     }
   ],
   "inputs": [
+    {
+      "id": "CFURL",
+      "description": "Enter codeforces problem URL",
+      "type": "promptString"
+    },
     {
       "id": "CFContestID",
       "description": "Contest ID",

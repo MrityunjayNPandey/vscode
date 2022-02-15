@@ -1,0 +1,29 @@
+[
+  {
+    "key": "ctrl+4",
+    "command": "workbench.action.tasks.runTask",
+    "args": "CF-Menu"
+  },
+  {
+    "key": "ctrl+2",
+    "command": "workbench.action.tasks.runTask",
+    "args": "CF-LastSubmission"
+  },
+  {
+    "key": "ctrl+3",
+    "command": "workbench.action.tasks.runTask",
+    "args": "CF-MenuContest"
+  },
+  {
+    "key": "ctrl+4",
+    "command": "workbench.action.tasks.runTask",
+    "args": "CF-Test",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+1",
+    "command": "workbench.action.tasks.runTask",
+    "args": "CF-Submit",
+    "when": "editorTextFocus"
+  }
+]
