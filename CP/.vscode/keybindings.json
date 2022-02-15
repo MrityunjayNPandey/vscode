@@ -5,20 +5,14 @@
     "args": "CF-Menu"
   },
   {
-    "key": "ctrl+2",
+    "key": "ctrl+alt+j",
     "command": "workbench.action.tasks.runTask",
     "args": "CF-LastSubmission"
   },
   {
-    "key": "ctrl+3",
+    "key": "ctrl+2",
     "command": "workbench.action.tasks.runTask",
     "args": "CF-MenuContest"
-  },
-  {
-    "key": "ctrl+4",
-    "command": "workbench.action.tasks.runTask",
-    "args": "CF-Test",
-    "when": "editorTextFocus"
   },
   {
     "key": "ctrl+alt+f",

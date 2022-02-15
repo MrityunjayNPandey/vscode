@@ -2,15 +2,6 @@
   "tasks": [
     {
       "type": "shell",
-      "label": "CF-Test",
-      "command": "clear&&cf test ${fileBasename}",
-      "options": {
-        "cwd": "${fileDirname}"
-      },
-      "problemMatcher": []
-    },
-    {
-      "type": "shell",
       "label": "CF-LastSubmission",
       "command": "clear&&cf sid",
       "options": {
@@ -69,11 +60,6 @@
     }
   ],
   "inputs": [
-    {
-      "id": "CFURL",
-      "description": "Enter codeforces problem URL to submit the current file in focus.",
-      "type": "promptString"
-    },
     {
       "id": "CFContestID",
       "description": "Contest ID",
