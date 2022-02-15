@@ -13,24 +13,63 @@ using namespace std;
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
 #define ios ios_base::sync_with_stdio(false); cin.tie(0);
-const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
-const long long MOD = 1e9 + 7; const long long mod = 998244353;
-#define int long long
+const int_fast32_t INF = 1ll << 32; const int_fast32_t MAX_N = 10000000;
+const int_fast32_t MOD = 1e9 + 7; const int_fast32_t mod = 998244353;
+#define int int_fast32_t
 int I;
-//C_Inversion_Graph.cpp
+
+//Sieve of Eratosthenes, time complexity of O(N*log(logN))
+int primetemp[MAX_N + 5] = { 1 }, prime[MAX_N], mp[MAX_N + 5], f[MAX_N + 5];
+int primenum = 1;
+void SIEVE()
+{
+    for(int p = 2; p <= MAX_N; p++)
+    {
+        if(primetemp[p] == 1)
+        {
+            prime[primenum++] = p;
+            for(int i = p; i <= MAX_N; i += p)
+            {
+                primetemp[i] = 0;
+            }
+        }
+    }
+}
+
+
+
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = 0, x = 0;
+    SIEVE();
+    int n = 0, m = 0, k = 0, ans = 0;
     cin >> n;
     int maxa = 0;
     for(int i = 0; i < n; i++)
     {
+        int x;
         cin >> x;
-        maxa = max(x, maxa);
-        if(i + 1 == maxa)
-            {ans++;}
+        mp[x]++;
+        maxa = max(maxa, x);
     }
-    cout << ans;
+    // debug(v);
+    cin >> m;
+    for(int i = 1; i < primenum; ++i)
+        for(int j = prime[i]; j <= 10000000; j += prime[i])
+            f[i] += mp[j];
+    for(int i = 1; i < primenum; ++i)
+        f[i] += f[i - 1];
+    // debug(f);
+    for(int i = 0; i < m; i++)
+    {
+        int x = 0;
+        int y = 0;
+        cin >> x >> y;
+        ans = 0;
+        auto p = lower_bound(prime + 1, prime + primenum, x + 1) - prime - 1;
+        auto q = lower_bound(prime + 1, prime + primenum, y + 1) - prime - 1;
+        debug(ans, x, maxa, p, q);
+        cout << f[q] - f[p] << endl;
+    }
 }
 
 int32_t main()
@@ -39,8 +78,9 @@ int32_t main()
 #ifdef SUBLIME
     free
 #endif
+
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(I = 1; I <= Test; I++)
     {
         // cerr << "-------" << I << "-------" << endl;dclear();
