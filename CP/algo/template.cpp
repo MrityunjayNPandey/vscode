@@ -5,7 +5,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
-#define dclear()
+#define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
@@ -15,7 +15,6 @@ using namespace std;
 const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
-int I;
 
 void solve()
 {
@@ -31,11 +30,9 @@ signed main()
 #endif
         int Test = 1;
     cin >> Test;
-    for(I = 1; I <= Test; I++)
+    for(int I = 1; I <= Test; I++)
     {
-#ifdef DEBUG
-        clog << "-------" << I << "-------" << endl;dclear();
-#endif
+        dclear(I);
         solve();
         cout << endl;
     }
