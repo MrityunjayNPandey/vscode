@@ -4,7 +4,7 @@ using namespace std;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...) 
+#define debug(...)
 #define dclear()
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -13,9 +13,9 @@ using namespace std;
 #define pb push_back
 #define LOG(n) 31 - __builtin_clz(n)
 #define ios ios_base::sync_with_stdio(false); cin.tie(0);
-const int_fast32_t INF = 1ll << 32; const int_fast32_t MAX_N = 10000000;
-const int_fast32_t MOD = 1e9 + 7; const int_fast32_t mod = 998244353;
-#define int int_fast32_t
+const long long INF = 1ll << 32; const long long MAX_N = 10000000;
+const long long MOD = 1e9 + 7; const long long mod = 998244353;
+#define int long long
 int I;
 
 //Sieve of Eratosthenes, time complexity of O(N*log(logN))
@@ -23,12 +23,12 @@ int primetemp[MAX_N + 5] = { 1 }, prime[MAX_N], mp[MAX_N + 5], f[MAX_N + 5];
 int primenum = 1;
 void SIEVE()
 {
-    for(int p = 2; p <= MAX_N; p++)
+    for (int p = 2; p <= MAX_N; p++)
     {
-        if(primetemp[p] == 1)
+        if (primetemp[p] == 1)
         {
             prime[primenum++] = p;
-            for(int i = p; i <= MAX_N; i += p)
+            for (int i = p; i <= MAX_N; i += p)
             {
                 primetemp[i] = 0;
             }
@@ -44,7 +44,7 @@ void solve()
     int n = 0, m = 0, k = 0, ans = 0;
     cin >> n;
     int maxa = 0;
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         int x;
         cin >> x;
@@ -53,13 +53,13 @@ void solve()
     }
     // debug(v);
     cin >> m;
-    for(int i = 1; i < primenum; ++i)
-        for(int j = prime[i]; j <= 10000000; j += prime[i])
+    for (int i = 1; i < primenum; ++i)
+        for (int j = prime[i]; j <= 10000000; j += prime[i])
             f[i] += mp[j];
-    for(int i = 1; i < primenum; ++i)
+    for (int i = 1; i < primenum; ++i)
         f[i] += f[i - 1];
     // debug(f);
-    for(int i = 0; i < m; i++)
+    for (int i = 0; i < m; i++)
     {
         int x = 0;
         int y = 0;
@@ -79,9 +79,9 @@ int32_t main()
     free
 #endif
 
-        int Test = 1;
+    int Test = 1;
     // cin >> Test;
-    for(I = 1; I <= Test; I++)
+    for (I = 1; I <= Test; I++)
     {
         // cerr << "-------" << I << "-------" << endl;dclear();
         solve();
