@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
@@ -99,23 +100,19 @@ void tree(int n)
         {
             cout << (i + 1) << " ";
             j++;
-        }
-        else if (vertex_set[i] == 0 && j == 1)
+        } else if (vertex_set[i] == 0 && j == 1)
             cout << (i + 1) << "\n";
     }
 }
 signed main()
 {
-    int t = 1;
-    // cout << t << endl;
+    free;
+    int t = 1000;
+    cout << t << endl;
     while (t--)
     {
         int temp = 1000;
         cout << temp << endl;
-        for (int i = 0; i < temp; i++)
-        {
-            str(2, 1);
-            cout << endl;
-        }
+        // num(1, 1000, 100000);
     }
 }

@@ -36,23 +36,28 @@ void solve()
     }
     for(int i = 0; i < n; i++)
     {
-        for(int j = 0; j < str.length(); j++)
+        for(int j = 0; j < str.length() - 1; j++)
         {
-            if(j + 1 != str.length())
-                if(str[j] == vstr[i][0] && str[j + 1] == vstr[i][1] || str[j] == vstr[i][1] && str[j + 1] == vstr[i][0])
+            if(str[i] == vstr[i][0] && str[i + 1] == vstr[i][1] || str[i] == vstr[i][1] && str[i + 1] == vstr[i][0])
+            {
+                if(astr.size() > 0)
                 {
-                    if(j + 2 != str.length())
-                        if(str[j + 1] == str[j + 2])
+                    if(astr[astr.size() - 1] != str[j])
+                    {
+                        astr += str[j];j++;ans++;
+                    } else if(astr[astr.size() - 1] != str[j + 1])
+                    {
                         {
-                            astr += str[j + 1];
+                            astr += str[j + 1];j++;ans++;
                         }
-                    i++;
-                    ans++;
+                    } else
+                    {
+                        ans += 2;
+                        j += 2;
+                    }
                 }
-            astr += str[j];
+            }
         }
-        debug(astr);
-        str = astr;
     }
     cout << ans;
 }
