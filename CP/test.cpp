@@ -107,12 +107,12 @@ void tree(int n)
 signed main()
 {
     free;
-    int t = 1000;
+    int t = 100000;
     cout << t << endl;
     while (t--)
     {
         int temp = 1000;
-        cout << temp << endl;
+        cout << 1000000000 << endl;
         // num(1, 1000, 100000);
     }
 }
