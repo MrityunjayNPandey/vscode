@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-03-2022 02:02:29
+*      created: 17-04-2022 20:14:34
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...)
+#define debug(...) 
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -19,30 +19,27 @@ using namespace std;
 #define LOG(n) 31 - __builtin_clz(n)
 const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
-#define int long long
-
-int func(int n)
-{
-    int m = n;
-    if (n < 10)
-        return n;
-    int f, e = n % 10;
-    while (m)
-    {
-        f = m % 10;
-        m = m / 10;
-    }
-    if (f <= e) return 9 + n / 10;
-    else return 8 + n / 10;
-}
+// #define int long long
 
 void solve()
 {
-    int arr[MOD];
-    int a, b;
-    cin >> a >> b;
-    cout << "jhjh";
-    cout << func(b) - func(a - 1);
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    int r, b;
+    cin >> n >> r >> b;
+    k = r / (b + 1);
+    int moda = r % (b + 1);
+    while(r)
+    {
+        int x = k + (moda > 0);
+        moda = max(0, moda - 1);
+        r -= x;
+        for(int i = x; i > 0; i--) cout << 'R';
+        if(b > 0)
+        {
+            cout << 'B';
+            --b;
+        }
+    }
 }
 
 signed main()
@@ -51,9 +48,9 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-    int Test = 1;
-    // cin >> Test;
-    for (int I = 1; I <= Test; I++)
+        int Test = 1;
+    cin >> Test;
+    for(int I = 1; I <= Test; I++)
     {
         dclear(I);
         solve();

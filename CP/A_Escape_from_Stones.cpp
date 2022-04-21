@@ -4,7 +4,7 @@ using namespace std;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...) 
+#define debug(...)
 #define dclear()
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -26,14 +26,14 @@ void solve()
     debug(str);
     double pos = 1, idx = 0;
     vector < pair<double, int>> v;
-    for(int i = 0; i < str.length(); i++)
+    for (int i = 0; i < str.length(); i++)
     {
-        if(str[i] == 'r')
+        if (str[i] == 'r')
             cout << i + 1 << endl;
     }
-    for(int i = str.length(); i >= 0; i--)
+    for (int i = str.length(); i >= 0; i--)
     {
-        if(str[i] == 'l')
+        if (str[i] == 'l')
             cout << i + 1 << endl;
     }
 }
@@ -45,11 +45,13 @@ int32_t main()
 #ifdef SUBLIME
     free
 #endif
-        int Test = 1;
+    int Test = 1;
     // cin >> Test;
-    for(I = 1; I <= Test; I++)
+    for (I = 1; I <= Test; I++)
     {
-        cerr << "-------" << I << "-------" << endl;dclear();
+        int arr[1000000];
+        debug(arr[0]);
+        cerr << "-------" << I << "-------" << endl;
         solve();
         cout << endl;
     }

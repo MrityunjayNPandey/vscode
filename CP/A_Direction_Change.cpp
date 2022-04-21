@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-03-2022 02:02:29
+*      created: 19-04-2022 20:49:56
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...)
+#define debug(...) 
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -21,28 +21,30 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int func(int n)
-{
-    int m = n;
-    if (n < 10)
-        return n;
-    int f, e = n % 10;
-    while (m)
-    {
-        f = m % 10;
-        m = m / 10;
-    }
-    if (f <= e) return 9 + n / 10;
-    else return 8 + n / 10;
-}
-
 void solve()
 {
-    int arr[MOD];
-    int a, b;
-    cin >> a >> b;
-    cout << "jhjh";
-    cout << func(b) - func(a - 1);
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    cin >> n >> m;
+    if((n == 1 && m > 2) || (m == 1 && n > 2))
+    {
+        cout << -1;
+        return;
+    }
+    if(n == m)
+    {
+        cout << (2 * n - 2);
+        return;
+    } else
+    {
+        ans = 2 * min(n, m) - 2;
+        int tmp = max(n, m) - min(n, m);
+        if(tmp % 2 != 0)
+            ans++;
+        tmp /= 2;
+        ans += (tmp * 4);
+        cout << ans;
+    }
+
 }
 
 signed main()
@@ -51,9 +53,9 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-    int Test = 1;
-    // cin >> Test;
-    for (int I = 1; I <= Test; I++)
+        int Test = 1;
+    cin >> Test;
+    for(int I = 1; I <= Test; I++)
     {
         dclear(I);
         solve();

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-03-2022 02:02:29
+*      created: 19-04-2022 21:29:18
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...)
+#define debug(...) 
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -21,28 +21,24 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int func(int n)
-{
-    int m = n;
-    if (n < 10)
-        return n;
-    int f, e = n % 10;
-    while (m)
-    {
-        f = m % 10;
-        m = m / 10;
-    }
-    if (f <= e) return 9 + n / 10;
-    else return 8 + n / 10;
-}
-
 void solve()
 {
-    int arr[MOD];
-    int a, b;
-    cin >> a >> b;
-    cout << "jhjh";
-    cout << func(b) - func(a - 1);
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    cin >> n >> m;
+    vector<int> v(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+    sort(v.begin(), v.end());
+    for(int i = 1; i < n; i++)
+    {
+        sum += max(v[i - 1], v[i]);
+    }
+    sum += max(v[n - 1], v[0]);
+    sum += n;
+    if(sum <= m)
+    {
+        cout << "YES";
+        return;
+    } cout << "NO";
 }
 
 signed main()
@@ -51,9 +47,9 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-    int Test = 1;
-    // cin >> Test;
-    for (int I = 1; I <= Test; I++)
+        int Test = 1;
+    cin >> Test;
+    for(int I = 1; I <= Test; I++)
     {
         dclear(I);
         solve();
