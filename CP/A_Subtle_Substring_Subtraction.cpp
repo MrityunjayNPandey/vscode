@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 21-04-2022 23:16:49
+*      created: 30-04-2022 20:10:47
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,37 +21,33 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-string astr;
-int p = 0;
-string str;
-
-void _pair()
-{
-    if(cin >> str)
-    {
-        astr += str;
-        if(str == "pair")
-        {
-            astr += "<";
-            _pair();
-            astr += ",";
-            _pair();
-            astr += ">";
-        }
-    } else p = 1;
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    _pair();
-    if(p || cin >> str)
+    string str;
+    cin >> str;
+    if(str.length() == 1)
     {
-        cout << "Error occurred";
+        cout << "Bob" << " " << str[0] - 'a' + 1;
         return;
     }
-    cout << astr;
+    for(int i = 0; i < str.length(); i++)
+    {
+        sum += str[i] - 'a' + 1;
+    }
+    if(str.length() % 2 == 0)
+        cout << "Alice" << " " << sum;
+    else
+    {
+        if(str[0] > str[str.length() - 1])
+        {
+            cout << "Alice" << " " << sum - 2 * (str[str.length() - 1] - 'a' + 1);
+        } else
+        {
+            cout << "Alice" << " " << sum - 2 * (str[0] - 'a' + 1);
+            debug(sum, str[0] - 'a' + 1)
+        }
+    }
 }
 
 signed main()
@@ -61,7 +57,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 21-04-2022 23:16:49
+*      created: 26-04-2022 21:09:21
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,37 +21,49 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-string astr;
-int p = 0;
-string str;
-
-void _pair()
-{
-    if(cin >> str)
-    {
-        astr += str;
-        if(str == "pair")
-        {
-            astr += "<";
-            _pair();
-            astr += ",";
-            _pair();
-            astr += ">";
-        }
-    } else p = 1;
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    _pair();
-    if(p || cin >> str)
+    vector<int> x1(4), x2(4), y1(4), y2(4);
+    map<pair<int, int>, int> mp;
+    for(int i = 0; i < 4; i++)
     {
-        cout << "Error occurred";
+        int temp = 0;
+        cin >> x1[i] >> y1[i] >> x2[i] >> y2[i];
+    }
+    for(int i = 0; i < 4; i++)
+    {
+        mp[{x1[i], y1[i]}]++;
+        mp[{x2[i], y2[i]}]++;
+    }
+    int x = 0, y = 0;
+    for(int i = 0; i < 4;i++)
+    {
+        if(x1[i] == x2[i])
+            x++;
+        else if(y1[i] == y2[i])
+            y++;
+    }
+    debug(mp.size(), x, y, x1, y1, x2, y2);
+    if(x != 2 || y != 2)
+    {
+        cout << "NO";
         return;
     }
-    cout << astr;
+    if(mp.size() == 4)
+    {
+        for(auto i : mp)
+        {
+            if(i.second > 2)
+            {
+                cout << "NO";
+                return;
+            }
+        }
+        cout << "YES";
+        return;
+    }
+    cout << "NO";
 }
 
 signed main()

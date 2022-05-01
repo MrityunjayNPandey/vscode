@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 21-04-2022 23:16:49
+*      created: 30-04-2022 01:10:13
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,37 +21,47 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-string astr;
-int p = 0;
-string str;
-
-void _pair()
+// DFS, time complexity of O(V+E)
+//Remember to clear the maps in main() if multiple test cases exist.
+unordered_map<int, bool> visited;
+unordered_map<int, vector<int>> adj_list; //adjacency list
+map<pair<int, int>, int> adj_weight; //to add weights on edges
+void DFS(int current)
 {
-    if(cin >> str)
+    visited[current] = true;
+    cout << current << " ";
+    for(int next_vertex : adj_list[current])
     {
-        astr += str;
-        if(str == "pair")
+        if(!visited[next_vertex])
         {
-            astr += "<";
-            _pair();
-            astr += ",";
-            _pair();
-            astr += ">";
+            DFS(next_vertex);
         }
-    } else p = 1;
+    }
 }
 
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    _pair();
-    if(p || cin >> str)
+    map<int, int> mp;
+    for(int i = 0; i < n; i++)
     {
-        cout << "Error occurred";
-        return;
+        int temp1, temp2;
+        cin >> temp1 >> temp2;
+        mp[temp1]++, mp[temp2]++;
+        adj_list[temp1].pb(temp2);
+        adj_list[temp2].pb(temp1);
     }
-    cout << astr;
+    for(auto i : mp)
+    {
+        if(i.second == 1)
+        {
+            k = i.first;
+            break;
+        }
+    }
+    debug(adj_list)
+    DFS(k);
 }
 
 signed main()
