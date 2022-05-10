@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 02-05-2022 20:42:16
+*      created: 07-05-2022 14:08:31
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,50 +21,22 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int nCr[1001][1001];
-
-void pref()
-{
-    int n = 1000;
-    for(int i = 0;i <= n;i++)
-    {
-        for(int j = 0;j <= i;j++)
-        {
-            if(j == 0 || j == i) nCr[i][j] = 1;
-            else nCr[i][j] = (nCr[i - 1][j - 1] + nCr[i - 1][j]);
-        }
-    }
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    string s, t;
-    cin >> s >> t;
-    for(int i = 0; i < t.length(); i++)
+    double dist;
+    double r, x, y, x1, y1;
+    cin >> r >> x >> y >> x1 >> y1;
+    dist = sqrt(pow(x1 - x, 2) + pow(y1 - y, 2));
+    debug(dist)
+    if(dist == 0)
     {
-        if(t[i] == 'a')
-        {
-            k++;
-            break;
-        }
-    }
-    if(k)
-    {
-        if(t.length() == 1)
-        {
-            cout << 1;
-            return;
-        }
-        cout << -1;
+        cout << 0;
         return;
     }
-    for(int i = 1; i < s.length(); i++)
-    {
-        ans += nCr[s.length()][i];
-        debug(ans)
-    }
-    cout << ans + 2;
+    ans = 1;
+    int temp = ceil((dist - 2 * r)/(2*r));
+    cout << ans + temp;
 }
 
 signed main()
@@ -73,9 +45,8 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
-    cin >> Test;
+        int Test = 1;
+    // cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 02-05-2022 20:42:16
+*      created: 04-05-2022 22:28:41
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,50 +21,45 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int nCr[1001][1001];
-
-void pref()
-{
-    int n = 1000;
-    for(int i = 0;i <= n;i++)
-    {
-        for(int j = 0;j <= i;j++)
-        {
-            if(j == 0 || j == i) nCr[i][j] = 1;
-            else nCr[i][j] = (nCr[i - 1][j - 1] + nCr[i - 1][j]);
-        }
-    }
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    string s, t;
-    cin >> s >> t;
-    for(int i = 0; i < t.length(); i++)
+    string str;
+    cin >> str;
+    vector<int> pref;
+    map<int, vector<int>> mp;
+    for(int i = 0; i < str.length(); i++)
     {
-        if(t[i] == 'a')
+        if(str[i] == '(')
+            sum++;
+        else
+            sum--;
+        pref.pb(sum);
+        mp[sum].pb(i);
+    }
+    cnt = str.length();
+    debug(pref)
+        for(int i = str.length() - 1; i >= 0; i--)
         {
-            k++;
-            break;
+            if(mp.count(pref[i] + 1))
+            {
+                for(auto j : mp[pref[i] + 1])
+                {
+                    if(j >= i)
+                        break;
+                    if(str[j] == '(')
+                    {
+                        k = j;
+                        ans++;
+                        cnt -= i - k + 1;
+                        debug(cnt)
+                            i = k;
+                        break;
+                    }
+                }
+            }
         }
-    }
-    if(k)
-    {
-        if(t.length() == 1)
-        {
-            cout << 1;
-            return;
-        }
-        cout << -1;
-        return;
-    }
-    for(int i = 1; i < s.length(); i++)
-    {
-        ans += nCr[s.length()][i];
-        debug(ans)
-    }
-    cout << ans + 2;
+    cout << cnt << " " << ans;
 }
 
 signed main()
@@ -73,8 +68,7 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
+        int Test = 1;
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {

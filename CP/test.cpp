@@ -112,7 +112,7 @@ signed main()
     while (t--)
     {
         int temp = 1000;
-        cout << 1000000000 << endl;
+        cout <<  << endl;
         // num(1, 1000, 100000);
     }
 }

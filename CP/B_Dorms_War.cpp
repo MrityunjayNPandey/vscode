@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 02-05-2022 20:42:16
+*      created: 07-05-2022 16:30:29
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -21,50 +21,46 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int nCr[1001][1001];
-
-void pref()
-{
-    int n = 1000;
-    for(int i = 0;i <= n;i++)
-    {
-        for(int j = 0;j <= i;j++)
-        {
-            if(j == 0 || j == i) nCr[i][j] = 1;
-            else nCr[i][j] = (nCr[i - 1][j - 1] + nCr[i - 1][j]);
-        }
-    }
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    string s, t;
-    cin >> s >> t;
-    for(int i = 0; i < t.length(); i++)
+    cin >> n;
+    string str;
+    cin >> str;
+    cin >> m;
+    for(int i = 0; i < m; i++)
     {
-        if(t[i] == 'a')
+        char a;
+        cin >> a;
+        debug(a)
+            for(auto& i : str)
+            {
+                if(i == a)
+                    i = '1';
+            }
+    }
+    for(auto& i : str)
+    {
+        if(i != '1')
+            i = '0';
+    }
+    debug(str)
+        for(int i = 0; i < str.length(); i++)
         {
-            k++;
-            break;
+            if(str[i] == '0')
+                cnt++;
+            if(str[i] == '1')
+            {
+                if(k == 0)
+                {
+                    k++;
+                    ans = max(ans, cnt);
+                } else
+                    ans = max(ans, cnt + 1);
+                cnt = 0;
+            }
         }
-    }
-    if(k)
-    {
-        if(t.length() == 1)
-        {
-            cout << 1;
-            return;
-        }
-        cout << -1;
-        return;
-    }
-    for(int i = 1; i < s.length(); i++)
-    {
-        ans += nCr[s.length()][i];
-        debug(ans)
-    }
-    cout << ans + 2;
+    cout << ans;
 }
 
 signed main()
@@ -73,8 +69,7 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
+        int Test = 1;
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
