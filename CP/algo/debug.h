@@ -111,6 +111,18 @@ void debug_out(
 {
     clog << endl;
 }
+
+template <typename T, size_t size>
+void print(const T(&array)[size], int LINE_NUM)
+{
+    clog << "[" << LINE_NUM << "]" << "[" << ++kjhhgffsasd[LINE_NUM] << "] {";
+    for(size_t i = 0; i < size; ++i)
+    {
+        clog << array[i] << ((i < size - 1) ? "," : "");
+    }
+    clog << "}" << endl;
+}
+
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 {
@@ -124,6 +136,8 @@ void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T)
 }
 #define debug(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__);
 #define dclear(x) dclear_out(x);
+#define print(x) print(x, __LINE__);
+
 void dclear_out(int I)
 {
     kjhhgffsasd.clear();

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 10-05-2022 01:08:44
+*      created: 11-05-2022 01:25:34
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,7 +10,6 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
-#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -24,44 +23,22 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
-    int n = 0, m = 0, k = 1, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    string str;
-    cin >> str;
-    vector<int> v;
-    for(int i = 1; i < n; i++)
+    int n = 0, m = 0, k = 0, ans = INT_MAX, cnt = 0, sum = 0;
+    cin >> n >> m;
+    vector<vector<char>> vv(n, vector<char>(m, 0));
+    for(int i = 0; i < n; i++)
     {
-        if(str[i] != str[i - 1])
+        k = 0;
+        for(int j = 0; j < m; j++)
         {
-            v.pb(k);
-            k = 0;
+            cin >> vv[i][j];
+            if(vv[i][j] == '#')
+                k++;
         }
-        k++;
+        if(i & k)
+        ans = min(k, ans);
     }
-    v.pb(k);
-    vector<int> v1 = v;
-    debug(v, v1)
-        for(int i = 0; i < v1.size() - 1; i++)
-        {
-            if(v1[i]&1)
-            {
-                v1[i]++;
-                v1[i + 1]--;
-                cnt++;
-            }
-        }
-    for(int i = v.size() - 1; i > 0; i--)
-    {
-        if(v[i]&1)
-        {
-            v[i]++;
-            v[i - 1]--;
-            sum++;
-        }
-    }
-    cout << min(sum, cnt);
-    int arr[5];
-    print(arr)
+    cout << ans;
 }
 
 signed main()
@@ -71,7 +48,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

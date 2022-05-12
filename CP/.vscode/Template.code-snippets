@@ -14,6 +14,7 @@
       "#include \"algo/debug.h\"",
       "#else",
       "#define debug(...) ",
+      "#define print(x)",
       "#define dclear(x)",
       "#endif",
       "#define free freopen(\"input.txt\",\"r\",stdin);freopen(\"output.txt\",\"w\",stdout);freopen(\"error.txt\",\"w\",stderr);",
