@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 11-05-2022 01:25:34
+*      created: 16-05-2022 21:37:46
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -23,35 +24,52 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = INT_MAX, cnt = 0, sum = 0;
-    cin >> n >> m;
-    vector<vector<char>> vv(n, vector<char>(m, 0));
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    cin >> n;
+    vector<int> v(n);
     for(int i = 0; i < n; i++)
     {
-        k = 0;
-        for(int j = 0; j < m; j++)
-        {
-            cin >> vv[i][j];
-            if(vv[i][j] == '#')
-                k++;
-        }
-        if(i && k)
-        ans = min(k, ans);
+        cin >> v[i];
+        if(v[i] != 0)
+            cnt++;
+        if(v[i] == 0)
+            m++;
     }
-    for(int j = 0; j < n; j++)
+    sort(all(v));
+    if(!cnt)
     {
-        k = 0;
-        for(int i = 0; i < m; i++)
-        {
-            cin >> vv[j][i];
-            if(vv[j][i] == '#')
-                k++;
-        }
-        if(j && k)
-        ans = min(k, ans);
+        cout << 0;
+        return;
     }
-    
-    cout << min(ans, 2LL);
+    if(m)
+    {
+        cout << n - m;
+        return;
+    } else
+    {
+        for(int i = 0; i < n - 1; i++)
+        {
+            if(v[i] == v[i + 1])
+            {
+                m++;
+            }
+            if(m)
+            {
+                cout << n - m + 1;
+                return;
+            }
+        }
+        for(int i = 0; i < n - 1; i++)
+        {
+            if(v[i] != v[i + 1])
+            {
+                v[i] = min(v[i], v[i + 1]);
+                v[i + 1] = min(v[i], v[i + 1]);
+            }
+        }
+        cout << n - m + 1;
+
+    }
 }
 
 signed main()
@@ -61,7 +79,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

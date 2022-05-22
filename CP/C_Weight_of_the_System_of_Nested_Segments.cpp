@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 30-04-2022 21:20:46
+*      created: 18-05-2022 10:21:33
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -21,47 +22,29 @@ const long long INF = 1ll << 32; const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 
-int reverse(int n)
-{
-    int r = 0;
-    while(n > 0)
-    {
-        r = r * 10 + n % 10;
-        n /= 10;
-    }
-    return r;
-}
-
-int checkPalendrome(int n)
-{
-    return reverse(n) == n;
-}
-
-vector<int> palendrome;
-int dp[40004][502];
-
-void pref()
-{
-    for(int i = 0; i < 2 * 40004; i++) if(checkPalendrome(i)) palendrome.push_back(i);
-    for(int j = 1; j < 502; j++) dp[0][j] = 1;
-    for(int i = 1;i < 40004;i++)
-    {
-        dp[i][0] = 0;
-        for(int j = 1;j < 502;j++)
-        {
-            if(palendrome[j] <= i)
-                dp[i][j] = (dp[i][j - 1] + dp[i - palendrome[j]][j]) % MOD;
-            else
-            dp[i][j] = dp[i][j - 1];
-        }
-    }
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    cout << dp[n][501];
+    cin >> n >> m;
+    vector<tuple<int, int, int>> vv1, vv;
+    for(int i = 0; i < m; i++)
+    {
+        int x, y;
+        cin >> x >> y;
+        vv1.pb({ y, x , i + 1 });
+    }
+    sort(all(vv1));
+    for(int i = 0; i < 2 * n; i++)
+    {
+        vv.pb({ get<1>(vv1[i]), get<0>(vv1[i]), get<2>(vv1[i]) });
+        sum += get<1>(vv[i]);
+    }
+    sort(all(vv));
+    cout << sum << endl;
+    for(int i = 0; i < n; i++)
+    {
+        cout << get<2>(vv[i]) << " " << get<2>(vv[2 * n - i - 1]) << endl;
+    }
 }
 
 signed main()
@@ -70,8 +53,7 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
+        int Test = 1;
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {

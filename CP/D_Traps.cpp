@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 11-05-2022 01:25:34
+*      created: 20-05-2022 16:27:37
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -23,35 +24,49 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = INT_MAX, cnt = 0, sum = 0;
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n >> m;
-    vector<vector<char>> vv(n, vector<char>(m, 0));
+    k = m;
+    vector<int> v(n);
+    for(int i = 0; i < n; i++)
+        cin >> v[i];
+    vector<int> p(v);
+    debug(p, v)
+        int x = 0;
+    for(int i = 1; i < n; i++)
+    {
+        if(k--)
+            x++;
+        v[i] += x;
+    }
+    debug(v);
+    vector<tuple<int, int, int>> vp;
     for(int i = 0; i < n; i++)
     {
-        k = 0;
-        for(int j = 0; j < m; j++)
-        {
-            cin >> vv[i][j];
-            if(vv[i][j] == '#')
-                k++;
-        }
-        if(i && k)
-        ans = min(k, ans);
+        vp.pb({ v[i], i , p[i] });
     }
-    for(int j = 0; j < n; j++)
+    sort(all(vp));
+    vector<pair<int, int>> p1;
+    debug(n, k);
+    for(int i = 0; i < n - m; i++)
     {
-        k = 0;
-        for(int i = 0; i < m; i++)
-        {
-            cin >> vv[j][i];
-            if(vv[j][i] == '#')
-                k++;
-        }
-        if(j && k)
-        ans = min(k, ans);
+        p1.pb({ get<1>(vp[i]), get<2>(vp[i]) });
     }
-    
-    cout << min(ans, 2LL);
+    sort(all(p1));
+    cnt = 0;
+    if(p1.size())
+    {
+        cnt += p1[0].first;
+        sum += p1[0].second + cnt;
+    }
+    debug(p1);
+    for(int i = 1; i < p1.size(); i++)
+    {
+        cnt += p1[i].first - p1[i - 1].first - 1;
+        sum += p1[i].second + cnt;
+        debug(sum)
+    }
+    cout << sum;
 }
 
 signed main()
@@ -61,7 +76,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);
