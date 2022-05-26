@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 11-05-2022 01:25:34
+*      created: 24-05-2022 22:15:17
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -23,14 +24,44 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = INT_MAX, cnt = 0, sum = 0;
-    cin >> n >> m;
-    vector<vector<char>> vv(n, vector<char>(m, 0));
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    cin >> n;
+    vector<pair<int, int>> vp;
     for(int i = 0; i < n; i++)
-        for(int j = 0; j < m; j++)
-            cin >> vv[i][j], ((vv[i][j] == '#') ? k++ : k), ;
-    
-    debug(vv, k)
+    {
+        int x, y;
+        cin >> x >> y;
+        vp.pb({ x, i });
+        vp.pb({ y, i });
+    }
+    sort(all(vp));
+    debug(vp);
+    int t = -1;
+    map<int, int> mp;
+    for(int i = 0; i < vp.size(); i++)
+    {
+        mp[vp[i].second]++;
+        if(t == -1)
+        {
+            if(mp[vp[i].second] == 1)
+                t = vp[i].second;
+            continue;
+        }
+        if(vp[i].second != t)
+        {
+            k++;
+        } else
+        {
+            k = 0;
+            t = -1;
+        }
+        debug(t, k, i);
+        if(k >= 2)
+        {
+            cout << 0;
+            return;
+        }
+    }
 }
 
 signed main()
