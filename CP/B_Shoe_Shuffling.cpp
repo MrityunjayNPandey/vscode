@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 13-05-2022 20:57:17
+*      created: 31-05-2022 20:16:00
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -25,53 +25,53 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    string str;
-    cin >> str;
-    vector<int> pref1, suff1, pref0, suff0;
-    int one = 0, zero = 0;
-    for(int i = 0; i < str.length(); i++)
+    cin >> n;
+    vector<pair<int, int>> v;
+    map<int, int> mp;
+    map<int, vector<int>> mpt;
+    for(int i = 0; i < n; i++)
     {
-        if(str[i] == '0')
-        {
-            zero++;
-        } else
-            pref0.pb(zero);
+        int x;
+        cin >> x;
+        v.pb({ x, i });
+        mpt[x].pb(i);
+        mp[x]++;
     }
-    pref0.pb(zero);
-    int rm0 = zero;
-    int rf1 = 0;
-    one = 0, zero = 0;
-    for(int i = str.length() - 1; i >= 0; i--)
+    for(auto i : mp)
     {
-        if(str[i] == '1')
+        if(i.second < 2)
         {
-            one++;
+            cout << -1;
+            return;
         }
-        if(str[i] == '0')
-        {
-            zero++;
-        } else
-            suff0.pb(zero);
     }
-    suff0.pb(zero);
-    debug(one, zero);
-    int l = -1;
-    int r = one + 1;
-    while(r - l > 1)
+    vector<int> vans(n);
+    sort(all(v));
+    for(auto i : mpt)
     {
-        int mid = (l + r) / 2;
-        bool ok = false;
-        for(int i = 0; i <= mid; i++)
+        vector<int> vt;
+        int temp, temp1;
+        int p1 = 0;
+        for(auto j : i.second)
         {
-            int remaining_zeros = zero - pref0[i] - suff0[mid - i];
-            ok |= (remaining_zeros <= mid);
+            debug(j);
+            if(!p1)
+                temp = j, p1++;
+            else
+                vt.pb(j);
         }
-        if(ok) r = mid;
-        else l = mid;
+        debug(temp, vt)
+            temp1 = temp;
+        for(auto p : vt)
+        {
+            vans[temp] = p;
+            temp = p;
+        }
+        vans[temp] = temp1;
     }
-    cout << r;
+    for(int i = 0; i < n; i++)
+        cout << vans[i] + 1 << " ";
 }
-
 
 signed main()
 {
