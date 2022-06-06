@@ -23,28 +23,37 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 #define int long long
 const int ninf = -1e15;
 
-struct Node
+vector<int> nextGreater(vector<int>& arr, int n)
 {
-    int sum;
-    int prefix;
-};
+    stack<int> s;
+    vector<int> result(n, n);
+    for(int i = 0; i < n; i++)
+    {
+        while(!s.empty() && arr[s.top()] < arr[i])
+        {
+            result[s.top()] = i;
+            s.pop();
+        }
+        s.push(i);
+    }
+    return result;
+}
 
-// // function to build the segment tree
-// void build(int a[], int index, int beg, int end, Node tree[])
-// {
-//     if(beg == end)
-//     {
-//         tree[index].sum = a[beg];
-//         tree[index].prefix = a[beg];
-//     } else
-//     {
-//         int mid = (beg + end) / 2;
-//         build(a, 2 * index + 1, beg, mid, tree);
-//         build(a, 2 * index + 2, mid + 1, end, tree);
-//         tree[index].sum = tree[2 * index + 1].sum + tree[2 * index + 2].sum;
-//         tree[index].prefix = max(tree[2 * index + 1].prefix, tree[2 * index + 1].sum + tree[2 * index + 2].prefix);
-//     }
-// }
+vector<int> prevGreater(vector<int>& arr, int n)
+{
+    stack<int> s;
+    vector<int> result(n, -1);
+    for(int i = n - 1; i >= 0; i--)
+    {
+        while(!s.empty() && arr[s.top()] < arr[i])
+        {
+            result[s.top()] = i;
+            s.pop();
+        }
+        s.push(i);
+    }
+    return result;
+}
 // function to do the range query in the segment
 // tree for the maximum prefix sum
 int query(vector<int>& tree, int node, int ns, int ne, int qs, int qe)
@@ -62,7 +71,7 @@ void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    int v[n];
+    vector<int> v(n);
     for(int i = 0; i < n; i++)
     {
         cin >> v[i];
@@ -93,42 +102,17 @@ void solve()
         prefixTree[i] = max(prefixTree[2 * i], prefixTree[2 * i + 1]);
         suffixTree[i] = max(suffixTree[2 * i], suffixTree[2 * i + 1]);
     }
-//FIND THE Previus Greater Element and the Next Greater Element for each element of the array.
-    vector<int> NGE(n, -1), PGE(n, -1);
-    stack<int> temp, temp1;
-    for(int i = 0; i < n; i++)
-    {
-        if(!temp.empty())
-            while(v[temp.top()] < v[i])
-            {
-                NGE[temp.top()] = i;
-                temp.pop();
-                if(temp.empty())
-                    break;
-            }
-        temp.push(i);
-    }
-    for(int i = n - 1; i >= 0; i--)
-    {
-        if(!temp1.empty())
-            while(v[temp1.top()] < v[i])
-            {
-                PGE[temp1.top()] = i;
-                temp1.pop();
-                if(temp1.empty())
-                    break;
-            }
-        temp1.push(i);
-    }
+    //FIND THE Previus Greater Element and the Next Greater Element for each element of the array.
+    vector<int> ng = nextGreater(v, n);
+    vector<int> pg = prevGreater(v, n);
     //since left range + a[i] + right range<a[
     //=> to print no, left range + right range > 0
     // left range and right range signify, the Maximum prefix-sum for a given range, the range given in query.
-
     bool flag = true;
     for(int i = 0; i < n; i++)
     {
-        int rightMax = query(prefixTree, 1, 0, _n - 1, i + 1, NGE[i] - 1) - prefixSum[i];
-        int leftMax = query(suffixTree, 1, 0, _n - 1, PGE[i] + 1, i - 1) - suffixSum[i];
+        int rightMax = query(prefixTree, 1, 0, _n - 1, i + 1, ng[i] - 1) - prefixSum[i];
+        int leftMax = query(suffixTree, 1, 0, _n - 1, pg[i] + 1, i - 1) - suffixSum[i];
         if(max(leftMax, rightMax) > 0)
         {
             flag = false;

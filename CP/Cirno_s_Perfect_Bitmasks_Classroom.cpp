@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 19-04-2022 21:45:44
+*      created: 04-06-2022 23:48:15
 **/
 #include <bits/stdc++.h>
 using namespace std;
@@ -10,6 +10,7 @@ using namespace std;
 #include "algo/debug.h"
 #else
 #define debug(...) 
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -23,43 +24,20 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = LONG_LONG_MAX, cnt = 0, sum = 0;
+    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
+    if(__builtin_popcount(n) == 1)
     {
-        cin >> v[i];
-    }
-    debug(v);
-    for(int i = 0; i < n; i++)
-    {
-        k = 0;
-        int p = 0;
-        vector<int> show(n);
-        for(int j = i - 1; j >= 0; j--)
+        if(__builtin_ctz(n))
         {
-            if(-v[j] >= p)
-            {
-                p = -(((abs)(p / v[j]) + 1) * v[j]);
-                k += (abs)(p / v[j]);
-            } else
-                p = -v[j], k++;
-            show[j] = p;
+            ans = pow(2, __builtin_ctz(n)) + 1;
+            cout << ans;
+            return;
         }
-        p = 0;
-        for(int j = i + 1; j < n; j++)
-        {
-            if(v[j] <= p)
-            {
-                p = (p / v[j] + 1) * v[j];
-                k += p / v[j];
-            } else
-                p = v[j], k++;
-            show[j] = p;
-        }
-        ans = min(ans, k);
-        debug(show, ans)
+        cout << 3;
+        return;
     }
+    ans=pow(2, __builtin_ctz(n));
     cout << ans;
 }
 
@@ -70,7 +48,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    // cin >> Test;
+    cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);
