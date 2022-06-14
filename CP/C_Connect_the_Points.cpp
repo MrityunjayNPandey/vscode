@@ -23,6 +23,9 @@ const long long MOD = 1e9 + 7; const long long mod = 998244353;
 
 void solve()
 {
+    int t1;
+    t1 = LONG_LONG_MAX;
+    cout << t1;;
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     int x1, y1, x2, y2, x3, y3;
     vector<pair<int, int>> vp;

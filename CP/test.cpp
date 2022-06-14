@@ -35,11 +35,11 @@ void str(int l, int n)
         {
             // int v = rand(1, 150);
             // if (v % 3 == 0)
-            //     cout << (char)rand('a', 'z');
+            cout << (char)rand('a', 'b');
             // else if (v % 3 == 1)
             //     cout << (char)rand('A', 'Z');
             // else
-            cout << rand(0, 10000) << " ";
+            // cout << rand(0, 10000) << " ";
         }
         cout << " ";
     }
@@ -107,12 +107,14 @@ void tree(int n)
 signed main()
 {
     free;
-    int t = 100000;
+    int t = 1000;
     cout << t << endl;
     while (t--)
     {
-        int temp = 1000;
-        cout <<  << endl;
-        // num(1, 1000, 100000);
+        int p = rand(0, 10000);
+        cout << p << "\n";
+        str(1, p);
+        cout << "\n";
+        str(1, p);
     }
 }

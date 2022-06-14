@@ -1,3 +1,4 @@
+// clang-format off
 #include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
@@ -20,86 +21,27 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lld;
 #ifndef ONLINE_JUDGE
-#define debug(x)         \
-    cerr << #x << " = "; \
-    _print(x);           \
-    cerr << endl;
+#define debug(x) cerr << #x <<" = "; _print(x); cerr << endl;
 #else
 #define debug(x)
 #endif
-void _print(ll t)
-{
-    cerr << t;
-}
-void _print(int t) { cerr << t; }
-void _print(string t) { cerr << t; }
-void _print(char t) { cerr << t; }
-void _print(lld t) { cerr << t; }
-void _print(double t) { cerr << t; }
-void _print(ull t) { cerr << t; }
-template <class T, class V>
-void _print(pair<T, V> p);
-template <class T>
-void _print(vector<T> v);
-template <class T>
-void _print(set<T> v);
-template <class T, class V>
-void _print(map<T, V> v);
-template <class T>
-void _print(multiset<T> v);
-template <class T, class V>
-void _print(pair<T, V> p)
-{
-    cerr << "{";
-    _print(p.ff);
-    cerr << ",";
-    _print(p.ss);
-    cerr << "}";
-}
-template <class T>
-void _print(vector<T> v)
-{
-    cerr << "[ ";
-    for (T i : v)
-    {
-        _print(i);
-        cerr << " ";
-    }
-    cerr << "]";
-}
-template <class T>
-void _print(set<T> v)
-{
-    cerr << "[ ";
-    for (T i : v)
-    {
-        _print(i);
-        cerr << " ";
-    }
-    cerr << "]";
-}
-template <class T>
-void _print(multiset<T> v)
-{
-    cerr << "[ ";
-    for (T i : v)
-    {
-        _print(i);
-        cerr << " ";
-    }
-    cerr << "]";
-}
-template <class T, class V>
-void _print(map<T, V> v)
-{
-    cerr << "[ ";
-    for (auto i : v)
-    {
-        _print(i);
-        cerr << " ";
-    }
-    cerr << "]";
-}
+void _print(ll t) {cerr << t;}
+void _print(int t) {cerr << t;}
+void _print(string t) {cerr << t;}
+void _print(char t) {cerr << t;}
+void _print(lld t) {cerr << t;}
+void _print(double t) {cerr << t;}
+void _print(ull t) {cerr << t;}
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 const long long INF = 1ll << 32;
 const long long MAX_N = 1e6 + 7;
 const long long MOD = 998244353;
@@ -134,24 +76,26 @@ void solve()
         vp.pb(make_pair(v[i], v1[i]));
     }
     sort(all(vp));
-    int i = 0;
-    while (k >= vp[i].ff && i < n)
+    int i=0;
+    while(k>=vp[i].ff)
     {
-        k += vp[i].ss;
+        k+=vp[i].ss;
+        debug(k);
+        debug(vp[i].ss);
         i++;
     }
-    cout << k;
+    cout<<k;
 }
 
 int32_t main()
 {
-
     ios;
     int Test = 1;
     cin >> Test;
     for (I = 1; I <= Test; I++)
     {
-        // solve();
+        solve();
+        debug("--------------")
         cout << endl;
     }
 }

@@ -43,6 +43,7 @@ int dp[40004][502];
 void pref()
 {
     for(int i = 0; i < 2 * 40004; i++) if(checkPalendrome(i)) palendrome.push_back(i);
+    debug(palendrome)
     for(int j = 1; j < 502; j++) dp[0][j] = 1;
     for(int i = 1;i < 40004;i++)
     {
@@ -54,6 +55,14 @@ void pref()
             else
             dp[i][j] = dp[i][j - 1];
         }
+    }
+    for(int i = 0;i < 40004;i++)
+    {
+        for(int j = 1;j < 502;j++)
+        {
+            clog<<dp[i][j]<<" ";
+        }
+        clog<<endl;
     }
 }
 
