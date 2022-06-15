@@ -25,23 +25,71 @@ typedef long double lld;
 #else
 #define debug(x)
 #endif
-void _print(ll t) {cerr << t;}
-void _print(int t) {cerr << t;}
-void _print(string t) {cerr << t;}
-void _print(char t) {cerr << t;}
-void _print(lld t) {cerr << t;}
-void _print(double t) {cerr << t;}
-void _print(ull t) {cerr << t;}
+void _print(ll t)
+{
+    cerr << t;
+}
+void _print(int t)
+{
+    cerr << t;
+}
+void _print(string t)
+{
+    cerr << t;
+}
+void _print(char t)
+{
+    cerr << t;
+}
+void _print(lld t)
+{
+    cerr << t;
+}
+void _print(double t)
+{
+    cerr << t;
+}
+void _print(ull t)
+{
+    cerr << t;
+}
 template <class T, class V> void _print(pair <T, V> p);
 template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
-template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V> void _print(pair <T, V> p)
+{
+    cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";
+}
+template <class T> void _print(vector <T> v)
+{
+    cerr << "[ "; for(T i : v)
+    {
+        _print(i); cerr << " ";
+    } cerr << "]";
+}
+template <class T> void _print(set <T> v)
+{
+    cerr << "[ "; for(T i : v)
+    {
+        _print(i); cerr << " ";
+    } cerr << "]";
+}
+template <class T> void _print(multiset <T> v)
+{
+    cerr << "[ "; for(T i : v)
+    {
+        _print(i); cerr << " ";
+    } cerr << "]";
+}
+template <class T, class V> void _print(map <T, V> v)
+{
+    cerr << "[ "; for(auto i : v)
+    {
+        _print(i); cerr << " ";
+    } cerr << "]";
+}
 const long long INF = 1ll << 32;
 const long long MAX_N = 1e6 + 7;
 const long long MOD = 998244353;
@@ -56,35 +104,34 @@ void solve()
     cin >> n >> k;
     vector<pii> vp;
     vector<int> v, v1;
-    for (int i = 0; i < 2 * n; i++)
+    for(int i = 0; i < 2 * n; i++)
     {
-        if (i < n)
+        if(i < n)
         {
             int temp;
             cin >> temp;
             v.pb(temp);
-        }
-        else
+        } else
         {
             int temp;
             cin >> temp;
             v1.pb(temp);
         }
     }
-    for (int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++)
     {
         vp.pb(make_pair(v[i], v1[i]));
     }
     sort(all(vp));
-    int i=0;
-    while(k>=vp[i].ff)
+    int i = 0;
+    while(k >= vp[i].ff && i < n)
     {
-        k+=vp[i].ss;
+        k += vp[i].ss;
         debug(k);
         debug(vp[i].ss);
         i++;
     }
-    cout<<k;
+    cout << k;
 }
 
 int32_t main()
@@ -92,10 +139,10 @@ int32_t main()
     ios;
     int Test = 1;
     cin >> Test;
-    for (I = 1; I <= Test; I++)
+    for(I = 1; I <= Test; I++)
     {
         solve();
         debug("--------------")
-        cout << endl;
+            cout << endl;
     }
 }
