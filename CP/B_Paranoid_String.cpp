@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 15-06-2022 21:03:15
+*      created: 16-06-2022 20:44:32
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -25,77 +25,29 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 #define int long long
 
-map<int, int> mp1, mp2;
-
-void pref()
-{
-    int x = 1, x1 = 0;
-    mp1[0]++, mp2[0]++, mp2[1]++;
-    while(x < 1e10)
-    {
-        x <<= 1;
-        x1 += x;
-        mp1[x1]++;
-        mp2[x1 + 1]++;
-    }
-    // debug(mp1, mp2)
-}
-
-unsigned int count_1bits(unsigned int x)
-{
-    x = x - ((x >> 1) & 0x55555555);
-    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-    x = x + (x >> 8);
-    x = x + (x >> 16);
-    return x & 0x0000003F;
-}
-
-unsigned int count_0bits(unsigned int x)
-{
-    return 32 - count_1bits(x);
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    vector<int> v(3);
-    for(int i = 0; i < 3; i++)
+    cin >> n;
+    string str;
+    cin >> str;
+    if(n == 1)
     {
-        cin >> v[i];
-    }
-    sort(all(v));
-    int p = v[2] - v[0];
-    int q = v[2] - v[1];
-    if(p==q && q==0)
-    {
-        cout<<"YES";
+        cout << 1;
         return;
     }
-    debug(p, q);
-    if((p & 1 && q & 1))
+    int ind = 0;
+    for(int i = 1; i < n; i++)
     {
-        if(p & 1 && q & 1)
+        if(str[i] == str[i - 1])
         {
-            p++, q++;
-        }
-        int x = p + q + 1;
-        if(LOG(x) + 1 - __builtin_popcountll(x) == 0)
-            cout << "YES";
-        else
-            cout << "NO";
-    } else if(!(p & 1) && !(q & 1))
-    {
-        cout << "NO";
-    } else
-    {
-        int x = p + q;
-        if(LOG(x) + 1 - __builtin_popcountll(x) == 0)
+            ans++;
+        } else
         {
-            cout << "YES";
+            ans += i + 1;
         }
-        else
-            cout << "NO";
     }
+    cout << ans + 1;
 }
 
 signed main()
@@ -104,8 +56,7 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
+        int Test = 1;
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 15-06-2022 21:03:15
+*      created: 16-06-2022 11:33:12
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -25,77 +25,69 @@ typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 #define int long long
 
-map<int, int> mp1, mp2;
-
-void pref()
-{
-    int x = 1, x1 = 0;
-    mp1[0]++, mp2[0]++, mp2[1]++;
-    while(x < 1e10)
-    {
-        x <<= 1;
-        x1 += x;
-        mp1[x1]++;
-        mp2[x1 + 1]++;
-    }
-    // debug(mp1, mp2)
-}
-
-unsigned int count_1bits(unsigned int x)
-{
-    x = x - ((x >> 1) & 0x55555555);
-    x = (x & 0x33333333) + ((x >> 2) & 0x33333333);
-    x = x + (x >> 8);
-    x = x + (x >> 16);
-    return x & 0x0000003F;
-}
-
-unsigned int count_0bits(unsigned int x)
-{
-    return 32 - count_1bits(x);
-}
-
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    vector<int> v(3);
-    for(int i = 0; i < 3; i++)
+    cin >> n;
+    vector<int> v(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+    map<tuple<int, int, int>, int> mp;
+    int target = 3;
+    int x = 3, y = 0, z = 0;
+    mp[{1, 1, 1}]++;
+    while(x >= 1)
     {
-        cin >> v[i];
-    }
-    sort(all(v));
-    int p = v[2] - v[0];
-    int q = v[2] - v[1];
-    if(p==q && q==0)
-    {
-        cout<<"YES";
-        return;
-    }
-    debug(p, q);
-    if((p & 1 && q & 1))
-    {
-        if(p & 1 && q & 1)
+        if(y + z && y > 1 && z > 1)
         {
-            p++, q++;
+            y--;
+            z++;
         }
-        int x = p + q + 1;
-        if(LOG(x) + 1 - __builtin_popcountll(x) == 0)
-            cout << "YES";
-        else
-            cout << "NO";
-    } else if(!(p & 1) && !(q & 1))
+        mp[{x, y, z}]++;
+        x--; y++;
+    }
+    debug(mp);
+    int z1 = 4;
+    x = 9, y = 4, z = 0;
+    while(x >= 1)
     {
-        cout << "NO";
-    } else
+        if(y + z && y > 1 && z < 13 - x)
+        {
+            y--;
+            z++;
+        } else
+        {
+            x--; y = 13 - x;z = 0;
+        }
+        if(x + y + z == 13 && x < 10 && y < 10 && z < 10)
+            mp[{x, y, z}]++;
+    }
+    mp[{9, 9, 5}]++;
+    mp[{9, 8, 6}]++;
+    mp[{9, 7, 7}]++;
+    mp[{8, 8, 7}]++;
+    mp[{8, 7, 8}]++;
+    mp[{8, 6, 9}]++;
+    debug(mp);
+    map<int, int> mp1;
+    for(int i = 0; i < n; i++)
+        mp1[v[i] % 10]++;
+    for(auto i : mp)
     {
-        int x = p + q;
-        if(LOG(x) + 1 - __builtin_popcountll(x) == 0)
+        map<int, int> mp2 = mp1;
+        int ans = 0;
+        if(mp2[get<0>(i.first)] > 0)
+            mp2[get<0>(i.first)]--, ans++;
+        if(mp2[get<1>(i.first)] > 0)
+            mp2[get<1>(i.first)]--, ans++;
+        if(mp2[get<2>(i.first)] > 0)
+            mp2[get<2>(i.first)]--, ans++;
+        if(ans >= 3)
         {
             cout << "YES";
+            return;
         }
-        else
-            cout << "NO";
     }
+    cout << "NO";
 }
 
 signed main()
@@ -104,8 +96,7 @@ signed main()
 #ifdef SUBLIME
     free
 #endif
-        pref();
-    int Test = 1;
+        int Test = 1;
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
