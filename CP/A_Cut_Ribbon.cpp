@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 20-06-2022 21:31:29
+*      created: 20-06-2022 21:49:23
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -29,34 +29,20 @@ void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
-        cin >> v[i];
-    int mina = v[0], rt = 0;
-    for(int i = 1;i < n;i++)
+    int a, b, c;
+    cin >> a >> b >> c;
+    vector<int> dp(n + 1, -1);
+    dp[0] = 0;
+    for(int i = 1; i <= n; i++)
     {
-        v[i] -= rt;
-        if(mina < v[i])
+        int t = max((i >= a) ? dp[i - a] : -1, max((i >= b) ? dp[i - b] : -1, (i >= c) ? dp[i - c] : -1));
+        if(t != -1)
         {
-            rt += v[i] - mina;
-            v[i] = mina;
-        } else
-            mina = v[i];
+            dp[i] = t + 1;
+        }
     }
-    debug(v, rt)
-    int minb = v[n - 1], lt = 0;
-    for(int i = n - 2;i >= 0;i--)
-    {
-        v[i] -= lt;
-        if(minb < v[i])
-        {
-            lt += v[i] - minb;
-            v[i] = minb;
-        } else
-            minb = v[i];
-    }
-    debug(v, lt)
-    cout << lt + rt + abs(v[0]);
+    debug(dp);
+    cout << dp[n];
 }
 
 signed main()
@@ -66,7 +52,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

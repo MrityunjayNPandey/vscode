@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 20-06-2022 21:31:29
+*      created: 22-06-2022 22:24:23
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -32,31 +32,29 @@ void solve()
     vector<int> v(n);
     for(int i = 0; i < n; i++)
         cin >> v[i];
-    int mina = v[0], rt = 0;
-    for(int i = 1;i < n;i++)
+    vector<int> pref(v);
+    for(int i = 1; i < n; i++)
+        pref[i] += pref[i - 1];
+    sort(all(v));
+    for(int i = 0; i < n; i++)
     {
-        v[i] -= rt;
-        if(mina < v[i])
-        {
-            rt += v[i] - mina;
-            v[i] = mina;
-        } else
-            mina = v[i];
+        int mina = 0, maxa = 0;
+        // for(int j = 0; j < n; j++)
+        // {
+        //     if(v[j] > i)
+        //     {
+        //         mina++;
+        //         maxa += (n - v[j]) + 1;
+        //     } else if(v[j] < i)
+        //     {
+        //         maxa += n - v[j];
+        //     }
+        // }
+        int k = lower_bound(v.begin(), v.end(), i) - v.begin()+1;
+        mina = n - k;
+        debug(mina)
+        cout << mina << " " << maxa << endl;
     }
-    debug(v, rt)
-    int minb = v[n - 1], lt = 0;
-    for(int i = n - 2;i >= 0;i--)
-    {
-        v[i] -= lt;
-        if(minb < v[i])
-        {
-            lt += v[i] - minb;
-            v[i] = minb;
-        } else
-            minb = v[i];
-    }
-    debug(v, lt)
-    cout << lt + rt + abs(v[0]);
 }
 
 signed main()
@@ -71,7 +69,7 @@ signed main()
     {
         dclear(I);
         solve();
-        cout << endl;
+        // cout << endl;
     }
 }
 

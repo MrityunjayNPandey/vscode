@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 20-06-2022 21:31:29
+*      created: 20-06-2022 22:51:26
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,35 +28,23 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
-        cin >> v[i];
-    int mina = v[0], rt = 0;
-    for(int i = 1;i < n;i++)
-    {
-        v[i] -= rt;
-        if(mina < v[i])
-        {
-            rt += v[i] - mina;
-            v[i] = mina;
-        } else
-            mina = v[i];
-    }
-    debug(v, rt)
-    int minb = v[n - 1], lt = 0;
-    for(int i = n - 2;i >= 0;i--)
-    {
-        v[i] -= lt;
-        if(minb < v[i])
-        {
-            lt += v[i] - minb;
-            v[i] = minb;
-        } else
-            minb = v[i];
-    }
-    debug(v, lt)
-    cout << lt + rt + abs(v[0]);
+    cin >> n >> m;
+    vector<vector<int>> vv(n + 1, vector<int>(m + 1, 0));
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= m; j++)
+            cin >> vv[i][j];
+    pair< int, int > maxa;
+    int mina = -INF;
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= m; j++)
+            if(vv[i][j] > mina)
+            {
+                mina = vv[i][j];
+                maxa = { i, j };
+            }
+    int maxx = max(n - maxa.first + 1, maxa.first);
+    int maxy = max(m - maxa.second + 1, maxa.second);
+    cout << maxx * maxy;
 }
 
 signed main()

@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 20-06-2022 21:31:29
+*      created: 22-06-2022 21:20:40
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -29,34 +29,32 @@ void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++)
-        cin >> v[i];
-    int mina = v[0], rt = 0;
-    for(int i = 1;i < n;i++)
+    string str;
+    cin >> str;
+    int fi = 0, li = n - 1;
+    while(fi < li)
     {
-        v[i] -= rt;
-        if(mina < v[i])
+        if(str[fi] == '(')
         {
-            rt += v[i] - mina;
-            v[i] = mina;
-        } else
-            mina = v[i];
+            while(str[li] != ')' && li > fi)
+                li--;
+            if(str[li] != ')')
+            {
+                k++;
+                break;
+            }
+            cnt += 2;
+            debug(fi, li, cnt)
+        }
+        if(k)
+            break;
+        debug(fi, li);
+        if(str[fi] == '(')
+            li--;
+        fi++;
+        debug(fi, li)
     }
-    debug(v, rt)
-    int minb = v[n - 1], lt = 0;
-    for(int i = n - 2;i >= 0;i--)
-    {
-        v[i] -= lt;
-        if(minb < v[i])
-        {
-            lt += v[i] - minb;
-            v[i] = minb;
-        } else
-            minb = v[i];
-    }
-    debug(v, lt)
-    cout << lt + rt + abs(v[0]);
+    cout << n - cnt;
 }
 
 signed main()

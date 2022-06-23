@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 20-06-2022 21:31:29
+*      created: 20-06-2022 23:25:40
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -30,33 +30,29 @@ void solve()
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
     vector<int> v(n);
+    map<int, int> mp;
     for(int i = 0; i < n; i++)
-        cin >> v[i];
-    int mina = v[0], rt = 0;
-    for(int i = 1;i < n;i++)
+        cin >> v[i], mp[v[i]]++;
+    int t = 0, p = 0;
+    if(n & 1)
     {
-        v[i] -= rt;
-        if(mina < v[i])
-        {
-            rt += v[i] - mina;
-            v[i] = mina;
-        } else
-            mina = v[i];
-    }
-    debug(v, rt)
-    int minb = v[n - 1], lt = 0;
-    for(int i = n - 2;i >= 0;i--)
+        cout << "Mike";
+    } else
     {
-        v[i] -= lt;
-        if(minb < v[i])
+        int mina = INF, k = 0;
+        for(int i = 0; i < n; i++)
         {
-            lt += v[i] - minb;
-            v[i] = minb;
-        } else
-            minb = v[i];
+            if(mina > v[i])
+            {
+                mina = v[i];
+                k = i;
+            }
+        }
+        if(k & 1)
+            cout << "Mike";
+        else
+            cout << "Joe";
     }
-    debug(v, lt)
-    cout << lt + rt + abs(v[0]);
 }
 
 signed main()
