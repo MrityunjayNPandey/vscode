@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 16-07-2022 20:28:03
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,45 +28,27 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    int l, r;
+    cin >> n >> l >> r;
+    vector<int> v(n);
+    v[0] = l;
+    debug(__gcd(v[0], 1LL));
+    for(int i = 1; i < n; i++)
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
+        int x = r / (i + 1);
+        if(x * (i + 1) >= l)
         {
-            v1.pb(v[i]);
-        }
-    }
-    for(int i = v1.size() - 1; i >= 0; i--)
-    {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
-        {
-            cout << "NO";
-            return;
-        }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
-    {
-        sum += v[i];
-        if(sum >= 0)
+            v[i] = x * (i + 1);
+            debug(__gcd(v[i], i + 1))
+        } else
         {
             cout << "NO";
             return;
         }
     }
-    cout << "YES";
+    cout << "YES" << endl;
+    for(int i = 0; i < n; i++)
+        cout << v[i] << " ";
 }
 
 signed main()

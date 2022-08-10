@@ -66,11 +66,6 @@ void solve()
     sort(all(v));
     int p = v[2] - v[0];
     int q = v[2] - v[1];
-    if(p==q && q==0)
-    {
-        cout<<"YES";
-        return;
-    }
     debug(p, q);
     if((p & 1 && q & 1))
     {

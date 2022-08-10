@@ -1,10 +1,10 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 12-07-2022 10:36:39
 **/
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
+#include "ext/pb_ds/assoc_container.hpp"
 using namespace std;
 using namespace __gnu_pbds;
 #define endl "\n"
@@ -28,45 +28,62 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    cin >> n >> m;
+    vector<int> v(m);
+    map<int, int> mp;
+    for(int i = 0; i < m; i++)
+        cin >> v[i], mp[v[i]]++;
+    int same = 0, diff = 0, diff1=0;
+    while(mp.size())
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
+        if(k % 2 == 0)
         {
-            v1.pb(v[i]);
-        }
-    }
-    for(int i = v1.size() - 1; i >= 0; i--)
-    {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
+            if(diff)
+                ans++;
+            n += diff;
+            diff = 0;
+        } else
         {
-            cout << "NO";
-            return;
+            if(diff1)
+                ans++;
+            n += diff1;
+            diff1 = 0;
         }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
-    {
-        sum += v[i];
-        if(sum >= 0)
+        k++;
+        n += same;
+        same = 0;
+        for(auto& i : mp)
         {
-            cout << "NO";
-            return;
+            i.second--, same++;
+            if(i.second == 0)
+                mp.erase(i.first);
+            if(same == n)
+                break;
         }
+        n -= same;
+        if(same)
+        ans++;
+        for(auto& i : mp)
+        {
+            if(n >= i.second)
+            {
+                if(k % 2)
+                    diff = i.second;
+                else
+                    diff1 = i.second;
+                mp.erase(i.first);
+            } else
+            {
+                if(k % 2)
+                    diff = n;
+                else
+                    diff1 = n;
+                break;
+            }
+        }
+        n -= diff;
     }
-    cout << "YES";
+    cout<<ans;
 }
 
 signed main()

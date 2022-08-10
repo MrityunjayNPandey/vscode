@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 24-06-2022 15:09:38
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,45 +28,31 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
     string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    map<string, int> mp;
+    while(getline(cin, str))
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
+        if(str[0] == '+')
         {
-            v1.pb(v[i]);
-        }
-    }
-    for(int i = v1.size() - 1; i >= 0; i--)
-    {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
+            mp[str.substr(1)]++;
+        } else if(str[0] == '-')
         {
-            cout << "NO";
-            return;
-        }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
-    {
-        sum += v[i];
-        if(sum >= 0)
+            string str1;
+            str1 = str.substr(1);
+            if(mp[str1] > 0)
+            {
+                mp.erase(str1);
+            }
+        } else
         {
-            cout << "NO";
-            return;
+            int pos = str.find(':');
+            string str1 = str.substr(pos + 1);
+            ans += str1.size() * mp.size();
+            debug(str1)
         }
+        debug(str, ans, mp);
     }
-    cout << "YES";
+    cout << ans;
 }
 
 signed main()
@@ -76,7 +62,7 @@ signed main()
     free
 #endif
         int Test = 1;
-    cin >> Test;
+    // cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
         dclear(I);

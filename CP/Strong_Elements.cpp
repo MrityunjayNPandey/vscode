@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 25-06-2022 17:05:13
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -29,44 +29,74 @@ void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
-    string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    vector<int> v(n);
+    for(int i = 0; i < n; i++)
+        cin >> v[i];
+    int p, index = 0;
+    int ansf = 1;
+    for(int i = 0; i < n - 1; i++)
     {
-        if(v[i] != 0)
+        if(i == 0)
+        {
+            p = v[i];
+            ans = __gcd(v[i], v[i + 1]);
+        } else
+        {
+            p = ans;
+            ans = __gcd(ans, v[i + 1]);
+        }
+        if(ans == 1)
+        {
+            if(k)
+            {
+                k++;
+                ansf = 0;
+                break;
+            }
+            ans = p;
             k++;
-        if(k)
-        {
-            v1.pb(v[i]);
+            index = i + 1;
         }
     }
-    for(int i = v1.size() - 1; i >= 0; i--)
+    debug(k, index, ans);
+    if(ans > 1 && !k)
     {
-        v2.pb(v1[i]);
-        sum += v1[i];
+        cout << n;
+        return;
     }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
-        {
-            cout << "NO";
-            return;
-        }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
+    k = 0;
+    int d = 0;
+    for(int i = n - 1; i > 0; i--)
     {
-        sum += v[i];
-        if(sum >= 0)
+        if(i == n - 1)
         {
-            cout << "NO";
-            return;
+            p = v[i];
+            ans = __gcd(v[i], v[i - 1]);
+        } else
+        {
+            p = ans;
+            ans = __gcd(ans, v[i - 1]);
+        }
+        if(ans == 1)
+        {
+            if(k)
+            {
+                k++;
+                break;
+            }
+            ans = p;
+            debug(index, i-1)
+            if(index != i - 1 && ansf)
+                d++;
+            k++;
         }
     }
-    cout << "YES";
+    if(k == 1 && d)
+    {
+        ansf = 2;
+    } else if(k == 1)
+        ansf = 1;
+    cout << ansf;
 }
 
 signed main()

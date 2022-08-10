@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 24-06-2022 01:59:57
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -30,43 +30,39 @@ void solve()
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
     cin >> n;
     string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    cin >> str;
+    int ans1 = INF;
+    for(char i = 'a'; i <= 'z'; i++)
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
+        char rmchar = i;
+        k = 0;
+        int start = 0, end = n - 1, ans = 0;
+        while(start < end)
         {
-            v1.pb(v[i]);
+            if(str[start] != str[end])
+            {
+                debug(ans);
+                if(str[start] == rmchar)
+                    start++, ans++;
+                else if(str[end] == rmchar)
+                    end--, ans++;
+                else
+                {
+                    k++;
+                    break;
+                }
+            } else
+            {
+                start++; end--;
+            }
         }
+        if(!k)
+            ans1 = min(ans1, ans);
     }
-    for(int i = v1.size() - 1; i >= 0; i--)
-    {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
-        {
-            cout << "NO";
-            return;
-        }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
-    {
-        sum += v[i];
-        if(sum >= 0)
-        {
-            cout << "NO";
-            return;
-        }
-    }
-    cout << "YES";
+    if(ans1 == INF)
+        cout << -1;
+    else
+        cout << ans1;
 }
 
 signed main()

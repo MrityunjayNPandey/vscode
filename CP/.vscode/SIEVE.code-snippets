@@ -3,7 +3,7 @@
     "prefix": "SIEVE",
     "body": [
       "//Sieve of Eratosthenes, time complexity of O(N*log(logN))",
-      "vector<int> primetemp(MAX_N, 1), ifprime(MAX_N, 0), prime;",
+      "vector<int> primetemp(MAX_N+1, 1), ifprime(MAX_N+1, 0), prime;",
       "void SIEVE()",
       "{",
       "    prime.pb(1);",

@@ -1,8 +1,4 @@
-/**
-*      codeforces: _joKer_0
-*      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
-**/
+
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace std;
@@ -27,46 +23,30 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 
 void solve()
 {
-    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+    int n, m, k, i, ans = 0;
+    int c, s, t, p = 0, q = 0;
     cin >> n;
-    string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    vector<int>a(n);
+    for(auto& it : a)
+        cin >> it, p += it;
+    cin >> m;
+    vector<int>v1(m);
+    for(auto& it : v1)
+        cin >> it, q += it;
+    cin >> k;
+    k = n + m - k;
+    for(int l = 0;l <= k;l++)
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
-        {
-            v1.pb(v[i]);
-        }
-    }
-    for(int i = v1.size() - 1; i >= 0; i--)
-    {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
-        {
-            cout << "NO";
-            return;
-        }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
-    {
-        sum += v[i];
-        if(sum >= 0)
-        {
-            cout << "NO";
-            return;
-        }
-    }
-    cout << "YES";
+        if(k - l > m || l > n)
+            continue;
+        for(i = 0, c = 0;i < l;i++)c += a[i];
+        s = c;
+        for(;i < n;i++)c += a[i] - a[i - l], s = min(s, c);
+        for(i = 0, c = 0;i < k - l;i++)c += v1[i];
+        t = c;
+        for(;i < m;i++)c += v1[i] - v1[i - k + l], t = min(t, c);
+        ans = max(ans, p - s + q - t);
+    }cout << ans;
 }
 
 signed main()
@@ -76,9 +56,11 @@ signed main()
     free
 #endif
         int Test = 1;
+    // pref();
     cin >> Test;
     for(int I = 1; I <= Test; I++)
     {
+        cout << "Case #" << I << ": ";
         dclear(I);
         solve();
         cout << endl;

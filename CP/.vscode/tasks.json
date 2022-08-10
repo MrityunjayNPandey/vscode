@@ -12,7 +12,7 @@
     {
       "type": "shell",
       "label": "CF-Submit",
-      "command": "clear&&cf submit -f ${fileBasename} $(egrep -o 'https?://[^ ]+' .cph/.${fileBasename}*.prob)",
+      "command": "clear&&cf submit -f ${fileBasename} `egrep -o '(http|https)?://[a-zA-Z0-9./?=_%:-]*' .cph/.${fileBasename}*.prob`",
       "options": {
         "cwd": "${fileDirname}"
       },

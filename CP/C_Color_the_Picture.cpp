@@ -1,7 +1,7 @@
 /**
 *      codeforces: _joKer_0
 *      codechef:  joker_0000
-*      created: 16-06-2022 21:26:39
+*      created: 26-07-2022 18:35:46
 **/
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
@@ -28,45 +28,79 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 void solve()
 {
     int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    string str;
-    str<<cin;
-    vector<int> v(n), v1, v2;
-    for(int i = 0; i < n; i++) cin >> v[i];
-    for(int i = n - 1; i >= 0; i--)
+    cin >> n >> m >> k;
+    vector<int> v(k);
+    for(int i = 0; i < k; i++)
+        cin >> v[i];
+    sort(rall(v));
+    debug(v)
+    //row wise
+        int x = m;
+    map<int, int> mp;
+    for(int i = 0; i < k; i++)
     {
-        if(v[i] != 0)
-            k++;
-        if(k)
+        if(v[i] >= n * 2)
         {
-            v1.pb(v[i]);
+            mp[i] += v[i] - n * 2;
+            x -= 2;
+            if(x == 0)
+            {
+                cout << "Yes";
+                return;
+            }
+            if(x < 0)
+            {
+                x += 2;
+                mp.erase(i);
+                break;
+            }
         }
     }
-    for(int i = v1.size() - 1; i >= 0; i--)
+    debug(x, mp);
+    for(auto i : mp)
     {
-        v2.pb(v1[i]);
-        sum += v1[i];
-    }
-    debug(v2.size());
-    if(v2.size())
-        if(v2[0] < 0 || v2[v2.size() - 1]>0 || sum != 0)
+        int p = i.second / n;
+        x -= p;
+        if(x <= 0)
         {
-            cout << "NO";
+            cout << "Yes";
             return;
         }
-    if(v2.size())
-    sum = v[v2.size() - 1];
-    debug(sum);
-    for(int i = v2.size() - 2; i > 0; i--)
+    }
+//column wise
+    x = n, cnt = 0;
+    map<int, int> mp1;
+    for(int i = 0; i < k; i++)
     {
-        sum += v[i];
-        if(sum >= 0)
+        if(v[i] >= m * 2)
         {
-            cout << "NO";
-            return;
+            mp1[i] += v[i] - m * 2;
+            x -= 2;
+            if(x == 0)
+            {
+                cout << "Yes";
+                return;
+            }
+            if(x < 0)
+            {
+                x += 2;
+                mp1.erase(i);
+                break;
+            }
         }
     }
-    cout << "YES";
+    debug(x, mp1)
+        for(auto i : mp1)
+        {
+            int p = i.second / m;
+            x -= p;
+            if(x <= 0)
+            {
+                cout << "Yes";
+                return;
+            }
+        }
+    cout << "No";
 }
 
 signed main()
