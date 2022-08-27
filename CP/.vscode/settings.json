@@ -74,7 +74,9 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "ranges": "cpp",
+    "span": "cpp"
   },
   "python.formatting.provider": "yapf"
 }
