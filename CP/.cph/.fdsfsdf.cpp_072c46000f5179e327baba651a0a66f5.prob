@@ -1,0 +1,1 @@
+{"name":"Local: fdsfsdf","url":"/home/joker/vscode/CP/fdsfsdf.cpp","tests":[{"id":1663180201073,"input":"1\n999999999999999\n999999","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/joker/vscode/CP/fdsfsdf.cpp","group":"local","local":true}
