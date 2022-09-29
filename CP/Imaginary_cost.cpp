@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 20-09-2022 00:14:59
+ *      created: 20-09-2022 22:43:08
  **/
 // clang-format off
 #include <bits/stdc++.h>
@@ -12,7 +12,7 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 
-#define print(x)c
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -27,32 +27,17 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 #define int long long
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> m;
-  vector<string> vstr;
-  for (int i = 0; i < n; i++) {
-    string str;
-    cin >> str;
-    vstr.pb(str);
-  }
-  debug(vstr);
-  for (int i = 1; i < m - 1; i++) {
-    if (vstr[0][i] == '1' || vstr[0][i - 1] == '1' || vstr[0][i + 1] == '1') {
-      if (vstr[0][i - 1] == '1' && vstr[0][i + 1] == '1') {
-        ans += 2;
-      } else
-        ans++;
-      vstr[0][i] = '0';
-      vstr[0][i - 1] = '0';
-      vstr[0][i + 1] = '0';
-      vstr[1][i] = '0';
-    }
-  }
-  debug(vstr);
-  for (int i = 1; i < n; i++) {
-    for (int j = 0; j < m; j++)
-      if (vstr[i][j] == '1')
-        ans++;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
+  int p, q;
+  cin >> n >> q >> p;
+  vector<int> v(n + 1);
+  for (int i = 1; i < n + 1; i++)
+    cin >> v[i], sum += v[i];
+  for (int i = 0; i < n + 1; i++) {
+    sum -= v[i];
+    int temp = (p + q) * v[i];
+    temp += (sum - (n - i) * v[i]) * p;
+    ans = min(ans, temp);
   }
   cout << ans;
 }
