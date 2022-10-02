@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 20-09-2022 00:14:59
+ *      created: 02-10-2022 20:12:51
  **/
 // clang-format off
 #include <bits/stdc++.h>
@@ -12,7 +12,7 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 
-#define print(x)c
+#define print(x)
 #define dclear(x)
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -23,36 +23,14 @@ using namespace std; using namespace __gnu_pbds;
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LONG_LONG_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
+typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
 // clang-format on
 #define int long long
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> m;
-  vector<string> vstr;
-  for (int i = 0; i < n; i++) {
-    string str;
-    cin >> str;
-    vstr.pb(str);
-  }
-  k = INF;
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++) {
-      if (vstr[i][j] == '1')
-        sum++;
-    }
-  for (int i = 0; i < n - 1; i++)
-    for (int j = 0; j < m - 1; j++) {
-      int cnt = vstr[i][j] - '0' + vstr[i][j + 1] - '0' + vstr[i + 1][j] - '0' +
-                vstr[i + 1][j + 1] - '0';
-      k = min(k, cnt);
-    }
-  if (k<=2) {
-    cout << max(sum, 0LL);
-  } else if (k == 3) {
-    cout << max(sum - 1, 0LL);
-  } else
-    cout << max(sum - 2, 0LL);
+  cin >> n;
+  cout << (n - 3) / 3 - 1;
 }
 
 signed main() {
