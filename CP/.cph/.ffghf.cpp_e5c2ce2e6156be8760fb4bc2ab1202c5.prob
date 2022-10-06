@@ -1,0 +1,1 @@
+{"name":"Local: ffghf","url":"/home/joker/vscode/CP/ffghf.cpp","tests":[{"id":1664983304407,"input":"5\n2 1 1 3 4 ","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/joker/vscode/CP/ffghf.cpp","group":"local","local":true}

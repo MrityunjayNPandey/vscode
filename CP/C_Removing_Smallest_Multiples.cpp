@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 28-09-2022 19:32:19
+ *      created: 05-10-2022 14:27:45
  **/
 // clang-format off
 #include <bits/stdc++.h>
@@ -20,51 +20,36 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LONG_LONG_MAX;
+const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
+typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
 // clang-format on
 #define int long long
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int x, y, st = 0;
-  cin >> n >> x >> y;
-  string str1, str2;
-  cin >> str1 >> str2;
-  vector<int> v;
+  string str;
+  cin >> n;
+  cin >> str;
+  vector<int> a;
+  a.pb(0);
   for (int i = 0; i < n; i++) {
-    if (str1[i] != str2[i]) {
-      v.pb(1);
-      if (k == 0)
-        st = i;
-      k++;
-    } else
-      v.pb(0);
+    a.pb((str[i] == '1'));
   }
-  if (k % 2 == 1) {
-    cout << -1;
-    return;
-  } else {
-    if (k == 2) {
-      if (st != n - 1) {
-        if (v[st] == v[st + 1]) {
-          cout << min(x, 2 * y);
-        } else
-          cout << y;
-        return;
-      }
-      if (st != 0) {
-        if (v[st] == v[st - 1]) {
-          cout << min(x, 2 * y);
-        } else
-          cout << y;
-        return;
-      }
-    } else {
-      cout << k * y / 2;
+  int cost[n + 1];
+  for (int i = n; i >= 1; i--) {
+    for (int j = i; j <= n; j += i) {
+      if (a[j])
+        break;
+      cost[j] = i;
     }
   }
+  for (int i = 1; i <= n; i++) {
+    if (!a[i])
+      ans += cost[i];
+  }
+  cout << ans;
 }
 
 signed main() {
