@@ -126,30 +126,10 @@ void heapPermutation(int a[], int size, int n) {
 
 signed main() {
   free;
-  int t = 1000;
-  cout << t << endl;
+  int t = 100000;
+  cout << t << " " << 1 << endl;
   while (t--) {
-    int k = rand(1, 100);
-    cout << k << endl;
-    for (int i = 0; i < k; i++) {
-      int x = rand(1, 3);
-      if (x % 3 == 1)
-        cout << "R";
-      else if (x % 3 == 2)
-        cout << "G";
-      else
-        cout << "B";
-    }
-    cout << endl;
-    for (int i = 0; i < k; i++) {
-      int x = rand(1, 3);
-      if (x % 3 == 1)
-        cout << "R";
-      else if (x % 3 == 2)
-        cout << "G";
-      else
-        cout << "B";
-    }
-    cout << endl;
+    cout << 100000 << " ";
   }
+  cout<<endl<<1<<" "<<100000;
 }
