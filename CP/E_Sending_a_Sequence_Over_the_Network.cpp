@@ -16,8 +16,8 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 73
-#define print(x)
-#define dclear(x)
+#define print(x) 73
+#define dclear(x) 73
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
