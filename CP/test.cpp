@@ -26,21 +26,19 @@ void real(int l, int r, int dig, int n) {
 }
 // Random n strings of length l
 void str(int l, int n) {
-  vector<int> v(l);
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < l; ++j) {
       // int v = rand(1, 150);
       // if (v % 3 == 0)
-      // cout << (char)rand('a', 'b');
+      cout << (char)rand('a', 'z');
       // else if (v % 3 == 1)
       //     cout << (char)rand('A', 'Z');
       // else
-      v[j] = rand(1, 104);
+      // v[j] = rand(1, 104);
     }
     // sort(v.begin(), v.end());
-    for (auto i : v)
-      cout << i << " ";
   }
+  cout << endl;
 }
 // Random n strings of max length l
 void strmx(int mxlen, int n) {
@@ -127,9 +125,7 @@ void heapPermutation(int a[], int size, int n) {
 signed main() {
   free;
   int t = 100000;
-  cout << t << " " << 1 << endl;
-  while (t--) {
-    cout << 100000 << " ";
-  }
-  cout<<endl<<1<<" "<<100000;
+  cout << 1 << endl;
+  cout << 100000 << endl;
+  str(t, 1);
 }
