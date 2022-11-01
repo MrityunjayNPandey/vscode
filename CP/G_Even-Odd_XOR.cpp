@@ -15,10 +15,10 @@ using namespace __gnu_pbds;
 #define print(x)
 #define dclear(x)
 #endif
-#define free                            \
-    freopen("input.txt", "r", stdin);   \
-    freopen("output.txt", "w", stdout); \
-    freopen("error.txt", "w", stderr);
+#define free                                                                   \
+  freopen("input.txt", "r", stdin);                                            \
+  freopen("output.txt", "w", stdout);                                          \
+  freopen("error.txt", "w", stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
@@ -27,48 +27,46 @@ const long long MAX_N = 1e6 + 7;
 const long long MOD = 1e9 + 7;
 const long long mod = 998244353;
 const long long INF = LONG_LONG_MAX;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
+typedef tree<int, null_type, less_equal<int>, rb_tree_tag,
+             tree_order_statistics_node_update>
+    ordered_multiset;
+typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag,
+             tree_order_statistics_node_update>
+    ordered_map;
 #define int long long
 
-void solve()
-{
-    int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-    cin >> n;
-    vector<int> v(n);
-    int odd = 1, even = 2;
-    v[0] = odd;
-    for (int i = 2; i < n; i += 2)
-    {
-        v[i] = even;
-        even += 2;
-    }
-    v[1] = even, odd+=2;
-    for (int i = 3; i < n; i += 2)
-    {
-        v[i] = odd;
-        odd += 2;
-    }
-    int xo1=v[0], xo2=v[1];
-    for (int i = 0; i < n; i++)
-    {
-        cout << v[i] << " ";
-    }
+void solve() {
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n);
+  int nxor = 0;
+  for (int i = 0; i < n - 2; i++) {
+    v[i] = i + 1;
+    nxor ^= v[i];
+  }
+  if (nxor == 0) {
+    nxor ^= v[n - 3];
+    v[n - 3]++;
+    nxor ^= v[n - 3];
+  }
+  v[n - 2] = (1 << 30);
+  nxor ^= v[n - 2];
+  v[n - 1] = nxor;
+  for (int i = 0; i < n; i++)
+    cout << v[i] << " ";
 }
 
-signed main()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(0);
+signed main() {
+  ios::sync_with_stdio(false);
+  cin.tie(0);
 #ifdef SUBLIME
-    free
+  free
 #endif
-        int Test = 1;
-    cin >> Test;
-    for (int I = 1; I <= Test; I++)
-    {
-        dclear(I);
-        solve();
-        cout << endl;
-    }
+      int Test = 1;
+  cin >> Test;
+  for (int I = 1; I <= Test; I++) {
+    dclear(I);
+    solve();
+    cout << endl;
+  }
 }
