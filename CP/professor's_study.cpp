@@ -7,13 +7,13 @@ using namespace std;
 #define LOG(n) 31 - __builtin_clz(n)
 #define nl "\n"
 #define ok cout << "OK\n"
-#define ios                                                                    \
-  ios_base::sync_with_stdio(false);                                            \
-  cin.tie(NULL);                                                               \
-  cout.tie(NULL)
-#define free                                                                   \
-  freopen("input.txt", "r", stdin);                                            \
-  freopen("output.txt", "w", stdout)
+#define ios                           \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL)
+#define free                          \
+    freopen("input.txt", "r", stdin); \
+    freopen("output.txt", "w", stdout)
 #define ff first
 #define ss second
 typedef pair<int, int> pii;
@@ -24,41 +24,48 @@ const long long mod = 998244353;
 
 int I;
 
-void solve() {
-  int n, k;
-  cin >> n >> k;
-  vector<int> a(n);
-  vector<pii> v;
-  for (int i = 0; i < n; i++) {
-    cin >> a[i];
-  }
-  sort(all(a));
-  for (int i = 0; i < n; i++) {
-    v.pb({a[i], i});
-  }
-  int m = 1, ans = 0;
-  for (int i = 0; i < n; i++) {
-    if (v[i].second == i)
-      ans++;
-    if (m == n)
-      continue;
-    pii p = {a[i] + k + 1, -1};
-    auto it = lower_bound(v.begin() + m, v.end(), p);
-    if (it == v.end())
-      m = n;
-    else {
-      v[(it - v.begin())].second = i;
-      m = (it - v.begin()) + 1;
+void solve()
+{
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    vector<pii> v;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
     }
-  }
-  cout << ans << nl;
+    sort(all(a));
+    for (int i = 0; i < n; i++)
+    {
+        v.pb({a[i], i});
+    }
+    int m = 1, ans = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i].ss == i)
+            ans++;
+        if (m == n)
+            continue;
+        pii p = {a[i] + k + 1, -1};
+        auto it = lower_bound(v.begin() + m, v.end(), p);
+        if (it == v.end())
+            m = n;
+        else
+        {
+            v[(it - v.begin())].ss = i;
+            m = (it - v.begin()) + 1;
+        }
+    }
+    cout << ans << nl;
 }
 
-int32_t main() {
-  ios;
-  int Test = 1;
-  cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    solve();
-  }
+int32_t main()
+{
+    ios;
+    int Test = 1;
+    cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        solve();
+    }
 }

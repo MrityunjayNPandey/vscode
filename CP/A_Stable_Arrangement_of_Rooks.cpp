@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,45 +50,55 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve() {
-  int n = 0, k = 0, ans = 0;
-  cin >> n >> k;
-  vector<pii> vp;
-  vector<int> v, v1;
-  for (int i = 0; i < 2 * n; i++) {
-    if (i < n) {
-      int temp;
-      cin >> temp;
-      v.pb(temp);
-    } else {
-      int temp;
-      cin >> temp;
-      v1.pb(temp);
+void solve()
+{
+    int n = 0, k = 0, ans = 0;
+    cin >> n >> k;
+    vector<pii> vp;
+    vector<int> v, v1;
+    for (int i = 0; i < 2 * n; i++)
+    {
+        if (i < n)
+        {
+            int temp;
+            cin >> temp;
+            v.pb(temp);
+        }
+        else
+        {
+            int temp;
+            cin >> temp;
+            v1.pb(temp);
+        }
     }
-  }
-  for (int i = 0; i < n; i++) {
-    vp.pb(make_pair(v[i], v1[i]));
-  }
-  sort(all(vp));
-  int i = 0;
-  while (k >= vp[i].first && i < n) {
-    k += vp[i].second;
-    i++;
-  }
-  cout << k;
+    for (int i = 0; i < n; i++)
+    {
+        vp.pb(make_pair(v[i], v1[i]));
+    }
+    sort(all(vp));
+    int i=0;
+    while(k>=vp[i].ff && i < n)
+    {
+        k+=vp[i].ss;
+        i++;
+    }
+    cout<<k;
 }
 
-int32_t main() {
-  ios;
-#ifndef ONLINE_JUDGE
-  freopen("input.txt", "r", stdin);
-  freopen("output.txt", "w", stdout);
-  freopen("error.txt", "w", stderr);
-#endif
-  int Test = 1;
-  // cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    debug(I) solve();
-    cout << "kgjhgkjh" << endl;
-  }
+int32_t main()
+{
+    ios;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    freopen("error.txt", "w", stderr);
+    #endif
+    int Test = 1;
+    // cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        debug(I)
+        solve();
+        cout<< "kgjhgkjh"<<endl;
+    }
 }

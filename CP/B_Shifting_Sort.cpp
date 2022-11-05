@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,74 +50,91 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve() {
-  int n = 0, k = 0, ans = 0;
-  cin >> n;
-  vector<int> v;
-  vector<pii> vp;
-  for (int i = 0; i < n; i++) {
-    int temp;
-    cin >> temp;
-    v.pb(temp);
-    vp.pb(make_pair(temp, i));
-    if (i > 0 && temp < v[i - 1])
-      k++;
-  }
-  sort(all(vp));
-  if (k == 0) {
-    cout << 0 << endl << nl;
-    return;
-  } else {
-    debug(v) vector<int> l, r, d;
-    k = 0;
-    for (int i = 0; i < n; i++) {
-      debug(i);
-      debug(vp[i].second);
-      if (vp[i].second != i) {
-        l.pb(i);
-        r.pb(vp[i].second);
-        d.pb(vp[i].second - i);
-        debug(l);
-        debug(r);
-        debug(v[vp[i].second]);
-        k++;
-        vector<int> temp;
-        for (int j = 0; j < i; j++) {
-          temp.pb(v[j]);
-        }
-        temp.pb(v[vp[i].second]);
-        for (int j = i; j < vp[i].second; j++) {
-          temp.pb(v[j]);
-        }
-        for (int j = vp[i].second + 1; j < n; j++) {
-          temp.pb(v[j]);
-          debug(v[j])
-        }
-        debug(temp);
-        v.clear();
-        vp.clear();
-        v = temp;
-        for (int i = 0; i < n; i++) {
-          vp.pb(make_pair(v[i], i));
-        }
-        sort(all(vp));
-        debug(vp);
-        debug(v);
-        debug(k);
-      }
+void solve()
+{
+    int n = 0, k = 0, ans = 0;
+    cin >> n;
+    vector<int> v;
+    vector<pii> vp;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        v.pb(temp);
+        vp.pb(make_pair(temp, i));
+        if (i > 0 && temp < v[i - 1])
+            k++;
     }
-    cout << k << nl;
-    for (int i = 0; i < k; i++)
-      cout << l[i] + 1 << " " << r[i] + 1 << " " << d[i] << nl;
-  }
+    sort(all(vp));
+    if (k == 0)
+    {
+        cout << 0 << endl
+             << nl;
+        return;
+    }
+    else
+    {
+        debug(v)
+            vector<int>
+                l, r, d;
+        k = 0;
+        for (int i = 0; i < n; i++)
+        {
+            debug(i);
+            debug(vp[i].ss);
+            if (vp[i].ss != i)
+            {
+                l.pb(i);
+                r.pb(vp[i].ss);
+                d.pb(vp[i].ss - i);
+                debug(l);
+                debug(r);
+                debug(v[vp[i].ss]);
+                k++;
+                vector<int> temp;
+                for (int j = 0; j < i; j++)
+                {
+                    temp.pb(v[j]);
+                }
+                temp.pb(v[vp[i].ss]);
+                for (int j = i; j < vp[i].ss; j++)
+                {
+                    temp.pb(v[j]);
+                }
+                for (int j = vp[i].ss + 1; j < n; j++)
+                {
+                    temp.pb(v[j]);
+                    debug(v[j])
+                }
+                debug(temp);
+                v.clear();
+                vp.clear();
+                v = temp;
+                for (int i = 0; i < n; i++)
+                {
+                    vp.pb(make_pair(v[i], i));
+                }
+                sort(all(vp));
+                debug(vp);
+                debug(v);
+                debug(k);
+            }
+        }
+        cout << k << nl;
+        for (int i = 0; i < k; i++)
+            cout
+                << l[i] + 1 << " " << r[i] + 1 << " " << d[i] << nl;
+    }
 }
 
-int32_t main() {
-  ios;
-  int Test = 1;
-  cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    solve();
-    // cout << endl;
-  }
+int32_t main()
+{
+    ios;
+    int Test = 1;
+    cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        solve();
+        // cout << endl;
+    }
 }

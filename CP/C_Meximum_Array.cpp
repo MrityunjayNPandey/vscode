@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,55 +50,64 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve() {
-  long long i, j, k, l, r, n, m, t, x, y, z, p;
-  cin >> n;
-  long long a[n], b[n];
-  vector<long long> v[n];
-  vector<long long> u;
-  for (i = 0; i < n; i++) {
-    cin >> a[i];
-    b[i] = 0;
-    if (a[i] < n) {
-      v[a[i]].push_back(i);
+void solve()
+{
+    long long i,j,k,l,r,n,m,t,x,y,z,p;
+    cin >> n;
+    long long a[n], b[n];
+    vector<long long> v[n];
+    vector<long long> u;
+    for (i = 0; i < n; i++)
+    {
+        cin >> a[i];
+        b[i] = 0;
+        if (a[i] < n)
+        {
+            v[a[i]].push_back(i);
+        }
     }
-  }
-  z = -1;
-  p = 0;
-  while (p < n) {
-    y = z;
-    for (i = 0; i < n; i++) {
-      j = b[i];
-      while (j < v[i].size() && v[i][j] <= z) {
-        j++;
-      }
-      if (j >= v[i].size())
-        break;
-      y = max(y, v[i][j]);
-      j++;
-      b[i] = j;
+    z = -1;
+    p = 0;
+    while (p < n)
+    {
+        y = z;
+        for (i = 0; i < n; i++)
+        {
+            j = b[i];
+            while (j < v[i].size() && v[i][j] <= z)
+            {
+                j++;
+            }
+            if (j >= v[i].size())
+                break;
+            y = max(y, v[i][j]);
+            j++;
+            b[i] = j;
+        }
+        if (i == 0)
+            y++;
+        z = y;
+        p = z + 1;
+        if (p == 0)
+            p = 1;
+        u.push_back(i);
     }
-    if (i == 0)
-      y++;
-    z = y;
-    p = z + 1;
-    if (p == 0)
-      p = 1;
-    u.push_back(i);
-  }
-  cout << u.size() << "\n";
-  for (i = 0; i < u.size(); i++) {
-    cout << u[i] << " ";
-  }
+    cout << u.size() << "\n";
+    for (i = 0; i < u.size(); i++)
+    {
+        cout << u[i] << " ";
+    }
 }
 
-int32_t main() {
-  ios;
-  int Test = 1;
-  cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    cerr << "----" << I << "----" << nl;
-    solve();
-    cout << endl;
-  }
+int32_t main()
+{
+    ios;
+    int Test = 1;
+    cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        cerr << "----" << I << "----" << nl;
+        solve();
+        cout << endl;
+    }
 }

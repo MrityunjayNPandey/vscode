@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,40 +50,50 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve() {
-  int N, d;
-  cin >> N >> d;
+void solve()
+{
+    int N, d;
+    cin >> N >> d;
 
-  int ds[10];
+    int ds[10];
 
-  for (int i = 1; i <= 10; i++) {
-    ds[i - 1] = i * d;
-  }
-
-  int arr[N];
-  for (int i = 0; i < N; i++) {
-    cin >> arr[i];
-    int as = 0;
-    for (int j = 0; j < 10; j++) {
-      if ((arr[i] % 10 == ds[j] % 10) && arr[i] >= ds[j]) {
-        as = 1;
-        break;
-      }
+    for (int i = 1; i <= 10; i++)
+    {
+        ds[i - 1] = i * d;
     }
-    if (as || d == 1 || (arr[i] >= d * 10)) {
-      cout << "YES\n";
-    } else {
-      cout << "NO\n";
+
+    int arr[N];
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
+        int as = 0;
+        for (int j = 0; j < 10; j++)
+        {
+            if ((arr[i] % 10 == ds[j] % 10) && arr[i] >= ds[j])
+            {
+                as = 1;
+                break;
+            }
+        }
+        if (as || d == 1 || (arr[i] >= d * 10))
+        {
+            cout << "YES\n";
+        }
+        else
+        {
+            cout << "NO\n";
+        }
     }
-  }
 }
 
-int32_t main() {
-  ios;
-  int Test = 1;
-  cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    solve();
-    // cout << endl;
-  }
+int32_t main()
+{
+    ios;
+    int Test = 1;
+    cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        solve();
+        // cout << endl;
+    }
 }

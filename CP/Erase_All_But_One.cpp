@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,29 +50,33 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve() {
-  int n = 0, k = 0, ans = 0;
-  cin >> n;
-  vector<pii> v;
-  for (int i = 0; i < n; i++) {
-    int temp;
-    cin >> temp;
-    v.pb(make_pair(temp, i));
-  }
-  sort(all(v));
-  if (v[0].second == n - 1 || v[n - 1].second == 0)
-    cout << "NO";
-  else
-    cout << "YES";
+void solve()
+{
+    int n = 0, k = 0, ans = 0;
+    cin >> n;
+    vector<pii> v;
+    for (int i = 0; i < n; i++)
+    {
+        int temp;
+        cin >> temp;
+        v.pb(make_pair(temp, i));
+    }
+    sort(all(v));
+    if(v[0].ss==n-1 || v[n-1].ss==0 )
+    cout<<"NO";
+    else
+    cout<<"YES";
 }
 
-int32_t main() {
-  ios;
-  int Test = 1;
-  cin >> Test;
-  for (I = 1; I <= Test; I++) {
-    cerr << "----" << I << "----" << nl;
-    solve();
-    cout << endl;
-  }
+int32_t main()
+{
+    ios;
+    int Test = 1;
+    cin >> Test;
+    for (I = 1; I <= Test; I++)
+    {
+        cerr << "----" << I << "----" << nl;
+        solve();
+        cout << endl;
+    }
 }
