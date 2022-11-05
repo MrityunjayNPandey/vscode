@@ -7,13 +7,13 @@ using namespace std;
 #define LOG(n) 31 - __builtin_clz(n)
 #define nl "\n"
 #define ok cout << "OK\n"
-#define ios                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
-#define free                          \
-    freopen("input.txt", "r", stdin); \
-    freopen("output.txt", "w", stdout)
+#define ios                                                                    \
+  ios_base::sync_with_stdio(false);                                            \
+  cin.tie(NULL);                                                               \
+  cout.tie(NULL)
+#define free                                                                   \
+  freopen("input.txt", "r", stdin);                                            \
+  freopen("output.txt", "w", stdout)
 #define ff first
 #define ss second
 typedef pair<int, int> pii;
@@ -24,53 +24,42 @@ const long long mod = 998244353;
 
 int I;
 
-void solve()
-{
-    int n, p = 0;
-    cin >> n;
-    string str;
-    vector<pair<char, char>> vp;
-    for (int i = 0; i < n - 2; i++)
-    {
-        cin >> str;
-        vp.pb(make_pair(str[0], str[1]));
+void solve() {
+  int n, p = 0;
+  cin >> n;
+  string str;
+  vector<pair<char, char>> vp;
+  for (int i = 0; i < n - 2; i++) {
+    cin >> str;
+    vp.pb(make_pair(str[0], str[1]));
+  }
+  for (int i = 1; i < n - 2; i++) {
+    // cout<<vp[i-1].second<<" "<<vp[i].first<<endl;
+    if (vp[i].first != vp[i - 1].second) {
+      vp.insert(vp.begin() + i, make_pair(vp[i - 1].second, vp[i].first));
+      p++;
+      break;
     }
-    for (int i = 1; i < n - 2; i++)
-    {
-        // cout<<vp[i-1].ss<<" "<<vp[i].ff<<endl;
-        if (vp[i].ff != vp[i - 1].ss)
-        {
-            vp.insert(vp.begin() + i, make_pair(vp[i - 1].ss, vp[i].ff));
-            p++;
-            break;
-        }
+  }
+  if (p == 0) {
+    cout << vp[0].first;
+    for (int i = 0; i < n - 2; i++) {
+      cout << vp[i].second;
     }
-    if (p == 0)
-    {
-        cout << vp[0].ff;
-        for (int i = 0; i < n - 2; i++)
-        {
-            cout << vp[i].ss;
-        }
-        cout << vp[n - 3].ss;
+    cout << vp[n - 3].second;
+  } else {
+    cout << vp[0].first;
+    for (int i = 0; i < n - 1; i++) {
+      cout << vp[i].second;
     }
-    else
-    {
-        cout << vp[0].ff;
-        for (int i = 0; i < n - 1; i++)
-        {
-            cout << vp[i].ss;
-        }
-    }
+  }
 }
-int32_t main()
-{
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
-    {
-        solve();
-        cout << endl;
-    }
+int32_t main() {
+  ios;
+  int Test = 1;
+  cin >> Test;
+  for (I = 1; I <= Test; I++) {
+    solve();
+    cout << endl;
+  }
 }

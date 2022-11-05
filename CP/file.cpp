@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,84 +50,66 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve()
-{
-    int n = 0, k = 0, ans = 0;
-    cin >> n;
-    string str;
-    vector<int> v;
-    cin >> str;
-    for (int i = 0; i < n; i++)
-    {
-        if (str[i] == '2')
-        {
-            k++;
-            v.pb(i);
+void solve() {
+  int n = 0, k = 0, ans = 0;
+  cin >> n;
+  string str;
+  vector<int> v;
+  cin >> str;
+  for (int i = 0; i < n; i++) {
+    if (str[i] == '2') {
+      k++;
+      v.pb(i);
+    }
+  }
+  debug(k);
+  if (k < 3 && k != 0) {
+    cout << "NO" << endl;
+    return;
+  } else
+    cout << "YES" << endl;
+  char a[n][n];
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      a[i][j] = '0';
+    }
+  }
+  for (int i = 0; i < n; i++) {
+    int p = 0;
+    for (int j = 0; j < n; j++) {
+      if (a[i][j] == '0') {
+        if (i == j)
+          a[i][j] = 'X';
+        else if (str[i] == '1' || str[j] == '1')
+          a[i][j] = '=';
+        else {
+          if (p == 0) {
+            p++;
+            a[i][j] = '+';
+            a[j][i] = '-';
+          } else {
+            a[i][j] = '-';
+            a[j][i] = '+';
+          }
         }
+      }
     }
-    debug(k);
-    if (k < 3 && k != 0)
-    {
-        cout << "NO" << endl;
-        return;
+  }
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      cout << a[i][j];
+      debug(a[i][j]);
     }
-    else
-        cout << "YES" << endl;
-    char a[n][n];
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            a[i][j] = '0';
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        int p = 0;
-        for (int j = 0; j < n; j++)
-        {
-            if (a[i][j] == '0')
-            {
-                if (i == j)
-                    a[i][j] = 'X';
-                else if (str[i] == '1' || str[j] == '1')
-                    a[i][j] = '=';
-                else
-                {
-                    if (p == 0 )
-                    {
-                        p++;
-                        a[i][j] = '+';
-                        a[j][i] = '-';
-                    }
-                    else
-                    {
-                        a[i][j] = '-';
-                        a[j][i] = '+';
-                    }
-                }
-            }
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cout << a[i][j];
-            debug(a[i][j]);
-        }
-        cout << endl;
-    }
+    cout << endl;
+  }
 }
 
-int32_t main()
-{
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
-    {
-        // solve();
-        cout << "ddaiduasy"<<endl;
-    }
+int32_t main() {
+  ios;
+  int Test = 1;
+  cin >> Test;
+  for (I = 1; I <= Test; I++) {
+    // solve();
+    cout << "ddaiduasy" << endl;
+  }
 }

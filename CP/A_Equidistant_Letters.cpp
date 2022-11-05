@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,43 +50,35 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve()
-{
-    string str;
-    cin >> str;
-    map<char, int> mp;
-    for (int i = 0; i < str.length(); i++)
-    {
-        mp[str[i]]++;
+void solve() {
+  string str;
+  cin >> str;
+  map<char, int> mp;
+  for (int i = 0; i < str.length(); i++) {
+    mp[str[i]]++;
+  }
+  vector<char> v;
+  for (auto i : mp) {
+    if (i.second == 2) {
+      v.pb(i.first);
     }
-    vector<char> v;
-    for (auto i : mp)
-    {
-        if (i.ss == 2)
-        {
-            v.pb(i.ff);
-        }
-    }
-    for (auto i : mp)
-    {
-        if (i.ss == 2)
-            continue;
-        cout << i.ff;
-    }
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i] << v[i];
-    }
+  }
+  for (auto i : mp) {
+    if (i.second == 2)
+      continue;
+    cout << i.first;
+  }
+  for (int i = 0; i < v.size(); i++) {
+    cout << v[i] << v[i];
+  }
 }
 
-int32_t main()
-{
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
-    {
-        solve();
-        cout << endl;
-    }
+int32_t main() {
+  ios;
+  int Test = 1;
+  cin >> Test;
+  for (I = 1; I <= Test; I++) {
+    solve();
+    cout << endl;
+  }
 }

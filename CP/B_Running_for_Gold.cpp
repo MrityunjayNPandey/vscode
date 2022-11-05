@@ -37,7 +37,7 @@ template <class T> void _print(vector <T> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
@@ -50,66 +50,53 @@ const long long mod = 998244353;
 int I;
 // clang-format on
 
-void solve()
-{
-    int n;
-    cin >> n;
-    vector<vector<int>> vv;
-    for (int i = 0; i < n; i++)
-    {
-        vector<int> v;
-        for (int j = 0; j < 5; j++)
-        {
-            int temp;
-            cin >> temp;
-            v.pb(temp);
-        }
-        vv.pb(v);
+void solve() {
+  int n;
+  cin >> n;
+  vector<vector<int>> vv;
+  for (int i = 0; i < n; i++) {
+    vector<int> v;
+    for (int j = 0; j < 5; j++) {
+      int temp;
+      cin >> temp;
+      v.pb(temp);
     }
-    int bwd = 0, potwin = 0;
-    for (int i = 1; i < n; i++)
-    {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                potwin = i;
-                break;
-            }
-        }
+    vv.pb(v);
+  }
+  int bwd = 0, potwin = 0;
+  for (int i = 1; i < n; i++) {
+    int t = 0;
+    for (int j = 0; j < 5; j++) {
+      if (vv[i][j] < vv[potwin][j]) {
+        t++;
+      }
+      if (t >= 3) {
+        potwin = i;
+        break;
+      }
     }
-    for (int i = 0; i < n; i++)
-    {
-        int t = 0;
-        for (int j = 0; j < 5; j++)
-        {
-            if (vv[i][j] < vv[potwin][j])
-            {
-                t++;
-            }
-            if (t >= 3)
-            {
-                cout << -1;
-                return;
-            }
-        }
+  }
+  for (int i = 0; i < n; i++) {
+    int t = 0;
+    for (int j = 0; j < 5; j++) {
+      if (vv[i][j] < vv[potwin][j]) {
+        t++;
+      }
+      if (t >= 3) {
+        cout << -1;
+        return;
+      }
     }
-    cout << potwin + 1;
+  }
+  cout << potwin + 1;
 }
 
-int32_t main()
-{
-    ios;
-    int Test = 1;
-    cin >> Test;
-    for (I = 1; I <= Test; I++)
-    {
-        // solve();
-        cout << endl;
-    }
+int32_t main() {
+  ios;
+  int Test = 1;
+  cin >> Test;
+  for (I = 1; I <= Test; I++) {
+    // solve();
+    cout << endl;
+  }
 }
