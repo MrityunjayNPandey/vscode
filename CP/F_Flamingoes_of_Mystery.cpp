@@ -1,9 +1,13 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 21-10-2022 17:04:04
+ *      created: 06-11-2022 02:33:23
  **/
 // clang-format off
+#ifdef ONLINE_JUDGE
+#pragma GCC optimize("Ofast", "unroll-loops")
+#pragma GCC target("avx,avx2,fma")
+#endif
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace std; using namespace __gnu_pbds;
@@ -11,9 +15,9 @@ using namespace std; using namespace __gnu_pbds;
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
-#define debug(...) 
-#define print(x)
-#define dclear(x)
+#define debug(...) 73;
+#define print(x) 73;
+#define dclear(x) 73;
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
@@ -26,33 +30,37 @@ typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
 // clang-format on
 #define int long long
+int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int n = 0, m = 0, k = 0, q = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  if (n == 1) {
-    cout << "FastestFinger";
-    return;
+  m = n;
+  vector<int> v, vans(n);
+  k = 2;
+  m--;
+  int x;
+  while (m--) {
+    cout << "?"
+         << " " << 1 << " " << k << endl;
+    cout.flush();
+    cin >> x;
+    k++;
+    v.pb(x);
   }
-  if (n & 1 || n == 2) {
-    cout << "Ashishgup";
-    return;
+  cout << "?"
+       << " " << 2 << " " << n << endl;
+  cout.flush();
+  cin >> x;
+  for (int i = 1; i < n - 1; i++) {
+    vans[i + 1] = v[i] - v[i - 1];
   }
-  if ((n & n - 1) == 0) {
-    cout << "FastestFinger";
-    return;
-  } else {
-    n /= 2;
-    for (int i = 2; i * i <= n; i++) {
-      if (n % i == 0) {
-        cnt++;
-        break;
-      }
-    }
-    if (!cnt) {
-      cout << "FastestFinger";
-    } else
-      cout << "Ashishgup";
+  debug(v);
+  vans[0] = v.back() - x;
+  vans[1] = v.front() - vans[0];
+  cout << "! ";
+  for (auto i : vans) {
+    cout << i << " ";
   }
 }
 
@@ -62,11 +70,10 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-      int Test = 1;
-  cin >> Test;
-  for (int I = 1; I <= Test; I++) {
+      Test = 1;
+  //   cin >> Test;
+  for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }
