@@ -1,0 +1,23 @@
+{
+    "Function for nCr": {
+    "prefix": "combination",
+    "body": [
+      "// nCr[n][r] = nCr[n-1][r-1] + nCr[n-1][r]",
+      "",
+      "vector<vector<int>> nCr(1001, vector<int>(1001));",
+      "",
+      "void combination() {",
+      "  int n = 1000;",
+      "  for (int i = 0; i <= n; i++) {",
+      "    for (int j = 0; j <= i; j++) {",
+      "      if (j == 0 || j == i)",
+      "        nCr[i][j] = 1;",
+      "      else",
+      "        nCr[i][j] = (nCr[i - 1][j - 1] % mod + nCr[i - 1][j] % mod) % mod;",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "description": "Function for nCr"
+  }
+}
