@@ -66,18 +66,18 @@ void solve() {
   debug(root);
   v1.pb(root);
   DFS(root);
-  // debug(adj_list, vv);
-  // if (!vv.size()) {
-  //   cout << 1 << endl << 1 << endl << 1 << endl;
-  //   return;
-  // }
-  // cout << vv.size() << endl;
-  // for (auto i : vv) {
-  //   cout << i.size() << endl;
-  //   for (auto it : i)
-  //     cout << it << " ";
-  //   cout << endl;
-  // }
+  debug(adj_list, vv);
+  if (!vv.size()) {
+    cout << 1 << endl << 1 << endl << 1 << endl;
+    return;
+  }
+  cout << vv.size() << endl;
+  for (auto i : vv) {
+    cout << i.size() << endl;
+    for (auto it : i)
+      cout << it << " ";
+    cout << endl;
+  }
 }
 
 signed main() {
