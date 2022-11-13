@@ -1,0 +1,1 @@
+{"name":"Local: amz","url":"/home/joker/vscode/CP/amz.cpp","tests":[{"id":1667728806726,"input":"3 3\n101\n001\n110","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/joker/vscode/CP/amz.cpp","group":"local","local":true}
