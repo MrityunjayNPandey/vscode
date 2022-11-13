@@ -31,6 +31,9 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+
+
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   int a, b, d;
