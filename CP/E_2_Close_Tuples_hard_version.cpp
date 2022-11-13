@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-11-2022 03:27:41
+ *      created: 13-11-2022 03:23:28
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,50 +32,55 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<int> factorial(MAX_N, 1);
+// nCr = n! * 1/r! * 1/(n-r)!
 
-int power(int a, int b) {
+vector<int> fact(MAX_N, 1), invFact(MAX_N, 1);
 
-  if (b == 0)
-    return 1;
-  int res = 1;
-  while (b > 0) {
-    if (b & 1)
-      (res *= a) %= mod;
-    (a *= a) %= mod;
-    b >>= 1;
+int nCr(int n, int r) {
+  if (r > n) {
+    return 0;
   }
-  return res % mod;
+  return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
 }
 
-int modInv(int a, int m) { return power(a, m - 2); }
+int bin_pow(int a, int p) {
+  int res = 1;
+  while (p) {
+    if (!(p & 1)) {
+      a = (a * a) % MOD;
+      p /= 2;
+    } else {
+      res = (res * a) % MOD;
+      p--;
+    }
+  }
+  return res;
+}
 
-void fact() {
+void pref() {
   for (int i = 1; i < MAX_N; i++) {
-    factorial[i] = factorial[i - 1] * i % mod;
+    fact[i] = (fact[i - 1] * i) % MOD;
+    invFact[i] = bin_pow(fact[i], MOD - 2);
   }
 }
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
+  cin >> n >> m >> k;
   vector<int> v(n);
-  map<int, int> mp;
   for (auto &i : v)
-    cin >> i, mp[i]++; 
+    cin >> i;
   sort(all(v));
-  // Permutation*permutation=permutation
-  if (v[n - 1] == v[n - 2])
-    cout << factorial[n];
-  else {
-    if (v[n - 1] - v[n - 2] > 1)
-      cout << 0;
-    else {
-      int x = factorial[n];
-      (x *= modInv(mp[v[n - 2]] + 1, mod)) %= mod;
-      cout << (factorial[n] - x + mod) % mod;
+  debug(v);
+  for (int i = 0; i < n; i++) {
+    int idx = upper_bound(all(v), v[i] + k) - v.begin() - 1;
+    debug(i, idx);
+    if (idx - i >= m - 1) {
+      int l = idx - i;
+      (ans += nCr(l, m - 1)) %= MOD;
     }
   }
+  cout << ans;
 }
 
 signed main() {
@@ -84,8 +89,9 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-  fact();
-  Test = 1;
+      Test = 1;
+  pref();
+  //   combination();
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);

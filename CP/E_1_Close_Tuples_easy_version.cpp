@@ -38,7 +38,15 @@ void solve() {
   vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-    
+  sort(all(v));
+  for (int i = 0; i < n; i++) {
+    int idx = upper_bound(all(v), v[i] + 2) - v.begin() - 1;
+    if (idx - i >= 2) {
+      int k = idx - i - 1;
+      ans += k * (k + 1) / 2;
+    }
+  }
+  cout << ans;
 }
 
 signed main() {

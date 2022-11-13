@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-11-2022 03:27:41
+ *      created: 13-11-2022 15:29:19
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -16,7 +16,6 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 73;
-#define print(x) 73;
 #define dclear(x) 73;
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -32,50 +31,53 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<int> factorial(MAX_N, 1);
-
-int power(int a, int b) {
-
-  if (b == 0)
-    return 1;
-  int res = 1;
-  while (b > 0) {
-    if (b & 1)
-      (res *= a) %= mod;
-    (a *= a) %= mod;
-    b >>= 1;
-  }
-  return res % mod;
-}
-
-int modInv(int a, int m) { return power(a, m - 2); }
-
-void fact() {
-  for (int i = 1; i < MAX_N; i++) {
-    factorial[i] = factorial[i - 1] * i % mod;
-  }
-}
-
 void solve() {
+  map<int, bool> visited;
+  map<int, vector<int>> adj_list;      // adjacency list
+  map<pair<int, int>, int> adj_weight; // to add weights on edges
+  vector<vector<int>> vv;
+  vector<int> v1;
+  function<void(int)> DFS = [&](int current) {
+    visited[current] = true;
+    for (int next_vertex : adj_list[current])
+      if (!visited[next_vertex]) {
+        debug(next_vertex);
+        v1.pb(next_vertex);
+        DFS(next_vertex);
+        if (v1.size())
+          vv.pb(v1);
+        v1.clear();
+        debug(next_vertex)
+      }
+  };
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
   vector<int> v(n);
-  map<int, int> mp;
   for (auto &i : v)
-    cin >> i, mp[i]++; 
-  sort(all(v));
-  // Permutation*permutation=permutation
-  if (v[n - 1] == v[n - 2])
-    cout << factorial[n];
-  else {
-    if (v[n - 1] - v[n - 2] > 1)
-      cout << 0;
-    else {
-      int x = factorial[n];
-      (x *= modInv(mp[v[n - 2]] + 1, mod)) %= mod;
-      cout << (factorial[n] - x + mod) % mod;
-    }
+    cin >> i;
+  int root;
+  for (int i = 0; i < n; i++) {
+    if (v[i] != i + 1) {
+      adj_list[i + 1].pb(v[i]);
+      adj_list[v[i]].pb(i + 1);
+    } else
+      root = v[i];
   }
+  debug(root);
+  v1.pb(root);
+  DFS(root);
+  // debug(adj_list, vv);
+  // if (!vv.size()) {
+  //   cout << 1 << endl << 1 << endl << 1 << endl;
+  //   return;
+  // }
+  // cout << vv.size() << endl;
+  // for (auto i : vv) {
+  //   cout << i.size() << endl;
+  //   for (auto it : i)
+  //     cout << it << " ";
+  //   cout << endl;
+  // }
 }
 
 signed main() {
@@ -84,8 +86,7 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-  fact();
-  Test = 1;
+      Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);

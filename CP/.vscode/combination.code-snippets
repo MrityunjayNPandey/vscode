@@ -1,23 +1,39 @@
 {
-    "Function for nCr": {
+  "Function to calculate nCr": {
     "prefix": "combination",
     "body": [
-      "// nCr[n][r] = nCr[n-1][r-1] + nCr[n-1][r]",
+      "//nCr = n! * 1/r! * 1/(n-r)!",
       "",
-      "vector<vector<int>> nCr(1001, vector<int>(1001));",
+      "vector<int> fact(MAX_N, 1), invFact(MAX_N, 1);",
       "",
-      "void combination() {",
-      "  int n = 1000;",
-      "  for (int i = 0; i <= n; i++) {",
-      "    for (int j = 0; j <= i; j++) {",
-      "      if (j == 0 || j == i)",
-      "        nCr[i][j] = 1;",
-      "      else",
-      "        nCr[i][j] = (nCr[i - 1][j - 1] % mod + nCr[i - 1][j] % mod) % mod;",
+      "int nCr(int n, int r) {",
+      "  if (r > n) {",
+      "    return 0;",
+      "  }",
+      "  return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;",
+      "}",
+      "",
+      "int bin_pow(int a, int p) {",
+      "  int res = 1;",
+      "  while (p) {",
+      "    if (!(p & 1)) {",
+      "      a = (a * a) % MOD;",
+      "      p /= 2;",
+      "    } else {",
+      "      res = (res * a) % MOD;",
+      "      p--;",
       "    }",
+      "  }",
+      "  return res;",
+      "}",
+      "",
+      "void pref() {",
+      "  for (int i = 1; i < MAX_N; i++) {",
+      "    fact[i] = (fact[i - 1] * i) % MOD;",
+      "    invFact[i] = bin_pow(fact[i], MOD - 2);",
       "  }",
       "}"
     ],
-    "description": "Function for nCr"
+    "description": "Function to calculate nCr"
   }
 }

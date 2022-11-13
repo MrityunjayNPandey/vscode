@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-11-2022 03:27:41
+ *      created: 13-11-2022 12:56:47
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -16,7 +16,6 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 73;
-#define print(x) 73;
 #define dclear(x) 73;
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -32,49 +31,45 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<int> factorial(MAX_N, 1);
-
-int power(int a, int b) {
-
-  if (b == 0)
-    return 1;
-  int res = 1;
-  while (b > 0) {
-    if (b & 1)
-      (res *= a) %= mod;
-    (a *= a) %= mod;
-    b >>= 1;
-  }
-  return res % mod;
-}
-
-int modInv(int a, int m) { return power(a, m - 2); }
-
-void fact() {
-  for (int i = 1; i < MAX_N; i++) {
-    factorial[i] = factorial[i - 1] * i % mod;
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<int> v(n);
-  map<int, int> mp;
-  for (auto &i : v)
-    cin >> i, mp[i]++; 
-  sort(all(v));
-  // Permutation*permutation=permutation
-  if (v[n - 1] == v[n - 2])
-    cout << factorial[n];
-  else {
-    if (v[n - 1] - v[n - 2] > 1)
-      cout << 0;
-    else {
-      int x = factorial[n];
-      (x *= modInv(mp[v[n - 2]] + 1, mod)) %= mod;
-      cout << (factorial[n] - x + mod) % mod;
-    }
+  int a, b, d;
+  cin >> a >> b >> d;
+  if ((a & 1 || b & 1) && (d & 1) == 0) {
+    cout << -1;
+    return;
+  }
+  int a1 = a, b1 = b, d1 = d;
+  k = 0;
+  while ((a1 & 1) == 0) {
+    k++;
+    a1 >>= 1;
+  }
+  a1 = k;
+  k = 0;
+  while ((b1 & 1) == 0) {
+    k++;
+    b1 >>= 1;
+  }
+  b1 = k;
+  k = 0;
+  while ((d1 & 1) == 0) {
+    k++;
+    d1 >>= 1;
+  }
+  d1 = k;
+  k = 0;
+  if (min(a1, b1) < d1) {
+    cout << -1;
+    return;
+  }
+  if (d & 1) {
+    cout << (1LL << 30) - 1LL;
+  } else {
+    int x = 30 - d1;
+    ans += (1LL << (x + 1)) - 1LL;
+    cout << (ans << d1);
+    debug((ans << d1) % d);
   }
 }
 
@@ -84,8 +79,7 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-  fact();
-  Test = 1;
+      Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);

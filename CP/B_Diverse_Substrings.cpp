@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-11-2022 03:27:41
+ *      created: 12-11-2022 21:46:01
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,50 +32,25 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<int> factorial(MAX_N, 1);
-
-int power(int a, int b) {
-
-  if (b == 0)
-    return 1;
-  int res = 1;
-  while (b > 0) {
-    if (b & 1)
-      (res *= a) %= mod;
-    (a *= a) %= mod;
-    b >>= 1;
-  }
-  return res % mod;
-}
-
-int modInv(int a, int m) { return power(a, m - 2); }
-
-void fact() {
-  for (int i = 1; i < MAX_N; i++) {
-    factorial[i] = factorial[i - 1] * i % mod;
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  map<int, int> mp;
-  for (auto &i : v)
-    cin >> i, mp[i]++; 
-  sort(all(v));
-  // Permutation*permutation=permutation
-  if (v[n - 1] == v[n - 2])
-    cout << factorial[n];
-  else {
-    if (v[n - 1] - v[n - 2] > 1)
-      cout << 0;
-    else {
-      int x = factorial[n];
-      (x *= modInv(mp[v[n - 2]] + 1, mod)) %= mod;
-      cout << (factorial[n] - x + mod) % mod;
+  string str;
+  cin >> str;
+  for (int i = 0; i < n; i++) {
+    vector<int> v(20);
+    int p = 0;
+    for (int j = i; j < min(i + 124LL, n); j++) {
+      int x = str[j] - '0';
+      if (v[x] == 0)
+        p++;
+      v[x]++;
+      int mx = *max_element(all(v));
+      if (mx <= p)
+        ans++;
     }
   }
+  cout << ans;
 }
 
 signed main() {
@@ -84,8 +59,7 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-  fact();
-  Test = 1;
+      Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);

@@ -20,7 +20,6 @@
       "#include \"algo/debug.h\"",
       "#else",
       "#define debug(...) 73;",
-      "#define print(x) 73;",
       "#define dclear(x) 73;",
       "#endif",
       "#define free freopen(\"input.txt\",\"r\",stdin);freopen(\"output.txt\",\"w\",stdout);freopen(\"error.txt\",\"w\",stderr);",

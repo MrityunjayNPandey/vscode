@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-11-2022 03:27:41
+ *      created: 12-11-2022 20:41:39
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,50 +32,51 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<int> factorial(MAX_N, 1);
-
-int power(int a, int b) {
-
-  if (b == 0)
-    return 1;
-  int res = 1;
-  while (b > 0) {
-    if (b & 1)
-      (res *= a) %= mod;
-    (a *= a) %= mod;
-    b >>= 1;
-  }
-  return res % mod;
-}
-
-int modInv(int a, int m) { return power(a, m - 2); }
-
-void fact() {
-  for (int i = 1; i < MAX_N; i++) {
-    factorial[i] = factorial[i - 1] * i % mod;
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
+  int zerall = 0;
+  vector<int> v(n), vsum(n), vsum1(n + 1);
+  for (auto &i : v) {
+    cin >> i;
+    if (i == 0)
+      zerall++;
+  }
+  debug(v);
+  vsum[0] = v[0];
+  for (int i = 1; i < n; i++) {
+    vsum[i] += vsum[i - 1] + v[i];
+  }
+  if (zerall == 0) {
+    for (int i = 0; i < n; i++)
+      if (vsum[i] == 0)
+        cnt++;
+  }
+  debug(vsum);
   map<int, int> mp;
-  for (auto &i : v)
-    cin >> i, mp[i]++; 
-  sort(all(v));
-  // Permutation*permutation=permutation
-  if (v[n - 1] == v[n - 2])
-    cout << factorial[n];
-  else {
-    if (v[n - 1] - v[n - 2] > 1)
-      cout << 0;
-    else {
-      int x = factorial[n];
-      (x *= modInv(mp[v[n - 2]] + 1, mod)) %= mod;
-      cout << (factorial[n] - x + mod) % mod;
+  for (int i = n - 1; i >= 0; i--) {
+    mp[vsum[i]]++;
+    if (v[i] == 0) {
+      int mx = 0;
+      for (auto [l, r] : mp) {
+        mx = max(mx, r);
+      }
+      debug(mp, mx);
+      ans += mx;
+      mp.clear();
     }
   }
+  if (zerall) {
+    for (int i = 0; i < n; i++) {
+      if (v[i] == 0) {
+        break;
+      }
+      if (vsum[i] == 0) {
+        cnt++;
+      }
+    }
+  }
+  cout << ans + cnt << endl;
 }
 
 signed main() {
@@ -84,12 +85,10 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-  fact();
-  Test = 1;
+      Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }

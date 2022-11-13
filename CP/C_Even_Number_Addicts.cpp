@@ -16,7 +16,6 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 73;
-#define print(x) 73;
 #define dclear(x) 73;
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -47,7 +46,6 @@ void solve() {
   int turn = n / 2;
   if (n % 2)
     turn++;
-  debug(turn);  
   int x1 = odd / 2;
   if (odd % 2)
     x1++;
@@ -57,11 +55,8 @@ void solve() {
   int x2 = even / 2;
   if (even % 2)
     x2++;
-  debug(x2)  
-  if (x2 >= turn)
-    cout << "Alice";
-  else
-    cout << "Bob";
+  debug(x2) if (x2 >= turn) cout << "Alice";
+  else cout << "Bob";
 }
 
 signed main() {
