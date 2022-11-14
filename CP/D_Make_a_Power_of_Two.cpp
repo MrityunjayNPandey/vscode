@@ -32,9 +32,29 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
   cin >> n;
-  
+  vector<string> vstr;
+  for (int i = 0; i < 60; i++) {
+    int p = 1LL << i;
+    string str = to_string(p);
+    vstr.pb(str);
+  }
+  debug(vstr);
+  string str = to_string(n);
+  for (auto i : vstr) {
+    string str1 = str;
+    k = 0, cnt = 0;
+    for (int j = 0; j < str1.length(); j++) {
+      if (k < i.size() && str1[j] == i[k]) {
+        k++;
+      } else
+        cnt++;
+    }
+    cnt += i.size() - k;
+    ans = min(ans, cnt);
+  }
+  cout << ans;
 }
 
 signed main() {
