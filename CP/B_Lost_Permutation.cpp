@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 18-11-2022 20:13:58
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -36,19 +36,24 @@ void solve() {
   cin >> n >> k;
   vector<int> v(n);
   for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+    cin >> i;
+  set<int> st;
+  for (int i = 0; i < n; i++)
+    st.insert(v[i]);
+  for (int i = 1; i <= 1000; i++) {
+    if (st.find(i) == st.end()) {
+      sum += i;
+    }
+    if (sum == k && i >= *max_element(all(v))) {
+      cout << "YES";
+      return;
+    }
+    if (sum > k) {
+      cout << "NO";
+      return;
     }
   }
-  debug(v);
-  cout << v[0] - init << endl;
+  cout << "NO";
 }
 
 signed main() {
@@ -62,6 +67,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }

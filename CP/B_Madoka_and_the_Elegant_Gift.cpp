@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 18-11-2022 02:13:37
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,22 +33,27 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+  cin >> n >> m;
+  vector<string> vstr;
+  for (int i = 0; i < n; i++) {
+    string str;
+    cin >> str;
+    vstr.pb(str);
+  }
+  for (int i = 0; i < n - 1; i++) {
+    for (int j = 0; j < m - 1; j++) {
+      k = 0;
+      k += (vstr[i][j] == '1') ? 1 : 0;
+      k += (vstr[i][j + 1] == '1') ? 1 : 0;
+      k += (vstr[i + 1][j] == '1') ? 1 : 0;
+      k += (vstr[i + 1][j + 1] == '1') ? 1 : 0;
+      if (k == 3) {
+        cout << "NO";
+        return;
+      }
     }
   }
-  debug(v);
-  cout << v[0] - init << endl;
+  cout << "YES";
 }
 
 signed main() {
@@ -62,6 +67,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }

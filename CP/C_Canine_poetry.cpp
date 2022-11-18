@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 17-11-2022 02:52:42
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,22 +33,27 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+  string str;
+  cin >> str;
+  n = str.length();
+  debug(str);
+  map<char, vector<int>> mp;
+  vector<int> mark(n);
+  for (int i = 0; i < n; i++) {
+    if (i + 1 < n) {
+      if (str[i] == str[i + 1] && !mark[i])
+        mark[i + 1]++;
+    }
+    if (i + 2 < n) {
+      if (str[i] == str[i + 2] && !mark[i]) {
+        mark[i + 2]++;
+      }
     }
   }
-  debug(v);
-  cout << v[0] - init << endl;
+  for (auto i : mark)
+    if (i)
+      ans++;
+  cout << ans;
 }
 
 signed main() {
@@ -62,6 +67,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }

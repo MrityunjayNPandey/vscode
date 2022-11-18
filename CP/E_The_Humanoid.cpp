@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 19-11-2022 01:24:14
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,21 +34,40 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n >> k;
+  int k1 = k;
   vector<int> v(n);
   for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
-    }
-  }
+    cin >> i;
+  sort(all(v));
   debug(v);
-  cout << v[0] - init << endl;
+  int b = 1, g = 2;
+  string permut = "BGG";
+  do {
+    debug(permut);
+    int ind = 0;
+    int ans1 = 0;
+    k = k1;
+    for (int i = 0; i < n; i++) {
+      while (v[i] >= k) {
+        int x;
+        if (ind == 3)
+          break;
+        if (permut[ind] == 'B')
+          x = 3;
+        else
+          x = 2;
+        k *= x;
+        ind++;
+      }
+      if (v[i] >= k)
+        break;
+      ans1++;
+      k += v[i] / 2;
+    }
+    debug(ans1);
+    ans = max(ans, ans1);
+  } while (next_permutation(all(permut)));
+  cout << ans;
 }
 
 signed main() {
@@ -62,6 +81,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }

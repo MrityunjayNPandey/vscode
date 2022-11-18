@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 18-11-2022 00:51:14
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,22 +33,45 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  vector<int> v(n);
+  cin >> n;
+  vector<int> v(n), v1(n);
   for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+    cin >> i;
+  for (auto &i : v1)
+    cin >> i;
+  vector<int> vt(v);
+  vector<pair<int, int>> vp(n), vpi(n), vans;
+  for (int i = 0; i < n; i++) {
+    vp[i] = {v[i], v1[i]};
+    vpi[i] = {v[i], i};
+  }
+  vector<pair<int, int>> vp1(vp);
+  sort(all(vp));
+  sort(all(v));
+  sort(all(v1));
+  sort(all(vpi));
+  for (int i = 0; i < n; i++) {
+    auto [l, r] = vp[i];
+    if (l != v[i] || r != v1[i]) {
+      cout << -1 << endl;
+      return;
     }
   }
   debug(v);
-  cout << v[0] - init << endl;
+  for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+      if (vp[i] == vp1[j]) {
+        vans.pb({i, j});
+        swap(vp1[j], vp1[i]);
+        break;
+      }
+    }
+    debug(vp1)
+  }
+  cout << vans.size() << endl;
+  for (auto [l, r] : vans) {
+    cout << l + 1 << " " << r + 1 << endl;
+  }
 }
 
 signed main() {
@@ -62,6 +85,5 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
   }
 }

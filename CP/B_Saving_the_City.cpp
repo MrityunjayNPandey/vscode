@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 17-11-2022 19:03:34
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,22 +33,39 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+  int a, b;
+  cin >> a >> b;
+  string str;
+  cin >> str;
+  n = str.length();
+  vector<int> zeros;
+  int zer = 0;
+  for (int i = 0; i < n; i++) {
+    if (str[i] == '1' && !cnt) {
+      k++;
+      cnt++;
+      if (zer)
+        zeros.pb(zer);
+      zer = 0;
+    }
+    if (str[i] == '0' && k) {
+      cnt = 0;
+      zer++;
     }
   }
-  debug(v);
-  cout << v[0] - init << endl;
+  debug(k, zeros);
+  sort(all(zeros));
+  ans = k * a;
+  for (auto i : zeros) {
+    debug(ans, (k - 1) * a + b * i);
+    sum += i;
+    if (k > 1 && (k - 1) * a + b * sum < ans) {
+      ans = (k - 1) * a + b * sum;
+      k--;
+    } else
+      break;
+  }
+  cout << ans << endl;
 }
 
 signed main() {
@@ -62,6 +79,5 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
   }
 }

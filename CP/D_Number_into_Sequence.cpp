@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 17-11-2022 00:25:43
+ *      created: 17-11-2022 16:06:18
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,40 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i, sum += i;
-  int init = v[0];
-  for (int i = n - 1; i >= 1; i--) {
-    sum -= v[i];
-    double x = sum, y = v[i] * 100, z = k;
-    if ((y / x) > z) {
-      int nsum = ((y + z - 1) / z);
-      v[0] += nsum - sum;
-      sum = nsum;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
+  cin >> n;
+  int n1 = n;
+  int fact = n;
+  int c = 2;
+  vector<int> pfact;
+  while (n % 2 == 0) {
+    pfact.pb(2);
+    n = n / 2;
+  }
+  for (int i = 3; i <= sqrt(n); i = i + 2) {
+    // While i divides n, print i and divide n
+    while (n % i == 0) {
+      pfact.pb(i);
+      n = n / i;
     }
   }
-  debug(v);
-  cout << v[0] - init << endl;
+  if (n > 2)
+    pfact.pb(n);
+  debug(pfact);
+  map<int, int> mp;
+  int freq = 1;
+  for (auto i : pfact) {
+    mp[i]++;
+    if (mp[i] > freq)
+      fact = i, freq = mp[i];
+  }
+  debug(fact) vector<int> vans;
+  while (n1 % fact == 0)
+    vans.pb(fact), n1 /= fact;
+  debug(vans) vans.back() *= n1;
+  cout << vans.size() << endl;
+  for (auto i : vans)
+    cout << i << " ";
 }
 
 signed main() {
@@ -62,6 +79,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }
