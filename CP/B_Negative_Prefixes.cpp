@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-11-2022 03:25:47
+ *      created: 19-11-2022 23:32:30
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,37 +31,28 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-//haa mai hu gaandu
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<pair<int, int>> vp(n);
-  vector<int> v(n);
-  for (auto &[l, r] : vp) {
-    cin >> l >> r;
+  vector<int> v(n), v1(n);
+  for (auto &i : v)
+    cin >> i;
+  for (auto &i : v1)
+    cin >> i;
+  priority_queue<int> pq;
+  for (int i = 0; i < n; i++) {
+    if (v1[i] == 0) {
+      pq.push(v[i]);
+    }
   }
   for (int i = 0; i < n; i++) {
-    v[i] = vp[i].first;
+    if (v1[i] == 0) {
+      v[i] = pq.top();
+      pq.pop();
+    }
   }
-  sort(all(v));
-  debug(v);
-  sort(all(vp),
-       [](auto &left, auto &right) { return left.second < right.second; });
-  debug(vp);
-  int maxa = 0;
-  map<int, int> mp;
-  for (int i = 0; i < n; i++) {
-    int idx = lower_bound(all(v), vp[i].second) - v.begin();
-    debug(idx);
-    maxa = idx - i;
-    debug(maxa);
-    if (!mp.count(maxa))
-      mp[maxa] = INF;
-    mp[maxa] = min(mp[maxa], v[idx - 1]);
-  }
-  debug(mp);
-  cout << (*mp.rbegin()).second << " " << (*mp.rbegin()).first;
+  for (auto i : v)
+    cout << i << " ";
 }
 
 signed main() {
@@ -71,7 +62,7 @@ signed main() {
   free
 #endif
       Test = 1;
-  //   cin >> Test;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

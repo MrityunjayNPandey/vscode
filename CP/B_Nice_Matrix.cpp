@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-11-2022 03:25:47
+ *      created: 19-11-2022 13:35:12
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,37 +31,57 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-//haa mai hu gaandu
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<pair<int, int>> vp(n);
-  vector<int> v(n);
-  for (auto &[l, r] : vp) {
-    cin >> l >> r;
-  }
+  cin >> n >> m;
+  vector<vector<int>> vv(n, vector<int>(m, 0));
   for (int i = 0; i < n; i++) {
-    v[i] = vp[i].first;
+    for (int j = 0; j < m; j++) {
+      cin >> vv[i][j];
+    }
   }
-  sort(all(v));
-  debug(v);
-  sort(all(vp),
-       [](auto &left, auto &right) { return left.second < right.second; });
-  debug(vp);
-  int maxa = 0;
-  map<int, int> mp;
-  for (int i = 0; i < n; i++) {
-    int idx = lower_bound(all(v), vp[i].second) - v.begin();
-    debug(idx);
-    maxa = idx - i;
-    debug(maxa);
-    if (!mp.count(maxa))
-      mp[maxa] = INF;
-    mp[maxa] = min(mp[maxa], v[idx - 1]);
+  for (int i = 0; i < n / 2; i++) {
+    for (int j = 0; j < m / 2; j++) {
+      vector<int> v(4);
+      int a = vv[i][j];
+      int b = vv[i][m - j - 1];
+      int c = vv[n - i - 1][j];
+      int d = vv[n - i - 1][m - j - 1];
+      v = {a, b, c, d};
+      sort(all(v));
+      int x = v[1];
+      vv[i][j] = x;
+      vv[i][m - j - 1] = x;
+      vv[n - i - 1][j] = x;
+      vv[n - i - 1][m - j - 1] = x;
+      ans += abs(x - a) + abs(x - b) + abs(x - c) + abs(x - d);
+    }
   }
-  debug(mp);
-  cout << (*mp.rbegin()).second << " " << (*mp.rbegin()).first;
+  debug(vv);
+  debug(ans);
+  if (n & 1) {
+    for (int j = 0; j < m / 2; j++) {
+      int a = vv[n / 2][j];
+      int b = vv[n / 2][m - j - 1];
+      int x = (a + b) / 2;
+      vv[n / 2][j] = x;
+      vv[n / 2][m - j - 1] = x;
+      ans += abs(x - a) + abs(x - b);
+    }
+  }
+  debug(vv);
+  if (m & 1) {
+    for (int i = 0; i < n / 2; i++) {
+      int a = vv[i][m / 2];
+      int b = vv[n - i - 1][m / 2];
+      int x = (a + b) / 2;
+      vv[i][m / 2] = x;
+      vv[n - i - 1][m / 2] = x;
+      ans += abs(x - a) + abs(x - b);
+    }
+  }
+  debug(vv);
+  cout << ans;
 }
 
 signed main() {
@@ -71,7 +91,7 @@ signed main() {
   free
 #endif
       Test = 1;
-  //   cin >> Test;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

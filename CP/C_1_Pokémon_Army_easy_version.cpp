@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-11-2022 03:25:47
+ *      created: 19-11-2022 16:20:19
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,37 +31,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-//haa mai hu gaandu
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<pair<int, int>> vp(n);
+  int q;
+  cin >> n >> q;
   vector<int> v(n);
-  for (auto &[l, r] : vp) {
-    cin >> l >> r;
+  for (auto &i : v)
+    cin >> i;
+  vector<vector<int>> dp(2, vector<int>(n + 1, -1));
+  debug(dp);
+  function<int(int, int, int)> func = [&](int prev, int ind, int flag) {
+    int choose = 0, nchoose = 0;
+    debug(prev, ind, flag);
+    if (dp[flag][prev] != -1) {
+      return dp[flag][prev];
+    }
+    if (ind < n) {
+      if (flag == 0) {
+        choose = func(v[ind], ind + 1, 1) + v[ind];
+        nchoose = func(prev, ind + 1, 0);
+      } else {
+        if (v[ind] < prev) {
+          choose = func(v[ind], ind + 1, 0) - v[ind];
+        }
+        nchoose = func(prev, ind + 1, 1);
+      }
+    }
+    return dp[flag][prev] = max(choose, nchoose);
+  };
+  //Tabultion
+  dp[0][0] = v[0];
+  dp[1][0] = 0;
+  for (int i = 1; i < n; i++) {
+    dp[0][i] = max(dp[0][i - 1], dp[1][i - 1] + v[i]);
+    dp[1][i] = max(dp[1][i - 1], dp[0][i - 1] - v[i]);
   }
-  for (int i = 0; i < n; i++) {
-    v[i] = vp[i].first;
-  }
-  sort(all(v));
-  debug(v);
-  sort(all(vp),
-       [](auto &left, auto &right) { return left.second < right.second; });
-  debug(vp);
-  int maxa = 0;
-  map<int, int> mp;
-  for (int i = 0; i < n; i++) {
-    int idx = lower_bound(all(v), vp[i].second) - v.begin();
-    debug(idx);
-    maxa = idx - i;
-    debug(maxa);
-    if (!mp.count(maxa))
-      mp[maxa] = INF;
-    mp[maxa] = min(mp[maxa], v[idx - 1]);
-  }
-  debug(mp);
-  cout << (*mp.rbegin()).second << " " << (*mp.rbegin()).first;
+  cout << max(dp[0][n - 1], dp[1][n - 1]);
 }
 
 signed main() {
@@ -71,7 +76,7 @@ signed main() {
   free
 #endif
       Test = 1;
-  //   cin >> Test;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
