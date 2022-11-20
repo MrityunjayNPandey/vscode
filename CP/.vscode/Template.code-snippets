@@ -47,6 +47,7 @@
       "#ifdef SUBLIME",
       "    free",
       "#endif",
+      "cout.precision(16);",
       "        Test = 1;",
       "    cin >> Test;",
       "    for(I = 1; I <= Test; I++)",
