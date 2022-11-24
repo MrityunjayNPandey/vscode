@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 21-11-2022 20:25:58
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n);
+  for (auto &i : v)
+    cin >> i;
+  vector<int> vans;
+  int prev = v[0];
+  vans.pb(prev);
+  for (int i = 1; i < n; i++) {
+    if (v[i] != prev) {
+      vans.pb(v[i]);
+      prev = v[i];
     }
   }
-  debug(i);
+  debug(vans);
+  for (int i = 1; i < vans.size() - 1; i++) {
+    if (vans[i] < vans[i - 1] && vans[i] < vans[i + 1])
+      cnt++;
+  }
+  debug(cnt);
+  if (vans.size() == 1) {
+    cout << "YES";
+    return;
+  }
+  if (vans.size() > 1) {
+    if (vans[0] < vans[1]) {
+      cnt++;
+    }
+    if (vans[vans.size() - 1] < vans[vans.size() - 2])
+      cnt++;
+  }
+  debug(cnt);
+  if (cnt == 1)
+    cout << "YES";
+  else
+    cout << "NO";
 }
 
 signed main() {

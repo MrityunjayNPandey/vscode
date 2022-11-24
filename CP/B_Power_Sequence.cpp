@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 24-11-2022 18:47:22
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,24 +31,44 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+int bin_pow(int a, int p) {
+  int res = 1;
+  while (p) {
+    if (!(p & 1)) {
+      (a *= a);
+      p /= 2;
+    } else {
+      (res *= a);
+      p--;
     }
   }
-  debug(i);
+  return res;
+}
+
+void solve() {
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n);
+  for (auto &i : v)
+    cin >> i;
+  sort(all(v));
+  int mn = INF;
+  for (int j = 0; j <= MOD; j++) {
+    int mnt = 0;
+    for (int i = 0; i < n; i++) {
+      if (bin_pow(j, i) > 10000000000) {
+        mnt = INF;
+        break;
+      }
+      mnt += abs(bin_pow(j, i) - v[i]);
+    }
+    if (mnt == INF)
+      break;
+    mn = min(mnt, mn);
+  }
+  debug(mn);
+  ans += mn;
+  cout << ans;
 }
 
 signed main() {
@@ -58,8 +78,9 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  cout << fixed;
   Test = 1;
-  cin >> Test;
+  // cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

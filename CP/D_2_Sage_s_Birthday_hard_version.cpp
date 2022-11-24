@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 22-11-2022 18:52:51
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,28 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n);
+  multiset<int> mltst;
+  for (auto &i : v)
+    cin >> i, mltst.insert(i);
+  vector<int> vans(n);
+  for (int i = 1; i < n; i += 2) {
+    vans[i] = *mltst.begin();
+    mltst.erase(mltst.begin());
   }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
-    }
+  for (int i = 0; i < n; i += 2) {
+    vans[i] = *mltst.begin();
+    mltst.erase(mltst.begin());
   }
-  debug(i);
+  for (int i = 1; i < vans.size() - 1; i++) {
+    if (vans[i] < vans[i - 1] && vans[i] < vans[i + 1])
+      ans++;
+  }
+  cout << ans << endl;
+  for (auto &i : vans)
+    cout << i << " ";
 }
 
 signed main() {
@@ -59,7 +64,6 @@ signed main() {
 #endif
       cout.precision(16);
   Test = 1;
-  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

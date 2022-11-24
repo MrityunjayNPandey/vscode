@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 23-11-2022 01:58:44
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,23 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n >> k;
+  vector<int> v(n);
+  for (auto &i : v)
+    cin >> i, sum += i;
+  for (int i = 0; i < v.size(); i++) {
+    if (v[i] == k) {
+      cnt++;
     }
   }
-  debug(i);
+  debug(n, k, v);
+  if (cnt == n)
+    cout << 0;
+  else if (cnt > 0 || n * k == sum) {
+    cout << 1;
+  } else
+    cout << 2;
 }
 
 signed main() {

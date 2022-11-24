@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 24-11-2022 03:26:52
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  string str;
+  cin >> str;
+  cin >> k;
+  n = str.length();
+  vector<int> v(n, INF);
+  for (int i = 0; i < n; i++) {
+    if (str[i] == '0') {
+      if (k + i < n)
+        v[k + i] = 0;
+      if (i - k >= 0) {
+        v[i - k] = 0;
       }
     }
   }
-  debug(i);
+  for (int i = 0; i < n; i++) {
+    if (str[i] == '1') {
+      if (k + i < n && v[k + i] != 0)
+        v[k + i] = 1;
+      if (i - k >= 0 && v[i - k] != 0)
+        v[i - k] = 1;
+      if (k + i < n && v[k + i] == 1)
+        continue;
+      if (i - k >= 0 && v[i - k] == 1)
+        continue;
+      cout << -1;
+      return;
+    }
+  }
+  debug(v);
+  for (auto i : v) {
+    if (i == INF)
+      cout << 1;
+    else
+      cout << i;
+  }
 }
 
 signed main() {
@@ -58,6 +77,7 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  cout << fixed;
   Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {

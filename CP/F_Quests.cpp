@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 21-11-2022 21:31:12
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,38 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int c, d;
+  cin >> n >> c >> d;
+  vector<int> v(n);
+  for (auto &i : v)
+    cin >> i;
+  sort(rall(v));
+  if (v[0] * d < c) {
+    cout << "Impossible";
     return;
   }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  for (int i = 0; i < min(n, d); i++)
+    sum += v[i];
+  if (sum >= c) {
+    cout << "Infinity";
+    return;
+  }
+  int l = 0, r = d;
+  while (l <= r) {
+    int mid = (l + r) / 2;
+    sum = (1 + (d - 1) / (mid + 1)) * v[0];
+    for (int i = 0; i < min(mid, n - 1); i++) {
+      sum += (1 + (d - 2 - i) / (mid + 1)) * v[i + 1];
+    }
+    if (sum >= c) {
+      ans = mid;
+      l = mid + 1;
+    } else {
+      r = mid - 1;
     }
   }
-  debug(i);
+  cout << ans;
 }
 
 signed main() {

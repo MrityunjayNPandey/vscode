@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 22-11-2022 16:01:49
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,45 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int x, pos;
+  cin >> n >> x >> pos;
+  int nol = 0, nor = 0;
+  auto bsearch = [&](vector<int> a, int x) {
+    int left = 0;
+    int right = a.size();
+    while (left < right) {
+      int mid = (left + right) / 2;
+      if (a[mid] <= x)
+        left = mid + 1, nol++;
+      else
+        right = mid, nor++;
     }
+    if (left > 0 and a[left - 1] == x)
+      return true;
+    else
+      return false;
+  };
+  vector<int> v(n);
+  for (int i = 0; i < n; i++)
+    v[i] = i;
+  bsearch(v, pos);
+  ans = 1;
+  for (int i = 1; i <= n - (nol + nor); i++)
+    (ans *= i) %= MOD;
+  int p = x - 1;
+  debug(p);
+  nol--;
+  while (nol--) {
+    (ans *= p) %= MOD;
+    p--;
   }
-  debug(i);
+  int q = n - x;
+  while (nor--) {
+    (ans *= q) %= MOD;
+    q--;
+  }
+  cout << ans;
 }
 
 signed main() {
@@ -59,7 +81,7 @@ signed main() {
 #endif
       cout.precision(16);
   Test = 1;
-  cin >> Test;
+  // cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

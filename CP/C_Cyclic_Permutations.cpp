@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 24-11-2022 20:37:59
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,24 +31,39 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+// nCr = n! * 1/r! * 1/(n-r)!
+
+vector<int> fact(MAX_N, 1), invFact(MAX_N, 1);
+
+int bin_pow(int a, int p) {
+  int res = 1;
+  while (p) {
+    if (!(p & 1)) {
+      (a *= a) %= MOD;
+      p /= 2;
+    } else {
+      (res *= a) %= MOD;
+      p--;
     }
   }
-  debug(i);
+  return res;
+}
+
+void pref() {
+  for (int i = 1; i < MAX_N; i++) {
+    fact[i] = (fact[i - 1] * i) % MOD;
+  }
+}
+
+void solve() {
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  // non-unimodal permutation
+  int x = fact[n] - bin_pow(2, n - 1);
+  if (x < 0) {
+    x += MOD;
+  }
+  cout << x;
 }
 
 signed main() {
@@ -58,8 +73,10 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  cout << fixed;
   Test = 1;
-  cin >> Test;
+  pref();
+  // cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

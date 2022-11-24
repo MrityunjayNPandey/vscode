@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 24-11-2022 01:18:09
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
-  }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n >> k;
+  string str;
+  cin >> str;
+  debug(str) for (int i = 0; i < n; i++) {
+    if (str[i] == '?') {
+      str[i] = str[i % k];
+    } else {
+      if (str[i % k] == '?') {
+        str[i % k] = str[i];
+      }
+      if (str[i] != str[i % k]) {
+        cout << "NO";
         return;
       }
     }
   }
-  debug(i);
+  debug(str);
+  map<char, int> mp;
+  for (int i = 0; i < k; i++) {
+    mp[str[i]]++;
+  }
+  for (int i = 0; i < n; i++) {
+    int x = mp['?'], y = mp['0'], z = mp['1'];
+    int p = max(y, z) - min(y, z);
+    x -= p;
+    if (x < 0 || x & 1) {
+      cout << "NO";
+      return;
+    }
+    mp[str[i]]--;
+    if (k + i == n)
+      break;
+    mp[str[k + i]]++;
+  }
+  cout << "YES";
 }
 
 signed main() {
@@ -58,6 +77,7 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  cout << fixed;
   Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {

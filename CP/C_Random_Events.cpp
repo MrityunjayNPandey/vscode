@@ -32,23 +32,36 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n >> m;
+  vector<int> v(n);
+  for (auto &i : v) {
+    cin >> i;
   }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  vector<int> v1(v);
+  sort(all(v1));
+  int ind = 0;
+  for (int i = n - 1; i >= 0; i--) {
+    if (v1[i] != v[i]) {
+      ind = i + 1;
+      break;
     }
   }
-  debug(i);
+  debug(ind);
+  double mult = 1;
+  while (m--) {
+    int x;
+    double y;
+    cin >> x >> y;
+    if (x >= ind) {
+      mult *= (1 - y);
+    }
+  }
+  if (ind == 0) {
+    cout << 1;
+    return;
+  }
+  cout << 1 - mult;
 }
 
 signed main() {

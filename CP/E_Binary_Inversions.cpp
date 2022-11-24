@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 21-11-2022 20:49:42
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,54 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n), ones(n), zeros(n);
+  for (auto &i : v)
+    cin >> i;
+  if (v[0] == 1)
+    ones[0] = 1;
+  for (int i = 1; i < n; i++) {
+    if (v[i] == 1)
+      ones[i]++;
+    ones[i] += ones[i - 1];
   }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  if (v[n - 1] == 0)
+    zeros[n - 1] = 1;
+  for (int i = n - 2; i >= 0; i--) {
+    if (v[i] == 0)
+      zeros[i]++;
+    zeros[i] += zeros[i + 1];
+  }
+  int initans = 0;
+  for (int i = 0; i < n - 1; i++) {
+    if (v[i] == 1)
+      initans += zeros[i + 1];
+  }
+  debug(initans, ones, zeros);
+  int mx = 0;
+  for (int i = 0; i < n - 1; i++) {
+    if (v[i] == 0) {
+      int k = 0;
+      if (i > 0)
+        k = zeros[i + 1] - ones[i - 1];
+      else
+        k = zeros[i + 1];
+      mx = max(mx, k);
     }
   }
-  debug(i);
+  for (int i = 1; i < n; i++) {
+    if (v[i] == 1) {
+      int k = 0;
+      if (i < n - 1)
+        k = ones[i - 1] - zeros[i + 1];
+      else
+        k = ones[i - 1];
+      mx = max(mx, k);
+    }
+  }
+  debug(mx);
+  cout << initans + mx;
 }
 
 signed main() {

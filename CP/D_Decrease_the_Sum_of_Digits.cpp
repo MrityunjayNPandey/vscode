@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-11-2022 02:06:12
+ *      created: 23-11-2022 16:17:20
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,23 +32,47 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int p, q;
-  cin >> p >> q;
-  if (p % q) {
-    cout << p;
-    return;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n >> k;
+  string str = to_string(n), strans;
+  m = str.size();
+  debug(str, k, n) vector<int> vd(m);
+  for (int i = 0; i < m; i++) {
+    sum += str[i] - '0';
+    vd[i] = str[i] - '0';
   }
-  int i;
-  for (i = 2; i * i <= p; i++) {
-    if (p % i == 0) {
-      int x = p / i;
-      if (x % q) {
-        cout << x;
-        return;
-      }
+  debug(sum, vd);
+  for (int i = m - 1; i >= 1; i--) {
+    if (sum <= k)
+      break;
+    if (vd[i] > 0) {
+      vd[i - 1]++;
+      sum -= vd[i];
+      sum += 1;
+      vd[i] = 0;
+    }
+    debug(vd, sum)
+  }
+  if (sum > k) {
+    sum -= vd[0];
+    vd[0] = 0;
+    strans += '1';
+  }
+  debug(m);
+  for (int i = m - 1; i >= 1; i--) {
+    if (vd[i] == 10) {
+      vd[i - 1]++;
+      vd[i] = 0;
     }
   }
-  debug(i);
+  for (int i = 0; i < m; i++) {
+    if (vd[i] == 10)
+      strans += "10";
+    else
+      strans += vd[i] + '0';
+  }
+  debug(vd, strans);
+  cout << stoll(strans) - n << endl;
 }
 
 signed main() {
@@ -63,6 +87,5 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }

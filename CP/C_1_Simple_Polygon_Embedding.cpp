@@ -52,7 +52,7 @@ void solve() {
     debug(angle, ans);
   }
   debug(ans);
-  cout << (double)2 * ans + (double)1;
+  cout << 2 * ans + 1;
 }
 
 signed main() {
