@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 26-11-2022 20:22:21
+ *      created: 27-11-2022 00:22:24
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -23,7 +23,7 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
+const long long MAX_N = 1e6 + 3; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -33,64 +33,24 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int n0 = 0, n1 = 0, n2 = 0;
-  cin >> n0 >> n1 >> n2;
-  string str;
-  if (n1 & 1) {
-    if (n1) {
-      if (n1 & 1 || n0)
-        str += '0';
-      else
-        str += '1';
+  cin >> n;
+  vector<int> v(n), v1(n);
+  for (auto &i : v)
+    cin >> i;
+  int init = v[0];
+  int mn = INF;
+  for (int i = 1; i < n; i++) {
+    v1[i] = v[i] - init;
+    if (v1[i] >= 0) {
+      init = v[i];
     }
-    for (int i = 0; i < n1; i++) {
-      if (str[str.length() - 1] == '0')
-        str += '1';
-      else
-        str += '0';
-    }
-    debug(str);
-    if (n0) {
-      if (str.empty()) {
-        str += '0';
-      }
-      while (n0--) {
-        str = '0' + str;
-      }
-    }
-    if (n2) {
-      if (str.empty()) {
-        str += '1';
-      }
-      while (n2--) {
-        str += '1';
-      }
-    }
-  } else {
-    if (n0) {
-      str += '0';
-      while (n0--) {
-        str = '0' + str;
-      }
-    }
-    if (n2) {
-      str += '1';
-      while (n2--) {
-        str += '1';
-      }
-    }
-    if (n0 && n2)
-      n1--;
-    if (str.empty())
-      str += '0';
-    for (int i = 0; i < n1; i++) {
-      if (str[str.length() - 1] == '0')
-        str += '1';
-      else
-        str += '0';
-    }
+    mn = min(mn, v1[i]);
   }
-  cout << str;
+  debug(mn, v);
+  if (mn >= 0)
+    cout << 0;
+  else
+    cout << LOG(-mn) + 1;
 }
 
 signed main() {
@@ -109,3 +69,18 @@ signed main() {
     cout << endl;
   }
 }
+
+/*
+Did I ever tell you what the definition of insanity is?
+Insanity is doing the exact... same fucking thing... over and over again
+expecting... shit to change... That. Is. Crazy. The first time somebody told me
+that, I dunno, I thought they were bullshitting me. The thing is... He was
+right. And then I started seeing, everywhere I looked, everywhere I looked all
+these fucking pricks, everywhere I looked, doing the exact same fucking thing...
+over and over and over and over again thinking 'this time is gonna be different'
+no, no, no please... This time is gonna be different, I'm sorry, I don't like...
+The way...
+
+Okay, Do you have a fucking problem in your head, do you think I am bullshitting
+you, do you think I am lying? Fuck you! Okay? Fuck you!...
+*/

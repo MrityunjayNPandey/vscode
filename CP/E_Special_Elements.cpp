@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 26-11-2022 20:22:21
+ *      created: 26-11-2022 22:27:30
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,64 +33,27 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int n0 = 0, n1 = 0, n2 = 0;
-  cin >> n0 >> n1 >> n2;
-  string str;
-  if (n1 & 1) {
-    if (n1) {
-      if (n1 & 1 || n0)
-        str += '0';
-      else
-        str += '1';
-    }
-    for (int i = 0; i < n1; i++) {
-      if (str[str.length() - 1] == '0')
-        str += '1';
-      else
-        str += '0';
-    }
-    debug(str);
-    if (n0) {
-      if (str.empty()) {
-        str += '0';
+  cin >> n;
+  vector<int> v(n), vsum(n + 1);
+  multiset<int> mltst;
+  set<int> ast;
+  map<int, int> mp;
+  for (auto &i : v)
+    cin >> i, mp[i]++;
+  debug(mltst)  
+  for (int i = 1; i < n + 1; i++) {
+    vsum[i] = vsum[i - 1] + v[i - 1];
+  }
+  debug(vsum);
+  for (int i = n; i >= 2; i--) {
+    for (int j = i - 2; j >= 0; j--) {
+      if (mp.count(vsum[i] - vsum[j])) {
+        ans+=mp[vsum[i] - vsum[j]];
+        mp.erase(vsum[i] - vsum[j]);
       }
-      while (n0--) {
-        str = '0' + str;
-      }
-    }
-    if (n2) {
-      if (str.empty()) {
-        str += '1';
-      }
-      while (n2--) {
-        str += '1';
-      }
-    }
-  } else {
-    if (n0) {
-      str += '0';
-      while (n0--) {
-        str = '0' + str;
-      }
-    }
-    if (n2) {
-      str += '1';
-      while (n2--) {
-        str += '1';
-      }
-    }
-    if (n0 && n2)
-      n1--;
-    if (str.empty())
-      str += '0';
-    for (int i = 0; i < n1; i++) {
-      if (str[str.length() - 1] == '0')
-        str += '1';
-      else
-        str += '0';
     }
   }
-  cout << str;
+  cout << ans;
 }
 
 signed main() {
