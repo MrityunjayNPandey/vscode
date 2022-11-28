@@ -124,14 +124,6 @@ void heapPermutation(int a[], int size, int n) {
 
 signed main() {
   free;
-  int t = 40000;
-  cout << t << " " << t << " " << 1396755360 << endl;
-  int k = 1, p = 0;
-  for (int i = 1; i < t; i++) {
-    cout << 1 << " ";
-  }
-  cout << endl;
-  for (int i = 1; i < t; i++) {
-    cout << 1 << " ";
-  }
+  int t = 100000;
+  str(t, 1);
 }
