@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 01-12-2022 21:45:17
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,62 +34,31 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
-  for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
-  }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
+  int l = 0, r = n - 1;
+  while (l <= r) {
+    int mid = l + (r - l) / 2;
+    cout << '?' << " " << l + 1 << " " << mid + 1 << endl;
+    cout.flush();
+    vector<int> v(mid - l + 1);
+    for (auto &i : v)
+      cin >> i;
+    cnt = 0;
+    debug(v);
+    for (int i = 0; i < mid - l + 1; i++) {
+      if (v[i] >= l + 1 && v[i] <= mid + 1)
         cnt++;
-        if (nef == -1) {
-          nef = j;
-        }
-        nes = j;
-      }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
     }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
-      }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
-      }
+    if (v.size() == 1 && v[0] == l + 1) {
+      cout << "! " << v[0] << endl;
+      cout.flush();
+      return;
     }
-    debug(fs, sn, ans);
+    debug(cnt);
     if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
-      } else {
-        ans -= sn;
-        end = nes;
-      }
-    }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
-    }
-    debug(ans, start, end, pans);
+      r = mid;
+    } else
+      l = mid + 1;
   }
-  cout << pans.first << " " << pans.second << endl;
 }
 
 signed main() {

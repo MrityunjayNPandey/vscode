@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 01-12-2022 23:29:49
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,63 +33,57 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  map<int, vector<int>> adj_list;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
-  for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
+  vector<int> count(n + 1);
+  for (int i = 0; i < n - 1; i++) {
+    int x, y;
+    cin >> x >> y;
+    adj_list[x].pb(y);
+    adj_list[y].pb(x);
+    sort(all(adj_list[x]));
+    sort(all(adj_list[y]));
   }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
-        cnt++;
-        if (nef == -1) {
-          nef = j;
-        }
-        nes = j;
-      }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
+  adj_list[1].pb(0);
+  debug(adj_list);
+  function<void(int, int)> numberOfNodes = [&](int s, int e) {
+    count[s] = 1;
+    for (auto &i : adj_list[s]) {
+      if (i == e)
+        continue;
+      numberOfNodes(i, s);
+      count[s] += count[i];
     }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
+  };
+  numberOfNodes(1, 0);
+  debug(count);
+  int num = 1;
+  vector<int> dp(n + 1, 0);
+  // DFS, time complexity of O(V+E)
+  map<int, bool> visited;
+  visited[0] = true;
+  function<void(int)> DFS = [&](int current) {
+    visited[current] = true;
+    debug(current);
+    vector<int> child;
+    for (int next_vertex : adj_list[current])
+      if (!visited[next_vertex]) {
+        child.pb(next_vertex);
+        DFS(next_vertex);
       }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
-      }
+    debug(current);
+    debug(child);
+    if (child.size() == 0)
+      return;
+    if (child.size() == 1) {
+      dp[current] = max(dp[current], count[child[0]] - 1);
+      return;
     }
-    debug(fs, sn, ans);
-    if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
-      } else {
-        ans -= sn;
-        end = nes;
-      }
-    }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
-    }
-    debug(ans, start, end, pans);
-  }
-  cout << pans.first << " " << pans.second << endl;
+    dp[current] = max({dp[current], dp[child[0]] + count[child[1]] - 1, dp[child[1]] + count[child[0]] - 1});
+  };
+  DFS(1);
+  cout << dp[1];
+  debug(dp);
 }
 
 signed main() {
@@ -105,6 +99,7 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
+    cout << endl;
   }
 }
 

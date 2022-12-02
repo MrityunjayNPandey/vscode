@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 02-12-2022 03:12:41
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,64 +32,45 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, cnt1 = 0, sum = 0;
+  cin >> n >> k;
   vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
-  for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
+  for (int i = 0; i < n - 1; i++) {
+    if (v[i] == 1 || v[i + 1] == 1)
+      cnt++;
+    ans += abs(v[i] - v[i + 1]);
   }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
-        cnt++;
-        if (nef == -1) {
-          nef = j;
-        }
-        nes = j;
+  if (k <= *max_element(all(v)))
+    cnt1++;
+  debug(cnt, cnt1, ans);
+  if (cnt && cnt1) {
+    cout << ans << endl;
+  } else {
+    if (cnt == 0) {
+      int mn = abs(v[0] - 1) + ans;
+      for (int i = 1; i < n; i++) {
+        mn = min(mn, ans + abs(v[i] - 1) + abs(v[i - 1] - 1) -
+                         abs(v[i] - v[i - 1]));
       }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
+      mn = min(mn, ans + abs(v[n - 1] - 1));
+      ans = mn;
     }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
+    if (cnt1 == 0) {
+      int mn = abs(v[0] - k) + ans;
+      debug(mn);
+      for (int i = 1; i < n; i++) {
+        mn = min(mn, ans + abs(v[i] - k) + abs(v[i - 1] - k) -
+                         abs(v[i] - v[i - 1]));
+        debug(mn);
       }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
-      }
+      mn = min(mn, ans + abs(v[n - 1] - k));
+      debug(mn);
+      ans = mn;
     }
-    debug(fs, sn, ans);
-    if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
-      } else {
-        ans -= sn;
-        end = nes;
-      }
-    }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
-    }
-    debug(ans, start, end, pans);
+    cout << ans << endl;
   }
-  cout << pans.first << " " << pans.second << endl;
 }
 
 signed main() {

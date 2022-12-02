@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 01-12-2022 01:18:31
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,63 +33,80 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  string str;
+  cin >> str;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
+  int n1 = str.length();
+  vector<string> vstr(n);
   for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
+    cin >> vstr[i];
   }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
-        cnt++;
-        if (nef == -1) {
-          nef = j;
+  int end = -1;
+  pair<int, int> p1;
+  for (int i = 0; i < vstr.size(); i++) {
+    k = 0;
+    for (int j = 0; j < vstr[i].length(); j++) {
+      if (vstr[i][j] != str[j]) {
+        k++;
+        break;
+      }
+    }
+    if (!k) {
+      int p = vstr[i].length();
+      if (end < p - 1) {
+        end = p - 1;
+        p1 = {i, 0};
+      }
+    }
+  }
+  if (end == -1) {
+    cout << -1 << endl;
+    return;
+  }
+  vector<pair<int, int>> vans;
+  vans.pb(p1);
+  debug(vans, end);
+  int init = 1;
+  while (end < n1 - 1) {
+    int next = -1;
+    pair<int, int> p1;
+    for (int i = init; i <= end + 1; i++) {
+      for (int it = 0; it < n; it++) {
+        k = 0;
+        int p2 = vstr[it].length();
+        if (i + p2 - 1 >= n1)
+          continue;
+        for (int j = 0; j < vstr[it].length(); j++) {
+          if (vstr[it][j] != str[i + j]) {
+            k++;
+            break;
+          }
         }
-        nes = j;
-      }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
-    }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
-      }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
+        if (!k) {
+          if (i + p2 - 1 > end) {
+            if (next < i + p2 - 1) {
+              next = i + p2 - 1;
+              p1 = {it, i};
+            }
+          }
+        }
       }
     }
-    debug(fs, sn, ans);
-    if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
-      } else {
-        ans -= sn;
-        end = nes;
-      }
+    debug(init, end, next);
+    if (next == -1) {
+      cout << -1 << endl;
+      return;
     }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
-    }
-    debug(ans, start, end, pans);
+    vans.pb(p1);
+    init = end + 1;
+    end = next;
+    if (end == n1 - 1)
+      break;
   }
-  cout << pans.first << " " << pans.second << endl;
+  cout << vans.size() << endl;
+  for (auto &[l, r] : vans) {
+    cout << l + 1 << " " << r + 1 << endl;
+  }
 }
 
 signed main() {

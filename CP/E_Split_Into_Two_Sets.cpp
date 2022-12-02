@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 01-12-2022 13:33:54
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,64 +32,52 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
-  for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
+  vector<pair<int, int>> vp(n);
+  map<int, vector<int>> adj_list; // adjacency list
+  for (auto &[l, r] : vp) {
+    cin >> l >> r;
+    if (l == r)
+      k++;
+    adj_list[l].pb(r);
+    adj_list[r].pb(l);
   }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
-        cnt++;
-        if (nef == -1) {
-          nef = j;
-        }
-        nes = j;
-      }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
+  for (auto [l, r] : adj_list) {
+    if (r.size() > 2) {
+      cout << "NO\n";
+      return;
     }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
-      }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
-      }
-    }
-    debug(fs, sn, ans);
-    if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
-      } else {
-        ans -= sn;
-        end = nes;
-      }
-    }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
-    }
-    debug(ans, start, end, pans);
   }
-  cout << pans.first << " " << pans.second << endl;
+  if (k) {
+    cout << "NO\n";
+    return;
+  }
+  debug(adj_list);
+  // DFS, time complexity of O(V+E)
+  int t = 0;
+  map<int, bool> visited;
+  map<pair<int, int>, int> adj_weight; // to add weights on edges
+  function<void(int)> DFS = [&](int current) {
+    visited[current] = true;
+    debug(current);
+    t++;
+    for (int next_vertex : adj_list[current])
+      if (!visited[next_vertex]) {
+        DFS(next_vertex);
+      }
+  };
+  for (int i = 1; i <= n; i++) {
+    t = 0;
+    if (!visited[i])
+      DFS(i);
+    if (t & 1) {
+      cout << "NO\n";
+      return;
+    }
+    debug("------");
+  }
+  cout << "YES\n";
 }
 
 signed main() {

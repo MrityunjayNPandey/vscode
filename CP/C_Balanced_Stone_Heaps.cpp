@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-12-2022 23:16:11
+ *      created: 02-12-2022 15:01:09
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -37,59 +37,32 @@ void solve() {
   vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-  vector<int> zero;
-  zero.pb(-1);
-  for (int i = 0; i < n; i++) {
-    if (v[i] == 0)
-      zero.pb(i);
-  }
-  zero.pb(n);
-  int ansf = -INF;
-  pair<int, int> pans;
-  for (int i = 1; i < zero.size(); i++) {
-    int start = zero[i - 1], end = zero[i];
-    debug(start, end);
-    cnt = 0, ans = 0;
-    int nef = -1, nes = -1;
-    for (int j = start + 1; j < end; j++) {
-      if (v[j] < 0) {
-        cnt++;
-        if (nef == -1) {
-          nef = j;
-        }
-        nes = j;
-      }
-      if (v[j] == 2 || v[j] == -2)
-        ans += 2;
-    }
-    int fs = 0, sn = 0;
-    if (nef != -1 && nes != -1) {
-      for (int j = start + 1; j <= nef; j++) {
-        if (v[j] == 2 || v[j] == -2)
-          fs += 2;
-      }
-      for (int j = end - 1; j >= nes; j--) {
-        if (v[j] == 2 || v[j] == -2)
-          sn += 2;
-      }
-    }
-    debug(fs, sn, ans);
-    if (cnt & 1) {
-      if (ans - fs > ans - sn) {
-        ans -= fs;
-        start = nef;
+  int l = 1, r = INF;
+  while (l <= r) {
+    int mid = l + (r - l) / 2;
+    vector<int> temp(v);
+    debug(mid);
+    k = 0;
+    for (int i = n - 1; i >= 2; i--) {
+      if (temp[i] < mid) {
+        debug(i);
+        k++;
+        break;
       } else {
-        ans -= sn;
-        end = nes;
+        int d = min(v[i], temp[i] - mid) / 3;
+        temp[i - 1] += d;
+        temp[i - 2] += 2 * d;
       }
     }
-    if (ansf < ans) {
-      pans = {start + 1, n - end};
-      ansf = ans;
+    debug(temp, k);
+    if (!k && temp[0] >= mid && temp[1] >= mid) {
+      ans = mid;
+      l = mid + 1;
+    } else {
+      r = mid - 1;
     }
-    debug(ans, start, end, pans);
   }
-  cout << pans.first << " " << pans.second << endl;
+  cout << ans;
 }
 
 signed main() {
@@ -105,6 +78,7 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
+    cout << endl;
   }
 }
 
