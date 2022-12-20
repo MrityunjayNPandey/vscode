@@ -36,7 +36,6 @@ void solve() {
   cin >> n;
   string str1, str2;
   cin >> str1 >> str2;
-
   vector<vector<char>> str;
   vector<char> vt;
   for (int j = 0; j < n; j++) {
@@ -48,42 +47,173 @@ void solve() {
     vt.pb(str2[j]);
   }
   str.pb(vt);
-  map<string, int> mp;
-  for (int j = 0; j < n; j++) {
-    string strt;
-    strt += str[0][j];
-    strt += str[1][j];
-    debug(mp, strt, j) if (strt == "WB") {
-      if (mp.count("BW")) {
-        if ((j - mp["BW"]) % 2) {
-          cout << "NO";
-          return;
+  debug(str);
+  int x = -1, y = -1;
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < n; j++) {
+      int p = 0, q = 0, r = 0, s = 0;
+      if (str[i][j] == 'B') {
+        if (j > 0) {
+          if (str[i][j - 1] == 'B')
+            p++;
         }
-      }
-      if (mp.count("WB")) {
-        if ((j - mp["WB"]) % 2 == 0) {
-          cout << "NO";
-          return;
+        if (j < n - 1) {
+          if (str[i][j + 1] == 'B')
+            q++;
         }
-      }
-    }
-    if (strt == "BW") {
-      if (mp.count("WB")) {
-        if ((j - mp["WB"]) % 2) {
-          cout << "NO";
-          return;
+        if (i == 1) {
+          if (str[i - 1][j] == 'B')
+            r++;
         }
-      }
-      if (mp.count("BW")) {
-        if ((j - mp["BW"]) % 2 == 0) {
-          cout << "NO";
-          return;
+        if (i == 0) {
+          if (str[i + 1][j] == 'B')
+            s++;
+        }
+        if (p + q + r + s <= 1) {
+          cnt++;
+          x = i, y = j;
         }
       }
     }
-    mp[strt] = j;
   }
-  cout << "YES";
+  debug(x, y);
+  if (cnt >= 3) {
+    cout << "NO\n";
+    return;
+  }
+  if (x == -1 && y == -1) {
+    for (int i = 0; i < n; i++) {
+      if (str[0][i] == 'B')
+        x = 0, y = i;
+    }
+    int x1=x, y1=y;
+    vector<vector<char>> str1(str);
+    while (1) {
+      str[x][y] = '.';
+      if (x == 0) {
+        if (str[x + 1][y] == 'B') {
+          str[x + 1][y] = '.';
+          x++;
+        } else if (y > 0 && str[x][y - 1] == 'B') {
+          str[x][y - 1] = '.';
+          y--;
+        } else if (y < n - 1 && str[x][y + 1] == 'B') {
+          str[x][y + 1] = '.';
+          y++;
+        } else {
+          break;
+        }
+      } else {
+        if (str[x - 1][y] == 'B') {
+          str[x - 1][y] = '.';
+          x--;
+        } else if (y > 0 && str[x][y - 1] == 'B') {
+          str[x][y - 1] = '.';
+          y--;
+        } else if (y < n - 1 && str[x][y + 1] == 'B') {
+          str[x][y + 1] = '.';
+          y++;
+        } else {
+          break;
+        }
+      }
+    }
+    debug(str);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < n; j++) {
+        if (str[i][j] == 'B') {
+          cnt++;
+        }
+      }
+    }
+    
+    if (!cnt) {
+      cout << "YES\n";
+      return;
+    }
+    x=x1+1, y=y1;
+    while (1) {
+      str1[x][y] = '.';
+      if (x == 0) {
+        if (str1[x + 1][y] == 'B') {
+          str1[x + 1][y] = '.';
+          x++;
+        } else if (y > 0 && str1[x][y - 1] == 'B') {
+          str1[x][y - 1] = '.';
+          y--;
+        } else if (y < n - 1 && str1[x][y + 1] == 'B') {
+          str1[x][y + 1] = '.';
+          y++;
+        } else {
+          break;
+        }
+      } else {
+        if (str1[x - 1][y] == 'B') {
+          str1[x - 1][y] = '.';
+          x--;
+        } else if (y > 0 && str1[x][y - 1] == 'B') {
+          str1[x][y - 1] = '.';
+          y--;
+        } else if (y < n - 1 && str1[x][y + 1] == 'B') {
+          str1[x][y + 1] = '.';
+          y++;
+        } else {
+          break;
+        }
+      }
+    }
+    debug(str1);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < n; j++) {
+        if (str1[i][j] == 'B') {
+          cout << "NO\n";
+          return;
+        }
+      }
+    }
+    cout << "YES\n";
+    return;
+  }
+  while (1) {
+    str[x][y] = '.';
+    if (x == 0) {
+      if (str[x + 1][y] == 'B') {
+        str[x + 1][y] = '.';
+        x++;
+      } else if (y > 0 && str[x][y - 1] == 'B') {
+        str[x][y - 1] = '.';
+        y--;
+      } else if (y < n - 1 && str[x][y + 1] == 'B') {
+        str[x][y + 1] = '.';
+        y++;
+      } else {
+        break;
+      }
+    } else {
+      if (str[x - 1][y] == 'B') {
+        str[x - 1][y] = '.';
+        x--;
+      } else if (y > 0 && str[x][y - 1] == 'B') {
+        str[x][y - 1] = '.';
+        y--;
+      } else if (y < n - 1 && str[x][y + 1] == 'B') {
+        str[x][y + 1] = '.';
+        y++;
+      } else {
+        break;
+      }
+    }
+  }
+  debug(str);
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < n; j++) {
+      if (str[i][j] == 'B') {
+        cout << "NO\n";
+        return;
+      }
+    }
+  }
+  cout << "YES\n";
 }
 
 signed main() {
@@ -99,7 +229,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }
 
