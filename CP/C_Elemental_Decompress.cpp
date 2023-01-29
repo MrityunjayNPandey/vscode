@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 04-01-2023 10:37:57
+ *      created: 05-01-2023 20:33:02
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,88 +34,68 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n), v1(n);
-  for (auto &i : v)
-    cin >> i;
-  for (auto &i : v1)
-    cin >> i;
-  cin >> m;
-  multiset<int> mltst;
-  vector<int> vx(m);
-  for (auto &i : vx)
-    cin >> i, mltst.insert(i);
-  // Segment tree
-  vector<int> seg(4 * n);
-  function<void(int, int, int)> build = [&](int ind, int low, int high) {
-    if (low == high) {
-      seg[ind] = v1[low];
-      return;
-    }
-    int mid = (low + high) / 2;
-    build(2 * ind + 1, low, mid);
-    build(2 * ind + 2, mid + 1, high);
-    seg[ind] = max(seg[2 * ind + 1], seg[2 * ind + 2]);
-  };
-  function<int(int, int, int, int, int)> query = [&](int ind, int low, int high, int l, int r) {
-    if (low >= l && high <= r) {
-      return seg[ind];
-    }
-    if (high < l || low > r)
-      return -INF;
-    int mid = (low + high) / 2;
-    int left = query(2 * ind + 1, low, mid, l, r);
-    int right = query(2 * ind + 2, mid + 1, high, l, r);
-    return max(left, right);
-  };
-  build(0, 0, n - 1);
-  debug(query(0, 0, n - 1, 0, n - 1));
+  vector<int> v(n);
   map<int, vector<int>> mpv;
   for (int i = 0; i < n; i++) {
-    if (v[i] > v1[i])
-      mpv[v1[i]].pb(i);
-    if (v[i] < v1[i]) {
-      cout << "NO";
-      return;
-    }
+    cin >> v[i];
+    mpv[-v[i]].pb(i);
   }
   debug(mpv);
-  while (mpv.size()) {
-    vector<int> vt;
-    auto [l, r] = *mpv.rbegin();
-    mpv.erase(l);
-    int en = r.back();
-    vt.pb(en);
-    r.pop_back();
-    while (r.size()) {
-      int ind = r.back();
-      int mx = query(0, 0, n - 1, ind, en);
-      if (mx <= l) {
-        vt.pb(r.back());
-        r.pop_back();
-      } else
-        break;
-    }
-    if (mltst.find(l) == mltst.end()) {
+  for (auto [l, r] : mpv) {
+    if (r.size() > 2) {
       cout << "NO";
       return;
+    }
+  }
+  vector<int> v1(n), v2(n);
+  set<int> st1, st2;
+  for (auto [l, r] : mpv) {
+    if (r.size() == 2) {
+      v1[r[0]] = -l;
+      v2[r[1]] = -l;
     } else {
-      mltst.erase(mltst.find(l));
+      v1[r[0]] = -l;
+      v2[r[0]] = -l;
     }
-    for (auto i : vt) {
-      v[i] = l;
-    }
-    if (r.size())
-      mpv.insert({l, r});
-    debug(mpv)
+    st1.insert(-l);
+    st2.insert(-l);
   }
-  debug(v);
+  vector<int> vt1, vt2;
+  for (int i = 1; i <= n; i++) {
+    if (st1.find(i) == st1.end()) {
+      vt1.pb(i);
+    }
+    if (st2.find(i) == st2.end()) {
+      vt2.pb(i);
+    }
+  }
+  k = 0;
   for (int i = 0; i < n; i++) {
-    if (v[i] != v1[i]) {
+    if (v1[i] == 0) {
+      v1[i] = vt1[k];
+      k++;
+    }
+  }
+  k = 0;
+  for (int i = 0; i < n; i++) {
+    if (v2[i] == 0) {
+      v2[i] = vt2[k];
+      k++;
+    }
+  }
+  debug(v1, v2);
+  for (int i = 0; i < n; i++) {
+    if (max(v1[i], v2[i]) != v[i]) {
       cout << "NO";
       return;
     }
   }
-  cout << "YES";
+  cout << "YES\n";
+  for (auto i : v1)
+    cout << i << " ";
+  cout << endl;
+  for (auto i : v2)
+    cout << i << " ";
 }
 
 signed main() {

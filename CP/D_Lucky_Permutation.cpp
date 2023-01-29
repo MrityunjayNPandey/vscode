@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 04-01-2023 10:37:57
+ *      created: 05-01-2023 21:15:26
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,91 +31,62 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+void swap(vector<int> &arr, int i, int j) {
+  int temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+// Return the minimum number
+// of swaps required to sort
+// the array
+pair<int, int> minSwaps(vector<int> arr, int N) {
+  int ans = 0, ans1 = 0;
+  vector<int> temp = arr;
+
+  // Hashmap which stores the
+  // indexes of the input array
+  map<int, int> h;
+
+  sort(temp.begin(), temp.end());
+  for (int i = 0; i < N; i++) {
+    h[arr[i]] = i;
+  }
+  for (int i = 0; i < N; i++) {
+    // This is checking whether
+    // the current element is
+    // at the right place or not
+    if (arr[i] != temp[i]) {
+      ans++;
+      int init = arr[i];
+
+      // If not, swap this element
+      // with the index of the
+      // element which should come here
+      swap(arr, i, h[temp[i]]);
+      if (abs(i - h[temp[i]]) == 1) {
+        ans1++;
+      }
+      // Update the indexes in
+      // the hashmap accordingly
+      h[init] = h[temp[i]];
+      h[temp[i]] = i;
+    }
+  }
+  return {ans, ans1};
+}
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n), v1(n);
+  vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-  for (auto &i : v1)
-    cin >> i;
-  cin >> m;
-  multiset<int> mltst;
-  vector<int> vx(m);
-  for (auto &i : vx)
-    cin >> i, mltst.insert(i);
-  // Segment tree
-  vector<int> seg(4 * n);
-  function<void(int, int, int)> build = [&](int ind, int low, int high) {
-    if (low == high) {
-      seg[ind] = v1[low];
-      return;
-    }
-    int mid = (low + high) / 2;
-    build(2 * ind + 1, low, mid);
-    build(2 * ind + 2, mid + 1, high);
-    seg[ind] = max(seg[2 * ind + 1], seg[2 * ind + 2]);
-  };
-  function<int(int, int, int, int, int)> query = [&](int ind, int low, int high, int l, int r) {
-    if (low >= l && high <= r) {
-      return seg[ind];
-    }
-    if (high < l || low > r)
-      return -INF;
-    int mid = (low + high) / 2;
-    int left = query(2 * ind + 1, low, mid, l, r);
-    int right = query(2 * ind + 2, mid + 1, high, l, r);
-    return max(left, right);
-  };
-  build(0, 0, n - 1);
-  debug(query(0, 0, n - 1, 0, n - 1));
-  map<int, vector<int>> mpv;
-  for (int i = 0; i < n; i++) {
-    if (v[i] > v1[i])
-      mpv[v1[i]].pb(i);
-    if (v[i] < v1[i]) {
-      cout << "NO";
-      return;
-    }
-  }
-  debug(mpv);
-  while (mpv.size()) {
-    vector<int> vt;
-    auto [l, r] = *mpv.rbegin();
-    mpv.erase(l);
-    int en = r.back();
-    vt.pb(en);
-    r.pop_back();
-    while (r.size()) {
-      int ind = r.back();
-      int mx = query(0, 0, n - 1, ind, en);
-      if (mx <= l) {
-        vt.pb(r.back());
-        r.pop_back();
-      } else
-        break;
-    }
-    if (mltst.find(l) == mltst.end()) {
-      cout << "NO";
-      return;
-    } else {
-      mltst.erase(mltst.find(l));
-    }
-    for (auto i : vt) {
-      v[i] = l;
-    }
-    if (r.size())
-      mpv.insert({l, r});
-    debug(mpv)
-  }
-  debug(v);
-  for (int i = 0; i < n; i++) {
-    if (v[i] != v1[i]) {
-      cout << "NO";
-      return;
-    }
-  }
-  cout << "YES";
+  auto [x, y] = minSwaps(v, n);
+  debug(x, y)
+  if (y) {
+    cout << x - 1;
+  } else
+    cout << x + 1;
 }
 
 signed main() {
