@@ -89,11 +89,3 @@ The way...
 Okay, Do you have a fucking problem in your head, do you think I am bullshitting
 you, do you think I am lying? Fuck you! Okay? Fuck you!...
 */
-
-vector<int> v(n);
-
-vector<int> pref(n + 1);
-
-for (int i = 1; i < n; i++) {
-  pref[i] = pref[i - 1] + v[i];
-}
