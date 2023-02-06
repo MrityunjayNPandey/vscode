@@ -38,7 +38,23 @@ void solve() {
   for (auto &i : v) {
     cin >> i;
   }
-  
+  int mx = *max_element(all(v));
+  if (n == 2) {
+    if (2 * abs(v[0] - v[1]) >= v[0] + v[1]) {
+      cout << 2 * abs(v[0] - v[1]);
+    } else
+      cout << v[0] + v[1];
+    return;
+  }
+  debug(mx);
+  if (n - 2 == 1) {
+    ans = v[0] + v[1] + v[2];
+    ans = max({ans, 3 * abs(v[1] - v[0]), 3 * abs(v[2] - v[1]), 3 * v[0], 3 * v[2]});
+    cout << ans;
+    return;
+  }
+  cout << mx * n;
+  return;
 }
 
 signed main() {

@@ -31,6 +31,23 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+//Gaand faad Problem
+//Chinese Remainder theorum aur pigeonhole principle ka chod
+
+// Sieve of Eratosthenes, time complexity of O(N*log(logN))
+vector<int> primetemp(MAX_N + 1, 1), isprime(MAX_N + 1, 0), prime;
+void SIEVE() {
+  for (int p = 2; p <= MAX_N; p++) {
+    if (primetemp[p] == 1) {
+      prime.pb(p);
+      isprime[p]++;
+      for (int i = p * p; i <= MAX_N; i += p) {
+        primetemp[i] = 0;
+      }
+    }
+  }
+}
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
@@ -52,23 +69,17 @@ void solve() {
     cout << "NO";
     return;
   }
-  sort(all(v));
-  for (int i = 0; i < n; i++) {
-    map<int, int> mp;
-    cnt = 0;
+  for (int i = 0; prime[i] <= n; i++) {
+    vector<int> vt(prime[i]);
     for (int j = 0; j < n; j++) {
-      int p = v[i] % v[j];
-      if (mp.count(p)) {
-        cnt++;
-        break;
-      }
+      vt[v[j] % prime[i]]++;
     }
-    if (!cnt) {
-      cout << "YES";
+    if (*min_element(all(vt)) > 1) {
+      cout << "NO";
       return;
     }
   }
-  cout << "NO";
+  cout << "YES";
 }
 
 signed main() {
@@ -78,6 +89,7 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  SIEVE();
   cout << fixed;
   Test = 1;
   cin >> Test;
@@ -87,18 +99,3 @@ signed main() {
     cout << endl;
   }
 }
-
-/*
-Did I ever tell you what the definition of insanity is?
-Insanity is doing the exact... same fucking thing... over and over again
-expecting... shit to change... That. Is. Crazy. The first time somebody told me
-that, I dunno, I thought they were bullshitting me. The thing is... He was
-right. And then I started seeing, everywhere I looked, everywhere I looked all
-these fucking pricks, everywhere I looked, doing the exact same fucking thing...
-over and over and over and over again thinking 'this time is gonna be different'
-no, no, no please... This time is gonna be different, I'm sorry, I don't like...
-The way...
-
-Okay, Do you have a fucking problem in your head, do you think I am bullshitting
-you, do you think I am lying? Fuck you! Okay? Fuck you!...
-*/

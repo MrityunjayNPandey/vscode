@@ -31,42 +31,25 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-set<int> perfect;
-
-void pref1() {
-  for (int i = 1; i * i <= 1e5; i++)
-    perfect.insert(i * i);
-  debug(perfect.size());
-}
+//n*sqrt(n)*log(n) is not that simple bby
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n), xorv(n + 1), v1;
+  vector<int> v(n), mp(2 * n), v1;
   for (auto &i : v)
     cin >> i;
-  map<int, int> mp;
-  for (int i = 1; i <= n; i++) {
-    xorv[i] = v[i - 1] ^ xorv[i - 1];
-    mp[xorv[i]]++;
-  }
-  debug(xorv, mp);
-  for (auto [l, r] : mp)
-    v1.pb(l);
-  debug(v1);
-  for (auto i : v1) {
-    {
-      ans += (mp[i] * (mp[i] - 1)) / 2;
-    }
-    for (auto j : perfect) {
-      if (mp.count(j ^ i)) {
-        ans += mp[j ^ i];
+  int x = 0;
+  mp[x]++;
+  for (int i = 0; i < n; i++) {
+    x ^= v[i];
+    for (int j = 0; j * j <= 2 * n; j++) {
+      if ((x ^ (j * j)) < 2 * n) {
+        ans += mp[x ^ (j * j)];
       }
     }
-    debug(ans);
-    mp.erase(i);
+    mp[x]++;
   }
-
   cout << ((n * (n + 1)) / 2) - ans;
 }
 
@@ -80,25 +63,9 @@ signed main() {
   cout << fixed;
   Test = 1;
   cin >> Test;
-  pref1();
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
     cout << endl;
   }
 }
-
-/*
-Did I ever tell you what the definition of insanity is?
-Insanity is doing the exact... same fucking thing... over and over again
-expecting... shit to change... That. Is. Crazy. The first time somebody told me
-that, I dunno, I thought they were bullshitting me. The thing is... He was
-right. And then I started seeing, everywhere I looked, everywhere I looked all
-these fucking pricks, everywhere I looked, doing the exact same fucking thing...
-over and over and over and over again thinking 'this time is gonna be different'
-no, no, no please... This time is gonna be different, I'm sorry, I don't like...
-The way...
-
-Okay, Do you have a fucking problem in your head, do you think I am bullshitting
-you, do you think I am lying? Fuck you! Okay? Fuck you!...
-*/
