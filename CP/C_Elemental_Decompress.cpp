@@ -46,6 +46,7 @@ void solve() {
     st1.insert(i);
     st2.insert(i);
   }
+
   debug(mp);
   for (auto [l, r] : mp) {
     if (r.size() > 2) {
@@ -131,3 +132,5 @@ The way...
 Okay, Do you have a fucking problem in your head, do you think I am bullshitting
 you, do you think I am lying? Fuck you! Okay? Fuck you!...
 */
+
+
