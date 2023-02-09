@@ -34,68 +34,70 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  map<int, vector<int>> mpv;
+  vector<int> v(n), ans1(n), ans2(n), l1, l2;
+  map<int, vector<int>> mp;
   for (int i = 0; i < n; i++) {
     cin >> v[i];
-    mpv[-v[i]].pb(i);
+    mp[-v[i]].pb(i);
+    cnt = max(cnt, v[i]);
   }
-  debug(mpv);
-  for (auto [l, r] : mpv) {
-    if (r.size() > 2) {
-      cout << "NO";
-      return;
-    }
-  }
-  vector<int> v1(n), v2(n);
   set<int> st1, st2;
-  for (auto [l, r] : mpv) {
-    if (r.size() == 2) {
-      v1[r[0]] = -l;
-      v2[r[1]] = -l;
+  for (int i = 1; i <= cnt; i++) {
+    st1.insert(i);
+    st2.insert(i);
+  }
+  debug(mp);
+  for (auto [l, r] : mp) {
+    if (r.size() > 2) {
+      cout << "NO\n";
+      return;
+    } else if (r.size() == 1) {
+      ans1[r[0]] = ans2[r[0]] = -l;
     } else {
-      v1[r[0]] = -l;
-      v2[r[0]] = -l;
+      ans1[r[0]] = ans2[r[1]] = -l;
+      l2.pb(r[0]);
+      l1.pb(r[1]);
     }
-    st1.insert(-l);
-    st2.insert(-l);
+    st1.erase(-l);
+    st2.erase(-l);
   }
-  vector<int> vt1, vt2;
-  for (int i = 1; i <= n; i++) {
-    if (st1.find(i) == st1.end()) {
-      vt1.pb(i);
+  debug(l1, l2);
+  debug(ans1, ans2, st1, st2);
+  for (int i = 0; i < l1.size(); i++) {
+    if (ans1[l1[i]] == 0) {
+      if (st1.empty()) {
+        cout << "NO\n";
+        return;
+      }
+      ans1[l1[i]] = *prev(st1.end());
+      st1.erase(*prev(st1.end()));
     }
-    if (st2.find(i) == st2.end()) {
-      vt2.pb(i);
+    if (ans2[l2[i]] == 0) {
+      if (st2.empty()) {
+        cout << "NO\n";
+        return;
+      }
+      ans2[l2[i]] = *prev(st2.end());
+      st2.erase(*prev(st2.end()));
     }
   }
-  k = 0;
+  if (st1.size() || st2.size()) {
+    cout << "NO\n";
+    return;
+  }
   for (int i = 0; i < n; i++) {
-    if (v1[i] == 0) {
-      v1[i] = vt1[k];
-      k++;
-    }
-  }
-  k = 0;
-  for (int i = 0; i < n; i++) {
-    if (v2[i] == 0) {
-      v2[i] = vt2[k];
-      k++;
-    }
-  }
-  debug(v1, v2);
-  for (int i = 0; i < n; i++) {
-    if (max(v1[i], v2[i]) != v[i]) {
-      cout << "NO";
+    if (max(ans1[i], ans2[i]) != v[i]) {
+      cout << "NO\n";
       return;
     }
   }
-  cout << "YES\n";
-  for (auto i : v1)
+  cout << "YES" << endl;
+  for (auto i : ans1)
     cout << i << " ";
   cout << endl;
-  for (auto i : v2)
+  for (auto i : ans2)
     cout << i << " ";
+  cout << endl;
 }
 
 signed main() {
@@ -111,7 +113,7 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
+    // cout << endl;
   }
 }
 
