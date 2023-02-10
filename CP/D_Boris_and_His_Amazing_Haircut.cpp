@@ -23,7 +23,7 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
+const long long MAX_N = 1e6 + 7; const long long MOD = 2147483647; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -31,8 +31,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+// nCr = n! * 1/r! * 1/(n-r)!
+
+vector<int> fact(MAX_N, 1), invFact(MAX_N, 1);
+
+int nCr(int n, int r) {
+  if (r > n) {
+    return 0;
+  }
+  debug(fact[n], invFact[r], invFact[n - r]) return fact[n] * invFact[r] % MOD *
+      invFact[n - r] % MOD;
+}
+
+int bin_pow(int a, int p) {
+  int res = 1;
+  while (p) {
+    if (!(p & 1)) {
+      (a *= a) %= MOD;
+      p /= 2;
+    } else {
+      (res *= a) %= MOD;
+      p--;
+    }
+  }
+  return res;
+}
+
+void pref() {
+  for (int i = 1; i < MAX_N; i++) {
+    fact[i] = (fact[i - 1] * i) % MOD;
+    invFact[i] = bin_pow(fact[i], MOD - 2);
+  }
+}
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  debug(nCr(58, 8));
   cin >> n;
   vector<int> v(n), v1(n);
   for (auto &i : v)
@@ -56,7 +90,8 @@ void solve() {
     build(2 * ind + 2, mid + 1, high);
     seg[ind] = max(seg[2 * ind + 1], seg[2 * ind + 2]);
   };
-  function<int(int, int, int, int, int)> query = [&](int ind, int low, int high, int l, int r) {
+  function<int(int, int, int, int, int)> query = [&](int ind, int low, int high,
+                                                     int l, int r) {
     if (low >= l && high <= r) {
       return seg[ind];
     }
@@ -125,6 +160,7 @@ signed main() {
   free
 #endif
       cout.precision(16);
+  pref();
   cout << fixed;
   Test = 1;
   cin >> Test;
