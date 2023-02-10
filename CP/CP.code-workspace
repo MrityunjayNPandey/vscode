@@ -6,6 +6,10 @@
 		{
 			"name": ".leetcode",
 			"path": "../../.leetcode"
+		},
+		{
+			"name": ".leetcode",
+			"path": "/home/joker/.leetcode"
 		}
 	],
 	"settings": {

@@ -36,11 +36,10 @@
       },
       "problemMatcher": []
     },
-
     {
       "type": "cppbuild",
-      "label": "C/C++: g++-9 build active file",
-      "command": "/usr/bin/g++-9",
+      "label": "C/C++: gcc build active file",
+      "command": "g++",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
