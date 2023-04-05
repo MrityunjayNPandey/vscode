@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 09-03-2023 17:07:20
+ *      created: 02-04-2023 20:13:19
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,30 +31,24 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-vector<vector<int>> v = vector<vector<int>>(256, vector<int>(256, 0));
-
-void pref() {
-  int k = 0;
-  for (int i = 0; i < 256; i += 2) {
-    for (int j = 0; j < 256; j += 2) {
-      v[i][j] = k;
-      v[i][j + 1] = k + 1;
-      v[i + 1][j] = k + 2;
-      v[i + 1][j + 1] = k + 3;
-      k += 4;
-    }
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> m;
-  cout << n * m << endl;
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      cout << v[i][j] << " ";
+  cin >> n;
+  string str;
+  cin >> str;
+  int ind = -1;
+  char mnc = *min_element(all(str));
+  for (int i = n - 1; i >= 0; i--) {
+    if (str[i] == mnc) {
+      ind = i;
+      break;
     }
-    cout << endl;
+  }
+  cout << str[ind];
+  for (int i = 0; i < n; i++) {
+    if (i != ind) {
+      cout << str[i];
+    }
   }
 }
 
@@ -68,9 +62,9 @@ signed main() {
   cout << fixed;
   Test = 1;
   cin >> Test;
-  pref();
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
+    cout << endl;
   }
 }
