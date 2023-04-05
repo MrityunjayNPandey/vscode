@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 25-03-2023 10:23:48
+ *      created: 26-03-2023 20:21:46
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,35 +33,42 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int q = 0, x;
-  cin >> n >> x >> m >> q;
-  vector<int> query(q);
-  vector<pair<int, int>> vp(m), vpm(m);
-  for (auto &[l, r] : vp) {
-    cin >> l >> r;
+  cin >> k;
+  m = k;
+  set<int> st;
+  vector<vector<int>> vv;
+  while (k--) {
+    cin >> n;
+    vector<int> v(n);
+    for (auto &i : v)
+      cin >> i;
+    vv.pb(v);
   }
-  for (auto &i : query) {
-    cin >> i;
-  }
-  for (int i = 0; i < m; i++) {
-    vpm[i] = {vp[i].second, vp[i].first};
-  }
-  sort(all(vpm));
-  debug(vpm, query);
-  vector<int> vans(q);
-  for (int i = 0; i < q; i++) {
-    pair<int, int> p1 = {query[i] - x, 0}, p2 = {query[i] + 1, 0};
-    debug(p1, p2);
-    int idx = lower_bound(vpm.begin(), vpm.end(), p1) - vpm.begin();
-    int idx1 = upper_bound(vpm.begin(), vpm.end(), p2) - vpm.begin() - 1;
-    debug(idx, idx1);
-    set<int> st;
-    for (int j = idx; j <= idx1; j++) {
-      st.insert(vpm[j].second);
+  for (int i = m - 1; i >= 0; i--) {
+    for (int j = 0; j < vv[i].size(); j++) {
+      if (st.find(vv[i][j]) != st.end()) {
+        vv[i][j] = 0;
+      } else
+        st.insert(vv[i][j]);
     }
-    vans[i] = n - st.size();
   }
-  debug(vans);
+  vector<int> vans;
+  for (int i = 0; i < m; i++) {
+    int cnt = 0;
+    for (int j = 0; j < vv[i].size(); j++) {
+      if (vv[i][j]) {
+        cnt++;
+        vans.pb(vv[i][j]);
+        break;
+      }
+    }
+    if (!cnt) {
+      cout << -1;
+      return;
+    }
+  }
+  for (auto &i : vans)
+    cout << i << " ";
 }
 
 signed main() {
@@ -73,7 +80,7 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
-  //   cin >> Test;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
