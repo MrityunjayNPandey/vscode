@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 26-03-2023 20:51:06
+ *      created: 26-03-2023 21:32:35
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,33 +34,38 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<pair<int, int>> vp(n);
-  int mina = INF;
-  for (auto &[l, r] : vp)
-    cin >> l >> r;
-  debug(vp);
-  int l = 0, r = 0;
-  int prevlcm = 1;
-  int prevhcf = vp[l].first * vp[l].second;
-  while (r < n) {
-    int lcm = (prevlcm * vp[r].second) / __gcd(prevlcm, vp[r].second);
-    int hcf = __gcd(prevhcf, vp[r].first * vp[r].second);
-    int attainable = 1;
-    if (hcf % lcm)
-      attainable = 0;
-    if (attainable) {
-      prevlcm = lcm;
-      prevhcf = hcf;
-      r++;
+  vector<int> v(n), vans;
+  for (auto &i : v)
+    cin >> i;
+  priority_queue<int> pos, neg;
+  int mx = *max_element(all(v)) - *min_element(all(v));
+  for (int i = 0; i < n; i++) {
+    if (v[i] > 0)
+      pos.push(v[i]);
+    else
+      neg.push(-v[i]);
+  }
+  debug(mx);
+  while (pos.size() || neg.size()) {
+    if ((pos.size()) && (sum + pos.top() < mx)) {
+      debug(sum + pos.top());
+      sum += pos.top();
+      vans.pb(pos.top());
+      pos.pop();
     } else {
-      l = r;
-      mina = INF;
-      ans++;
-      prevlcm = 1;
-      prevhcf = vp[l].first * vp[l].second;
+      if (neg.size() && -sum < mx) {
+        sum -= neg.top();
+        vans.pb(-neg.top());
+        neg.pop();
+      } else {
+        cout << "NO";
+        return;
+      }
     }
   }
-  cout << ans + 1;
+  cout << "YES\n";
+  for (auto i : vans)
+    cout << i << " ";
 }
 
 signed main() {

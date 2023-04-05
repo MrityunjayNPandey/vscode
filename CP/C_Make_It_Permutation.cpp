@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 26-03-2023 20:51:06
+ *      created: 01-04-2023 01:47:32
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -23,7 +23,7 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
+const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -32,35 +32,43 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<pair<int, int>> vp(n);
-  int mina = INF;
-  for (auto &[l, r] : vp)
-    cin >> l >> r;
-  debug(vp);
-  int l = 0, r = 0;
-  int prevlcm = 1;
-  int prevhcf = vp[l].first * vp[l].second;
-  while (r < n) {
-    int lcm = (prevlcm * vp[r].second) / __gcd(prevlcm, vp[r].second);
-    int hcf = __gcd(prevhcf, vp[r].first * vp[r].second);
-    int attainable = 1;
-    if (hcf % lcm)
-      attainable = 0;
-    if (attainable) {
-      prevlcm = lcm;
-      prevhcf = hcf;
-      r++;
-    } else {
-      l = r;
-      mina = INF;
-      ans++;
-      prevlcm = 1;
-      prevhcf = vp[l].first * vp[l].second;
-    }
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0, ansf = INF;
+  int c, d;
+  cin >> n >> c >> d;
+  vector<int> v(n);
+  priority_queue<int, vector<int>, greater<int>> pq;
+  for (auto &i : v)
+    cin >> i, pq.push(i);
+  k = 1;
+  if (pq.top() != 1) {
+    pq.push(1);
+    ans += d;
   }
-  cout << ans + 1;
+  while (pq.size()) {
+    if (k != pq.top()) {
+      if (k > pq.top()) {
+        pq.pop();
+        ans += c;
+        debug(ans, pq.size());
+        continue;
+      } else {
+        int x = pq.top() - k;
+        debug(x);
+        // remove
+        ansf = min(ansf, (int)(ans + c * pq.size()));
+        // if add
+        ans += x * d;
+        k = pq.top();
+        pq.pop();
+        debug(ans, pq.size());
+        k++;
+        continue;
+      }
+    }
+    pq.pop();
+    debug(k, pq.size()) k++;
+  }
+  cout << min(ans, ansf);
 }
 
 signed main() {

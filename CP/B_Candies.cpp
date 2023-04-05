@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 26-03-2023 20:51:06
+ *      created: 31-03-2023 23:28:53
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,33 +34,24 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<pair<int, int>> vp(n);
-  int mina = INF;
-  for (auto &[l, r] : vp)
-    cin >> l >> r;
-  debug(vp);
-  int l = 0, r = 0;
-  int prevlcm = 1;
-  int prevhcf = vp[l].first * vp[l].second;
-  while (r < n) {
-    int lcm = (prevlcm * vp[r].second) / __gcd(prevlcm, vp[r].second);
-    int hcf = __gcd(prevhcf, vp[r].first * vp[r].second);
-    int attainable = 1;
-    if (hcf % lcm)
-      attainable = 0;
-    if (attainable) {
-      prevlcm = lcm;
-      prevhcf = hcf;
-      r++;
+  if ((n & 1) == 0) {
+    cout << -1;
+    return;
+  }
+  vector<int> vans;
+  while (n > 1) {
+    if (((n - 1) / 2) & 1) {
+      vans.pb(2);
+      n = (n - 1) / 2;
     } else {
-      l = r;
-      mina = INF;
-      ans++;
-      prevlcm = 1;
-      prevhcf = vp[l].first * vp[l].second;
+      vans.pb(1);
+      n = (n + 1) / 2;
     }
   }
-  cout << ans + 1;
+  reverse(all(vans));
+  cout << vans.size() << endl;
+  for (auto &i : vans)
+    cout << i << " ";
 }
 
 signed main() {
