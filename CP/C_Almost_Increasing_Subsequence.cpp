@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-11-2022 01:24:14
+ *      created: 29-04-2023 21:16:09
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -23,7 +23,7 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
+const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -33,41 +33,41 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  int k1 = k;
-  vector<int> v(n);
+  int q = 0;
+  cin >> n >> q;
+  vector<int> v(n), v1;
   for (auto &i : v)
     cin >> i;
-  sort(all(v));
-  debug(v);
-  int b = 1, g = 2;
-  string permut = "BGG";
-  do {
-    debug(permut);
-    // int ind = 0;
-    // int ans1 = 0;
-    // k = k1;
-    // for (int i = 0; i < n; i++) {
-    //   while (v[i] >= k) {
-    //     int x;
-    //     if (ind == 3)
-    //       break;
-    //     if (permut[ind] == 'B')
-    //       x = 3;
-    //     else
-    //       x = 2;
-    //     k *= x;
-    //     ind++;
-    //   }
-    //   if (v[i] >= k)
-    //     break;
-    //   ans1++;
-    //   k += v[i] / 2;
-    // }
-    // debug(ans1);
-    // ans = max(ans, ans1);
-  } while (next_permutation(all(permut)));
-  cout << ans;
+  for (int i = 0; i < n - 1; i++) {
+    if (v[i] < v[i + 1]) {
+      v1.pb(i + 1);
+    }
+  }
+  int l, r;
+  debug(v1);
+  while (q--) {
+    cin >> l >> r;
+    l--, r--;
+    int ind1 = lower_bound(all(v1), l) - v1.begin();
+    int ind2 = upper_bound(all(v1), r) - v1.begin() - 1;
+    ind2 = max(ind2, 0LL);
+    debug(ind1, ind2);
+    if (ind1 >= v1.size()) {
+      cout << min(r - l + 1, 2LL) << endl;
+      continue;
+    }
+    debug(ind1, ind2);
+    ans = 0;
+    ans += min(v1[ind1] - l, 2LL);
+    debug(ans);
+    for (int i = ind1; i < ind2; i++) {
+      ans += min(v1[i + 1] - v1[i], 2LL);
+    }
+    debug(ans);
+    ans += min(r - v1[ind2] + 1, 2LL);
+    debug(ans);
+    cout << ans << endl;
+  }
 }
 
 signed main() {
@@ -76,8 +76,9 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-      Test = 1;
-  cin >> Test;
+      cout.precision(16);
+  cout << fixed;
+  Test = 1;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

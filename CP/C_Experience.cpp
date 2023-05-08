@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-11-2022 01:24:14
+ *      created: 02-05-2023 01:42:23
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -23,7 +23,7 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
+const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -31,43 +31,49 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+int FIND(int x, vector<int> &parent) {
+  if (parent[x] == x) {
+    return x;
+  }
+  return parent[x] = FIND(parent[x], parent);
+}
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n >> k;
-  int k1 = k;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  sort(all(v));
-  debug(v);
-  int b = 1, g = 2;
-  string permut = "BGG";
-  do {
-    debug(permut);
-    // int ind = 0;
-    // int ans1 = 0;
-    // k = k1;
-    // for (int i = 0; i < n; i++) {
-    //   while (v[i] >= k) {
-    //     int x;
-    //     if (ind == 3)
-    //       break;
-    //     if (permut[ind] == 'B')
-    //       x = 3;
-    //     else
-    //       x = 2;
-    //     k *= x;
-    //     ind++;
-    //   }
-    //   if (v[i] >= k)
-    //     break;
-    //   ans1++;
-    //   k += v[i] / 2;
-    // }
-    // debug(ans1);
-    // ans = max(ans, ans1);
-  } while (next_permutation(all(permut)));
-  cout << ans;
+  int q;
+  cin >> n >> q;
+  vector<int> parent(n + 1), rank(n + 1, 1);
+  for (int i = 0; i < n; i++) {
+    parent[i] = i;
+  }
+  map<int, int> point;
+  while (q--) {
+    string str;
+    cin >> str;
+    int x, y;
+    if (str == "add") {
+      cin >> x >> y;
+      int p = FIND(x, parent);
+      point[p] += y;
+    } else if (str == "join") {
+      cin >> x >> y;
+      int p1 = FIND(x, parent);
+      int p2 = FIND(y, parent);
+      if (rank[p1] > rank[p2]) {
+        parent[p2] = p1;
+        rank[p1] += rank[p2];
+        point[p1] += point[p2];
+      } else {
+        parent[p1] = p2;
+        rank[p2] += rank[p1];
+        point[p2] += point[p1];
+      }
+    } else {
+      cin >> x;
+      int p = FIND(x, parent);
+      cout << point[p] << endl;
+    }
+  }
 }
 
 signed main() {
@@ -76,8 +82,9 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-      Test = 1;
-  cin >> Test;
+      cout.precision(16);
+  cout << fixed;
+  Test = 1;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
