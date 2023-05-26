@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-05-2023 01:42:23
+ *      created: 09-05-2023 11:32:48
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -11,7 +11,7 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace std; using namespace __gnu_pbds;
-#define endl "\n"
+//#define endl "\n"
 #ifdef DEBUG
 #include "algo/debug.h"
 #else
@@ -31,68 +31,32 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-int FIND(int x, vector<int> &parent) {
-  if (parent[x] == x) {
-    return x;
-  }
-  return FIND(parent[x], parent);
-}
-
-void changevalue(int c, int p, map<int, vector<int>> &child, vector<int> &val,
-                 int valpar) {
-  if (val[c] == valpar)
-    val[c] -= val[p];
-  else {
-    debug(valpar + val[c]);
-    val[c] = valpar + val[c] - val[p];
-  }
-  for (auto i : child[c]) {
-    changevalue(i, p, child, val, valpar);
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int q;
-  cin >> n >> q;
-  vector<int> parent(n + 1), rank(n + 1, 1), val(n + 1, 0);
-  map<int, vector<int>> child;
-  for (int i = 0; i < n + 1; i++) {
-    parent[i] = i;
-  }
-  map<int, int> point;
-  while (q--) {
-    string str;
-    cin >> str;
-    int x, y;
-    if (str == "add") {
-      cin >> x >> y;
-      int p = FIND(x, parent);
-      val[p] += y;
-    } else if (str == "join") {
-      cin >> x >> y;
-      int p1 = FIND(x, parent);
-      int p2 = FIND(y, parent);
-      if (rank[p1] > rank[p2]) {
-        changevalue(p2, p1, child, val, val[p2]);
-        parent[p2] = p1;
-        child[p1].pb(p2);
-        rank[p1] += rank[p2];
-      } else {
-        changevalue(p1, p2, child, val, val[p1]);
-        parent[p1] = p2;
-        child[p2].pb(p1);
-        rank[p2] += rank[p1];
-      }
+  cin >> n >> m;
+  cout << "? 1 1" << endl;
+  cout.flush();
+  int x1, y1, x2, y2;
+  int d, d1;
+  cin >> d;
+  cout << "? " << 1 << " " << m << endl;
+  cin >> d1;
+  if (1 + d == m - d1) {
+    cout << "? " << 1 << " " << 1 + d << endl;
+    int d2;
+    cin >> d2;
+    cout << "! " << 1 + d2 << " " << 1 + d << endl;
+  } else if (1 + d1 == 1 + d) {
+    cout << "? " << 1 + d << " " << 1 << endl;
+    int x;
+    cin >> x;
+    cout << "! " << 1 + d << " " << 1 + x << endl;
+  } else {
+    if (1 + d > 1 + d1) {
+      cout << "! " << 1 + d1 << " " << 1 + d << endl;
     } else {
-      cin >> x;
-      int p = FIND(x, parent);
-      if (p == x) {
-        cout << val[p] << endl;
-      } else
-        cout << val[p] + val[x] << endl;
+      cout << "! " << 1 + d << " " << m - d1 << endl;
     }
-    debug(val, child);
   }
 }
 
@@ -105,6 +69,7 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();

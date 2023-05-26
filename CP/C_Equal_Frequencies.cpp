@@ -1,8 +1,8 @@
 /**
- *      codeforces: _joKer_0
- *      codechef:  joker_0000
- *      created: 28-02-2023 20:57:35
- **/
+*      codeforces: _joKer_0
+*      codechef:  joker_0000
+*      created: 26-05-2023 23:37:09
+**/
 // clang-format off
 #ifdef ONLINE_JUDGE
 #pragma GCC optimize("Ofast", "unroll-loops")
@@ -33,42 +33,7 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int l, r;
-  cin >> l >> r;
-  int x = l, mx = 0;
-  while (x <= r) {
-    mx++;
-    x *= 2;
-  }
-  debug(mx, l << (mx - 1));
-  int l1 = l, lim = r;
-  r = l * 2 - 1;
-  int ans1 = 0;
-  while (l <= r) {
-    int mid = l + (r - l) / 2;
-    if ((mid << (mx - 1)) <= lim) {
-      ans1 = mid;
-      l = mid + 1;
-    } else {
-      r = mid - 1;
-    }
-  }
-  l = l1, r = l1 + ans1 - 1;
-  while (l <= r) {
-    int mid = l + (r - l) / 2;
-    if (((mid << (mx - 2)) * 3) <= lim) {
-      ans = mid;
-      l = mid + 1;
-    } else {
-      r = mid - 1;
-    }
-  }
-  debug(ans);
-  if (ans == 0) {
-    cout << mx << " " << ans1 - l1 + 1;
-    return;
-  }
-  cout << mx << " " << ans1 - l1 + 1 + (mx - 1) * (ans - l1 + 1);
+  
 }
 
 signed main() {

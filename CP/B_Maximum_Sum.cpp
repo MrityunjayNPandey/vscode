@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 02-05-2023 01:42:23
+ *      created: 12-05-2023 20:11:22
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -31,69 +31,30 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-int FIND(int x, vector<int> &parent) {
-  if (parent[x] == x) {
-    return x;
-  }
-  return FIND(parent[x], parent);
-}
-
-void changevalue(int c, int p, map<int, vector<int>> &child, vector<int> &val,
-                 int valpar) {
-  if (val[c] == valpar)
-    val[c] -= val[p];
-  else {
-    debug(valpar + val[c]);
-    val[c] = valpar + val[c] - val[p];
-  }
-  for (auto i : child[c]) {
-    changevalue(i, p, child, val, valpar);
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  int q;
-  cin >> n >> q;
-  vector<int> parent(n + 1), rank(n + 1, 1), val(n + 1, 0);
-  map<int, vector<int>> child;
-  for (int i = 0; i < n + 1; i++) {
-    parent[i] = i;
+  cin >> n >> k;
+  vector<int> v(n);
+  multiset<int> mltst;
+  for (auto &i : v)
+    cin >> i, mltst.insert(i);
+  vector<int> prefix;
+  for (auto i : mltst) {
+    prefix.pb(i);
   }
-  map<int, int> point;
-  while (q--) {
-    string str;
-    cin >> str;
-    int x, y;
-    if (str == "add") {
-      cin >> x >> y;
-      int p = FIND(x, parent);
-      val[p] += y;
-    } else if (str == "join") {
-      cin >> x >> y;
-      int p1 = FIND(x, parent);
-      int p2 = FIND(y, parent);
-      if (rank[p1] > rank[p2]) {
-        changevalue(p2, p1, child, val, val[p2]);
-        parent[p2] = p1;
-        child[p1].pb(p2);
-        rank[p1] += rank[p2];
-      } else {
-        changevalue(p1, p2, child, val, val[p1]);
-        parent[p1] = p2;
-        child[p2].pb(p1);
-        rank[p2] += rank[p1];
-      }
-    } else {
-      cin >> x;
-      int p = FIND(x, parent);
-      if (p == x) {
-        cout << val[p] << endl;
-      } else
-        cout << val[p] + val[x] << endl;
-    }
-    debug(val, child);
+  for (int i = 1; i < n; i++) {
+    prefix[i] += prefix[i - 1];
   }
+  for (int i = 0; i <= k; i++) {
+    int l = 0;
+    if (i == 0)
+      l = 0;
+    else
+      l = prefix[2 * i - 1];
+    int r = prefix[n - 1] - prefix[n - 1 - (k - i)];
+    ans = max(prefix[n - 1] - (l + r), ans);
+  }
+  cout << ans;
 }
 
 signed main() {
@@ -105,6 +66,7 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
