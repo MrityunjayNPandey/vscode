@@ -32,15 +32,13 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 // Sieve of Eratosthenes, time complexity of O(N*log(logN))
-vector<int> primetemp(MAX_N + 1, 1), isprime(MAX_N + 1, 0), prime;
+vector<int> isprime(MAX_N + 1, 1), prime;
 void SIEVE() {
-  isprime[1]++;
   for (int p = 2; p <= MAX_N; p++) {
-    if (primetemp[p] == 1) {
-      prime.pb(p);
-      isprime[p]++;
+    if (isprime[p]) {
+      prime.emplace_back(p);
       for (int i = p * p; i <= MAX_N; i += p) {
-        primetemp[i] = 0;
+        isprime[i] = 0;
       }
     }
   }
