@@ -38,35 +38,23 @@ void solve() {
   vector<int> v(n), v1;
   for (auto &i : v)
     cin >> i;
-  for (int i = 0; i < n - 1; i++) {
-    if (v[i] < v[i + 1]) {
-      v1.pb(i + 1);
+  vector<int> nums(n);
+  for (int i = 1; i < v.size() - 1; i++) {
+    nums[i] = nums[i - 1];
+    if (v[i] <= v[i - 1] && v[i] >= v[i + 1]) {
+      nums[i]++;
     }
   }
   int l, r;
-  debug(v1);
+  debug(v1, nums);
   while (q--) {
     cin >> l >> r;
     l--, r--;
-    int ind1 = lower_bound(all(v1), l) - v1.begin();
-    int ind2 = upper_bound(all(v1), r) - v1.begin() - 1;
-    ind2 = max(ind2, 0LL);
-    debug(ind1, ind2);
-    if (ind1 >= v1.size()) {
-      cout << min(r - l + 1, 2LL) << endl;
+    if (r - l <= 1) {
+      cout << r - l + 1 << "\n";
       continue;
     }
-    debug(ind1, ind2);
-    ans = 0;
-    ans += min(v1[ind1] - l, 2LL);
-    debug(ans);
-    for (int i = ind1; i < ind2; i++) {
-      ans += min(v1[i + 1] - v1[i], 2LL);
-    }
-    debug(ans);
-    ans += min(r - v1[ind2] + 1, 2LL);
-    debug(ans);
-    cout << ans << endl;
+    cout << r - l + 1 - (nums[r - 1] - nums[l]) << endl;
   }
 }
 

@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 11-12-2022 22:12:06
+ *      created: 30-05-2023 04:20:45
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -21,9 +21,9 @@ using namespace std; using namespace __gnu_pbds;
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pb emplace_back
+#define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
+const long long MAX_N = 1e7 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
 typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
@@ -31,49 +31,55 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-// Sieve of Eratosthenes, time complexity of O(N*log(logN))
+vector<int> minfact(1e7 + 8, 0);
+
 vector<int> primetemp(MAX_N + 1, 1), isprime(MAX_N + 1, 0), prime;
 void SIEVE() {
+  prime.pb(1);
   isprime[1]++;
   for (int p = 2; p <= MAX_N; p++) {
     if (primetemp[p] == 1) {
       prime.pb(p);
       isprime[p]++;
-      for (int i = p * p; i <= MAX_N; i += p) {
+      for (int i = p; i <= MAX_N; i += p) {
         primetemp[i] = 0;
+        minfact[i] = p;
       }
     }
   }
+  debug(minfact[2])
 }
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  set<int> st;
-  for (auto i : v) {
-    for (int j = 0; prime[j] * prime[j] <= i; j++) {
-      if (i % prime[j] == 0) {
-        if (st.contains(prime[j])) {
-          cout << "YES";
-          return;
-        }
-        st.insert(prime[j]);
-        while (i % prime[j] == 0) {
-          i /= prime[j];
-        }
-      }
-    }
-    if (i > 1)
-      if (st.contains(i)) {
-        cout << "YES";
-        return;
-      }
-    st.insert(i);
+  cin >> n >> m;
+  if (__gcd(n, m) > 1) {
+    cout << 0<<endl;
+    return;
   }
-  cout << "NO";
+  if ((n & 1) && (m & 1)) {
+    cout << 1 << endl;
+    return;
+  }
+  int diff = m - n;
+  if (diff == 1) {
+    cout << -1 << endl;
+    return;
+  }
+  vector<int> fact;
+  fact.pb(diff);
+  while (diff > 1) {
+    debug(diff);
+    fact.pb(minfact[diff]);
+    diff /= minfact[diff];
+  }
+  debug(fact);
+  ans = INF;
+  for (auto i : fact) {
+    int p = ((n - 1) / i + 1) * i;
+    ans = min(ans, p - n);
+  }
+  cout << ans << endl;
 }
 
 signed main() {
@@ -83,13 +89,12 @@ signed main() {
   free
 #endif
       cout.precision(16);
-  SIEVE();
   cout << fixed;
   Test = 1;
   cin >> Test;
+  SIEVE();
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }

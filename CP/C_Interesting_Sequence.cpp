@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 11-12-2022 22:12:06
+ *      created: 30-05-2023 03:27:05
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -21,7 +21,7 @@ using namespace std; using namespace __gnu_pbds;
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pb emplace_back
+#define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
@@ -31,49 +31,42 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-// Sieve of Eratosthenes, time complexity of O(N*log(logN))
-vector<int> primetemp(MAX_N + 1, 1), isprime(MAX_N + 1, 0), prime;
-void SIEVE() {
-  isprime[1]++;
-  for (int p = 2; p <= MAX_N; p++) {
-    if (primetemp[p] == 1) {
-      prime.pb(p);
-      isprime[p]++;
-      for (int i = p * p; i <= MAX_N; i += p) {
-        primetemp[i] = 0;
-      }
-    }
-  }
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  set<int> st;
-  for (auto i : v) {
-    for (int j = 0; prime[j] * prime[j] <= i; j++) {
-      if (i % prime[j] == 0) {
-        if (st.contains(prime[j])) {
-          cout << "YES";
-          return;
-        }
-        st.insert(prime[j]);
-        while (i % prime[j] == 0) {
-          i /= prime[j];
-        }
-      }
-    }
-    if (i > 1)
-      if (st.contains(i)) {
-        cout << "YES";
-        return;
-      }
-    st.insert(i);
+  cin >> n >> k;
+  if ((n & k) != k) {
+    cout << -1;
+    return;
   }
-  cout << "NO";
+  string str = bitset<64>(n).to_string();
+  string str1 = bitset<64>(k).to_string();
+  debug(str, str1);
+  reverse(all(str));
+  reverse(all(str1));
+  int ind = -1;
+  for (int i = 0; i < str.size(); i++) {
+    if (str1[i] == '0' && str[i] == '1') {
+      ind = i;
+    }
+  }
+  if (ind == -1) {
+    cout << n;
+    return;
+  }
+  sum = 0;
+  for (int i = 0; i < ind; i++) {
+    if (str[i] == '1') {
+      sum += 1LL << i;
+    }
+  }
+  n += (1LL << ind) - sum;
+  debug(n, bitset<64>(n).to_string());
+  if ((n & k) != k) {
+    cout << -1;
+    return;
+  }
+  debug(sum);
+  cout << n;
 }
 
 signed main() {
@@ -83,7 +76,6 @@ signed main() {
   free
 #endif
       cout.precision(16);
-  SIEVE();
   cout << fixed;
   Test = 1;
   cin >> Test;

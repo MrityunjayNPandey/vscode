@@ -36,27 +36,50 @@ void solve() {
   cin >> n;
   string str1, str2;
   cin >> str1 >> str2;
-  int num11 = 0, num10 = 0, num21 = 0, num20 = 0;
+  int c0 = 0, c1 = 0;
+  int ind = -1;
   for (int i = 0; i < n; i++) {
-    if (str1[i] == '1')
-      num11++;
-    else
-      num10++;
-    if (str2[i] == '1')
-      num21++;
-    else
-      num20++;
+    if (str1[i] == '1' && str2[i] == '0') {
+      c0++;
+    }
+    if (str1[i] == '0' && str2[i] == '1') {
+      c1++;
+    }
+    if (str1[i] == '1' && str2[i] == '1') {
+      ind = i;
+    }
   }
-  if ((num21 == num11 && num20 == num10) ||
-      (num21 == num10 + 1 && num20 == num11 - 1)) {
+  debug(c0, c1);
+  ans = INF;
+  if (c1 == c0) {
+    ans = min(ans, 2 * c1);
+  }
+  if (ind != -1) {
     for (int i = 0; i < n; i++) {
-      if (str1[i] == str2[i]) {
-        cnt++;
+      if (i == ind)
+        continue;
+      if (str1[i] == '1')
+        str1[i] = '0';
+      else {
+        str1[i] = '1';
       }
     }
-    cout << min(cnt, n - cnt);
-  } else
-    cout << -1;
+    c0 = 0, c1 = 0;
+    for (int i = 0; i < n; i++) {
+      if (str1[i] == '1' && str2[i] == '0') {
+        c0++;
+      }
+      if (str1[i] == '0' && str2[i] == '1') {
+        c1++;
+      }
+    }
+    debug(c0, c1) if (c1 == c0) { ans = min(ans, 2 * c1 + 1); }
+  }
+  if (ans == INF) {
+    cout << -1 << endl;
+  } else {
+    cout << ans << endl;
+  }
 }
 
 signed main() {
@@ -72,7 +95,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }
 

@@ -45,65 +45,70 @@ void solve() {
   int equal = cnt / n;
   debug(vv);
   if (cnt % n) {
-    cout << -1;
+    cout << -1 << endl;
     return;
   }
-  multimap<int, int> mp;
-  map<int, vector<int>> mpv;
+  map<int, set<int>> extra, less;
   for (int i = 0; i < n; i++) {
-    int temp = 0;
-    for (int j = 0; j < m; j++) {
-      if (vv[i][j] == 1) {
-        temp++;
+    if (count(all(vv[i]), 1) < equal) {
+      for (int j = 0; j < m; j++) {
+        if (vv[i][j] == 0) {
+          less[i].insert(j);
+        }
       }
     }
-    debug(temp);
-    if (temp != cnt / n) {
-      mp.insert({temp, i});
+    if (count(all(vv[i]), 1) > equal) {
+      for (int j = 0; j < m; j++) {
+        if (vv[i][j] == 1) {
+          extra[i].insert(j);
+        }
+      }
     }
   }
-  debug(mp);
-  debug(equal, cnt);
-  vector<tuple<int, int, int>> vtans;
-  while (mp.size()>1) {
-    auto [l, r] = *mp.begin();
-    int l1 = l, r1 = r;
-    auto [p, q] = *mp.rbegin();
-    int p1 = p, q1 = q;
-    debug(q, r, l1, p1);
-    for (int i = 0; i < m; i++) {
-      if (vv[q][i] == 1 && vv[r][i] == 0) {
-        swap(vv[q][i], vv[r][i]);
-        l1++, p1--;
-        vtans.pb({q, r, i});
-      }
-      if (l1 == equal || p1 == equal) {
+  debug(less, extra, equal);
+  vector<tuple<int, int, int>> vt;
+  while (extra.size()) {
+    pair<int, set<int>> pi = *(extra.begin());
+    int li = pi.first;
+    vector<int> temp;
+    for (auto &[lj, rj] : less) {
+      if (extra[li].size() == equal)
         break;
+      vector<int> temp0;
+      cnt = extra[li].size();
+      for (auto k : extra[li]) {
+        debug(lj, rj.size());
+        if (rj.find(k) != rj.end()) {
+          vt.pb({li, lj, k});
+          rj.erase(k);
+          temp0.pb(k);
+          cnt--;
+        }
+        debug(lj, rj.size());
+        if (rj.size() == m - equal) {
+          temp.pb(lj);
+          break;
+        }
+        if (cnt == equal) {
+          break;
+        }
       }
-      debug(l1, p1);
+      for (auto it : temp0) {
+        extra[li].erase(it);
+      }
     }
-    debug(l1, p1);
-    int z1, z2;
-    if (l1 == equal) {
-      mp.erase(mp.begin());
-      z1++;
+    for (auto i : temp) {
+      less.erase(i);
     }
-    if (p1 == equal) {
-      mp.erase(prev(mp.end()));
-      z2++;
+    if (extra[li].size() > equal) {
+      cout << -1 << endl;
+      return;
     }
-    if (!z1) {
-      mp.erase(mp.begin());
-      mp.insert({l1, r});
-    }
-    if (!z2) {
-      mp.erase(prev(mp.end()));
-      mp.insert({p1, q});
-    }
-    debug(mp);
+    extra.erase(extra.begin());
   }
-  cout << vtans.size() << endl;
-  for (auto [p, q, r] : vtans) {
+  debug(extra, less);
+  cout << vt.size() << endl;
+  for (auto [p, q, r] : vt) {
     cout << p + 1 << " " << q + 1 << " " << r + 1 << endl;
   }
 }
@@ -123,18 +128,3 @@ signed main() {
     solve();
   }
 }
-
-/*
-Did I ever tell you what the definition of insanity is?
-Insanity is doing the exact... same fucking thing... over and over again
-expecting... shit to change... That. Is. Crazy. The first time somebody told me
-that, I dunno, I thought they were bullshitting me. The thing is... He was
-right. And then I started seeing, everywhere I looked, everywhere I looked all
-these fucking pricks, everywhere I looked, doing the exact same fucking thing...
-over and over and over and over again thinking 'this time is gonna be different'
-no, no, no please... This time is gonna be different, I'm sorry, I don't like...
-The way...
-
-Okay, Do you have a fucking problem in your head, do you think I am bullshitting
-you, do you think I am lying? Fuck you! Okay? Fuck you!...
-*/
