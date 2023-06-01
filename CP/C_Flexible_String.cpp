@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 20:28:03
+ *      created: 31-05-2023 15:14:32
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,45 +33,54 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  int l = -1, r = -1;
-  int mx = -1;
-  for (int i = 1; i < n; i++) {
-    if (v[i] > mx) {
-      r = i - 1;
-      mx = v[i];
-    }
+  cin >> n >> k;
+  string str1, str2;
+  cin >> str1 >> str2;
+  set<char> st, temp;
+  for (auto i : str1) {
+    st.insert(i);
   }
-  debug(mx, r);
-  vector<vector<int>> vv;
-  for (int l = 0; l <= r; l++) {
-    vector<int> vtemp;
-    for (int i = r + 1; i < n; i++) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = r; i >= l; i--) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = 0; i < l; i++) {
-      vtemp.pb(v[i]);
-    }
-    vv.pb(vtemp);
+  vector<char> v;
+  for (auto i : st) {
+    v.pb(i);
   }
-  if (r == n - 2) {
-    vector<int> vtemp;
-    vtemp.pb(v[n - 1]);
-    for (int i = 0; i < n - 1; i++)
-      vtemp.pb(v[i]);
-    debug(vtemp) vv.pb(vtemp);
+  k = min(k, (int)v.size());
+  debug(v) int x = 0;
+  while (k--) {
+    x += 1 << k;
   }
-  sort(rall(vv));
-  for (int i = 0; i < n; i++) {
-    cout << vv[0][i] << " ";
+  string comb1 = bitset<10>(x).to_string(), comb;
+  x = v.size();
+  int ind = 9;
+  while (x--) {
+    comb += comb1[ind];
+    ind--;
   }
-  debug(vv);
+  reverse(all(comb));
+  debug(comb, comb1);
+  do {
+    set<int> st1;
+    for (int i = 0; i < comb.size(); i++) {
+      if (comb[i] == '1') {
+        st1.insert(v[i]);
+      }
+    }
+    cnt = 0;
+    int t1 = 0;
+    for (int j = 0; j < n; j++) {
+      if (st1.contains(str1[j]) || str1[j] == str2[j]) {
+        cnt++;
+      } else {
+        t1 += (cnt * (cnt + 1)) / 2;
+        cnt = 0;
+      }
+    }
+    if (cnt) {
+      t1 += (cnt * (cnt + 1)) / 2;
+    }
+    ans = max(ans, t1);
+  } while (next_permutation(all(comb)));
+  cout << ans;
 }
 
 signed main() {

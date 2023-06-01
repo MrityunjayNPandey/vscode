@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 20:28:03
+ *      created: 31-05-2023 00:53:49
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -32,46 +32,39 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
+  vector<string> vv(n);
+  for (auto &i : vv)
     cin >> i;
-  int l = -1, r = -1;
-  int mx = -1;
-  for (int i = 1; i < n; i++) {
-    if (v[i] > mx) {
-      r = i - 1;
-      mx = v[i];
-    }
-  }
-  debug(mx, r);
-  vector<vector<int>> vv;
-  for (int l = 0; l <= r; l++) {
-    vector<int> vtemp;
-    for (int i = r + 1; i < n; i++) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = r; i >= l; i--) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = 0; i < l; i++) {
-      vtemp.pb(v[i]);
-    }
-    vv.pb(vtemp);
-  }
-  if (r == n - 2) {
-    vector<int> vtemp;
-    vtemp.pb(v[n - 1]);
-    for (int i = 0; i < n - 1; i++)
-      vtemp.pb(v[i]);
-    debug(vtemp) vv.pb(vtemp);
-  }
-  sort(rall(vv));
+  map<int, int> mp;
   for (int i = 0; i < n; i++) {
-    cout << vv[0][i] << " ";
+    mp[i] = count(all(vv[i]), '1');
   }
-  debug(vv);
+  for (int i = 0; i < n; i++) {
+    int temp = 0;
+    int ind1 = n - i - 1, ind2 = i + 1;
+    int x1 = ind1, y1 = 0;
+    int x2 = 0, y2 = ind2;
+    while (x1 < n && y1 < n) {
+      if (vv[x1][y1] == '1') {
+        temp += mp[x1] - 1;
+      } else {
+        temp += mp[x1] + 1;
+      }
+      x1++, y1++;
+    }
+    while (x2 < n && y2 < n) {
+      if (vv[x2][y2] == '1') {
+        temp += mp[x2] - 1;
+      } else {
+        temp += mp[x2] + 1;
+      }
+      x2++, y2++;
+    }
+    ans = min(ans, temp);
+  }
+  cout << ans;
 }
 
 signed main() {

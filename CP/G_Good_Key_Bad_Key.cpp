@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 20:28:03
+ *      created: 31-05-2023 16:49:20
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -33,45 +33,41 @@ int Test, I, tnum;
 
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
+  cin >> n >> k;
   vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-  int l = -1, r = -1;
-  int mx = -1;
-  for (int i = 1; i < n; i++) {
-    if (v[i] > mx) {
-      r = i - 1;
-      mx = v[i];
-    }
-  }
-  debug(mx, r);
-  vector<vector<int>> vv;
-  for (int l = 0; l <= r; l++) {
-    vector<int> vtemp;
-    for (int i = r + 1; i < n; i++) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = r; i >= l; i--) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = 0; i < l; i++) {
-      vtemp.pb(v[i]);
-    }
-    vv.pb(vtemp);
-  }
-  if (r == n - 2) {
-    vector<int> vtemp;
-    vtemp.pb(v[n - 1]);
-    for (int i = 0; i < n - 1; i++)
-      vtemp.pb(v[i]);
-    debug(vtemp) vv.pb(vtemp);
-  }
-  sort(rall(vv));
+  vector<vector<int>> grid(32, vector<int>(n, 0));
   for (int i = 0; i < n; i++) {
-    cout << vv[0][i] << " ";
+    int x = v[i] / 2;
+    int ind = 32;
+    while (ind--) {
+      grid[ind][i] = x;
+      x >>= 1;
+    }
   }
-  debug(vv);
+  vector<int> suff(n), pref(n);
+  for (int i = 0; i < n; i++) {
+    int r = 31, c = i;
+    while (r > 0 && c < n) {
+      suff[i] += grid[r][c];
+      r--, c++;
+    }
+  }
+  pref[0] = v[0];
+  for (int i = 1; i < n; i++) {
+    pref[i] += pref[i - 1] + v[i];
+  }
+  debug(v, pref, suff);
+  ans = max(ans, suff[0]);
+  debug(ans);
+  for (int i = 0; i < n - 1; i++) {
+    ans = max(ans, pref[i] - (i + 1) * k + suff[i + 1]);
+    debug(ans);
+  }
+  ans = max(ans, pref[n - 1] - n * k);
+  debug(ans);
+  cout << ans;
 }
 
 signed main() {

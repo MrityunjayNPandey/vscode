@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 20:28:03
+ *      created: 31-05-2023 20:00:54
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -21,7 +21,7 @@ using namespace std; using namespace __gnu_pbds;
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pb emplace_back
+#define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
@@ -34,44 +34,27 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  int l = -1, r = -1;
-  int mx = -1;
-  for (int i = 1; i < n; i++) {
-    if (v[i] > mx) {
-      r = i - 1;
-      mx = v[i];
+  vector<pair<int, int>> vp(n), vans;
+  for (auto &[l, r] : vp) {
+    cin >> l >> r;
+  }
+  int l = 0, r = n;
+  while (l <= r) {
+    int mid = (l + r) / 2;
+    int x = 0;
+    for (int i = 0; i < n; i++) {
+      auto [p, q] = vp[i];
+      if (p >= mid - x - 1 && q >= x)
+        x++;
+    }
+    if (x >= mid) {
+      ans = mid;
+      l = mid + 1;
+    } else {
+      r = mid - 1;
     }
   }
-  debug(mx, r);
-  vector<vector<int>> vv;
-  for (int l = 0; l <= r; l++) {
-    vector<int> vtemp;
-    for (int i = r + 1; i < n; i++) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = r; i >= l; i--) {
-      vtemp.pb(v[i]);
-    }
-    for (int i = 0; i < l; i++) {
-      vtemp.pb(v[i]);
-    }
-    vv.pb(vtemp);
-  }
-  if (r == n - 2) {
-    vector<int> vtemp;
-    vtemp.pb(v[n - 1]);
-    for (int i = 0; i < n - 1; i++)
-      vtemp.pb(v[i]);
-    debug(vtemp) vv.pb(vtemp);
-  }
-  sort(rall(vv));
-  for (int i = 0; i < n; i++) {
-    cout << vv[0][i] << " ";
-  }
-  debug(vv);
+  cout << ans;
 }
 
 signed main() {

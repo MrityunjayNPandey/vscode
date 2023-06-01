@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 20:28:03
+ *      created: 01-06-2023 04:01:25
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -21,7 +21,7 @@ using namespace std; using namespace __gnu_pbds;
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
-#define pb emplace_back
+#define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
 typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
@@ -31,47 +31,54 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+int find(vector<int> &parent, int x) {
+  if (parent[x] == x) {
+    return x;
+  }
+  return parent[x] = find(parent, parent[x]);
+}
+
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
-  vector<int> v(n);
-  for (auto &i : v)
-    cin >> i;
-  int l = -1, r = -1;
-  int mx = -1;
-  for (int i = 1; i < n; i++) {
-    if (v[i] > mx) {
-      r = i - 1;
-      mx = v[i];
-    }
+  cin >> n >> k;
+  vector<int> parent(n + 1), deg(n + 1, 1);
+  for (int i = 1; i <= n; i++) {
+    parent[i] = i;
   }
-  debug(mx, r);
-  vector<vector<int>> vv;
-  for (int l = 0; l <= r; l++) {
-    vector<int> vtemp;
-    for (int i = r + 1; i < n; i++) {
-      vtemp.pb(v[i]);
+  debug(parent, deg);
+  int extra = 0;
+  while (k--) {
+    int x, y;
+    cin >> x >> y;
+    int px = find(parent, x), py = find(parent, y);
+    if (px == py) {
+      extra++;
+    } else {
+      if (deg[px] > deg[py]) {
+        deg[px] += deg[py];
+        parent[py] = px;
+      } else {
+        deg[py] += deg[px];
+        parent[px] = py;
+      }
     }
-    for (int i = r; i >= l; i--) {
-      vtemp.pb(v[i]);
+    priority_queue<int> pq;
+    for (int i = 1; i < n + 1; i++) {
+      if (parent[i] == i) {
+        pq.push(deg[i]);
+      }
     }
-    for (int i = 0; i < l; i++) {
-      vtemp.pb(v[i]);
+    int temp = min(extra + 1, (int)pq.size());
+    sum = 0;
+    while (temp--) {
+      sum += pq.top();
+      pq.pop();
     }
-    vv.pb(vtemp);
+    debug(sum);
+    debug(parent, deg);
+    ans = max({ans, deg[px], deg[py], sum});
+    cout << ans - 1 << endl;
   }
-  if (r == n - 2) {
-    vector<int> vtemp;
-    vtemp.pb(v[n - 1]);
-    for (int i = 0; i < n - 1; i++)
-      vtemp.pb(v[i]);
-    debug(vtemp) vv.pb(vtemp);
-  }
-  sort(rall(vv));
-  for (int i = 0; i < n; i++) {
-    cout << vv[0][i] << " ";
-  }
-  debug(vv);
 }
 
 signed main() {
@@ -83,7 +90,6 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
-  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
