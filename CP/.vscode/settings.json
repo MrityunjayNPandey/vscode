@@ -79,5 +79,6 @@
     "span": "cpp"
   },
   "python.formatting.provider": "yapf",
-  "editor.wrappingIndent": "none"
+  "editor.wrappingIndent": "none",
+  "cph.general.onceMaintainerMessage": false
 }
