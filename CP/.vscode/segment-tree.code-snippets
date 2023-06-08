@@ -77,7 +77,7 @@
       "    val = p1;           // may change",
       "  }",
       "  void merge(Node1 &l, Node1 &r) { // Merge two child nodes",
-      "    val = l.val ^ r.val;           // may change",
+      "    val = l.val + r.val;           // may change",
       "  }",
       "};",
       "",
