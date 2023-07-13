@@ -1,0 +1,29 @@
+{
+  "": {
+    "prefix": "Nearest-Small-elements",
+    "body": [
+      "// Nearest Smaller elements O(n)",
+      "// vNSE[i]={{prev_smallest_value, prev_smallest_index}, {next_smallest_value, next_smallest_index}}",
+      "  vector<pair<pair<int, int>, pair<int, int>>> vNSE(n, {{-1, -1}, {-1, -1}});",
+      "  function<void(int)> NSE = [&](int n) {",
+      "    stack<pair<int, int>> S, S1;",
+      "    for (int i = 0; i < n; i++) {",
+      "      while (!S.empty() && S.top().first >= v[i])",
+      "        S.pop();",
+      "      if (!S.empty())",
+      "        vNSE[i] = {S.top(), vNSE[i].second};",
+      "      S.push({v[i], i});",
+      "    }",
+      "    for (int i = n - 1; i >= 0; i--) {",
+      "      while (!S1.empty() && S1.top().first >= v[i])",
+      "        S1.pop();",
+      "      if (!S1.empty())",
+      "        vNSE[i] = {vNSE[i].first, S1.top()};",
+      "      S1.push({v[i], i});",
+      "    }",
+      "  };",
+      "  NSE(n);"
+    ],
+    "description": ""
+  }
+}

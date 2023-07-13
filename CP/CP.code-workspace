@@ -2,14 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"name": ".leetcode",
-			"path": "../../.leetcode"
-		},
-		{
-			"name": ".leetcode",
-			"path": "/home/joker/.leetcode"
 		}
 	],
 	"settings": {
@@ -90,7 +82,6 @@
 			"variant": "cpp",
 			"ranges": "cpp",
 			"span": "cpp"
-		},
-		"liveServer.settings.multiRootWorkspaceName": "CP"
+		}
 	}
 }

@@ -1,0 +1,12 @@
+
+{
+"bitset of 250MB": {
+    "prefix": "bitset",
+    "body": [
+      "//bitset of 250MB",
+      "std::vector<std::bitset<2500000000UL>> wrapper(1);",
+      "auto &bt = wrapper[0];"
+    ],
+    "description": "bitset of 250MB"
+  }
+}  

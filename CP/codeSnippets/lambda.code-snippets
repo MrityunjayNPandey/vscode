@@ -1,0 +1,10 @@
+{
+    "Lambda function": {
+    "prefix": "lambda",
+    "body": [
+      "function< func_return_type (int) > func = [&](int var1) {",
+      "};"
+    ],
+    "description": "Lambda function"
+  }
+}

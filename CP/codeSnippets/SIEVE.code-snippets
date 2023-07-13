@@ -1,0 +1,24 @@
+{
+  "Sieve of Eratosthenes": {
+    "prefix": "SIEVE",
+    "body": [
+      "//Sieve of Eratosthenes, time complexity of O(N*log(logN))",
+      "vector<int> isprime(MAX_N+1, 1), prime;",
+      "void SIEVE()",
+      "{",
+      "    for(int p = 2; p <= MAX_N; p++)",
+      "    {",
+      "        if(isprime[p])",
+      "        {",
+      "            prime.emplace_back(p);",
+      "            for(int i = p * p; i <= MAX_N; i += p)",
+      "            {",
+      "                isprime[i] = 0;",
+      "            }",
+      "        }",
+      "    }",
+      "}"
+    ],
+    "description": "Sieve of Eratosthenes"
+  }
+}
