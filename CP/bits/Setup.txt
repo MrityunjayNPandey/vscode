@@ -1,3 +1,4 @@
+https://gist.github.com/nivranaitsirhc/e57a05de021842d93b0bc084433eb725
 Remember to precompile without any flags in UBUNTU gcc, it will be c++14 as default. Other versions of c++ 
 are not able to precompile.
 for UBUNTU:
