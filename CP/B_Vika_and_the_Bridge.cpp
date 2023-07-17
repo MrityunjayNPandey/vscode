@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 19-05-2023 21:49:09
+ *      created: 16-07-2023 20:43:24
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -24,52 +24,40 @@ using namespace std; using namespace __gnu_pbds;
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
-typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set; //find_by_order(k), order_of_key(k)
 // clang-format on
 #define int long long
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  cin >> n;
+  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
+  cin >> n >> m;
   vector<int> v(n);
   for (auto &i : v)
     cin >> i;
-  debug(v) map<int, bool> visited;
-  map<int, set<int>> adj_list; // adjacency list
-  bool flag = false;
-  function<void(int)> DFS = [&](int current) {
-    visited[current] = true;
-    if (adj_list[current].size() == 1) {
-      flag = true;
-    }
-    for (int next_vertex : adj_list[current])
-      if (!visited[next_vertex]) {
-        DFS(next_vertex);
-      }
-  };
+  map<int, vector<int>> mp;
   for (int i = 0; i < n; i++) {
-    adj_list[i + 1].insert(v[i]);
-    adj_list[v[i]].insert(i + 1);
+    mp[v[i]].pb(i);
   }
-  int minrd = 0, extrard = 0;
-  for (int i = 1; i <= n; i++) {
-    flag = false;
-    if (!visited[i]) {
-      DFS(i);
-      if (flag) {
-        extrard++;
-      } else {
-        minrd++;
-      }
+  debug(mp);
+  int l = 0, r = n;
+  for (auto &[l, r] : mp) {
+    multiset<int> mltst;
+    int pre = -1;
+    r.pb(n);
+    for (int i = 0; i < r.size(); i++) {
+      mltst.insert(r[i] - pre - 1);
+      pre = r[i];
+    }
+    debug(l, mltst);
+    if (mltst.size()) {
+      int x = *mltst.rbegin();
+      mltst.erase(prev(mltst.end()));
+      mltst.insert(x / 2);
+      ans = min(ans, *mltst.rbegin());
     }
   }
-  debug(minrd, extrard);
-  cout << minrd + ((extrard) ? 1 : 0) << " " << minrd + extrard;
-  debug(adj_list);
-  cout << endl;
+  cout << ans;
 }
 
 signed main() {
@@ -85,5 +73,6 @@ signed main() {
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
+    cout << endl;
   }
 }
