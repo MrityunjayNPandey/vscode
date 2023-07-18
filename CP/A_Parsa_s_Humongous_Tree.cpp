@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 18-07-2023 02:50:19
+ *      created: 19-07-2023 02:17:08
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -34,48 +34,33 @@ void solve() {
   cin >> n;
   vector<pair<int, int>> vp(n);
   for (auto &[l, r] : vp) {
-    cin >> r >> l;
+    cin >> l >> r;
   }
-  sort(all(vp));
-  debug(vp) vector<int> pref(n);
-  for (auto &[r, l] : vp) {
-    sum += l;
-  }
-  int l = 0, r = sum;
-  while (l <= r) {
-    int mid = l + (r - l) / 2;
-    debug(mid);
-    int sumt = 0;
-    int ind = 0, mx = 0;
-    cnt = sum - mid;
-    bool flag1 = true;
-    for (int i = 0; i < n; i++) {
-      if (sumt + vp[i].second > mid) {
-        ind = i;
-        break;
+  // DFS, time complexity of O(V+E)
+  map<int, bool> visited;
+  map<int, vector<int>> adj_list; // adjacency list
+  vector<vector<int>> dp(2, vector<int>(n + 1));
+  function<void(int)> DFS = [&](int current) {
+    visited[current] = true;
+    auto [lv, rv] = vp[current - 1];
+    for (int next_vertex : adj_list[current]) {
+      if (!visited[next_vertex]) {
+        DFS(next_vertex);
+        auto [lvs, rvs] = vp[next_vertex - 1];
+        dp[0][current] += max(abs(lv - lvs) + dp[0][next_vertex], abs(lv - rvs) + dp[1][next_vertex]);
+        dp[1][current] += max(abs(rv - lvs) + dp[0][next_vertex], abs(rv - rvs) + dp[1][next_vertex]);
       }
-      if (vp[i].first > cnt) {
-        flag1 = false;
-        break;
-      }
-      cnt += vp[i].second;
-      sumt += vp[i].second;
     }
-    bool flag = false;
-    if (sumt != mid && flag1) {
-      if (vp[ind].first <= cnt)
-        flag = true;
-    }
-    debug(sumt, cnt, vp[ind].first);
-    if (flag || sumt == mid) {
-      ans = mid;
-      l = mid + 1;
-    } else {
-      r = mid - 1;
-    }
+  };
+  for (int i = 0; i < n - 1; i++) {
+    auto [l, r] = pair<int, int>();
+    cin >> l >> r;
+    adj_list[l].pb(r);
+    adj_list[r].pb(l);
   }
-  debug(ans);
-  cout << ans + (sum - ans) * 2;
+  DFS(1);
+  debug(dp, dp.size(), dp[0].size());
+  cout << max(dp[0][1], dp[1][1]);
 }
 
 signed main() {
@@ -87,7 +72,7 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
-  //   cin >> Test;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
