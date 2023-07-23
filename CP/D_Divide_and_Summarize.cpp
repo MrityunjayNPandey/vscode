@@ -1,7 +1,7 @@
 /**
  *      codeforces: _joKer_0
  *      codechef:  joker_0000
- *      created: 22-07-2023 23:55:41
+ *      created: 23-07-2023 15:11:29
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -29,28 +29,50 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
+void func(vector<int> &v, vector<int> &pref, int l, int r, set<int> &st) {
+  debug(l, r, pref[r + 1] - pref[l]);
+  st.insert(pref[r + 1] - pref[l]);
+  if (l == r || l < 0 || r < 0 || r > v.size() - 1 || l > v.size() - 1)
+    return;
+  int mid = v[l];
+  mid += v[r];
+  mid /= 2;
+  mid = upper_bound(all(v), mid) - v.begin() - 1;
+  if (mid >= l) {
+    if (mid != r)
+      func(v, pref, l, mid, st);
+    if (mid + 1 != l)
+      func(v, pref, mid + 1, r, st);
+  }
+  return;
+}
+
 void solve() {
-  int n = 0, m = 0, k = 0, ans = 0, cnt = 0;
-  cin >> n >> k;
-  vector<int> v(n);
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n >> m;
+  vector<int> v(n), q(m), pref(n + 1);
   for (auto &i : v) {
     cin >> i;
   }
-  __int128 l = 0, r = 1e9, sum = 0;
-  while (l <= r) {
-    int mid = l + (r - l) / 2; 
-    sum = 0;
-    for (auto &i : v) {
-      sum += (i + 2 * mid) * (i + 2 * mid);
-    }
-    if (sum >= k) {
-      ans = mid;
-      r = mid - 1;
-    } else {
-      l = mid + 1;
-    }
+  for (auto &i : q) {
+    cin >> i;
   }
-  cout << ans;
+  sort(all(v));
+  set<int> st;
+  for (int i = 1; i <= n; i++) {
+    pref[i] += pref[i - 1] + v[i - 1];
+  }
+  debug(v);
+  func(v, pref, 0, n - 1, st);
+  debug(st);
+  for (auto &i : q) {
+    if (st.contains(i)) {
+      cout << "Yes";
+    } else {
+      cout << "No";
+    }
+    cout << endl;
+  }
 }
 
 signed main() {
@@ -60,13 +82,11 @@ signed main() {
   free
 #endif
       cout.precision(16);
-
   cout << fixed;
   Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    cout << endl;
   }
 }
