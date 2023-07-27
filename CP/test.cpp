@@ -123,11 +123,11 @@ void heapPermutation(int a[], int size, int n) {
 }
 
 signed main() {
-  free;
+  // free;
   int t = 300000;
 
-  cout << t << endl;
-  for (int i = 0; i < t; i++) {
-    cout << 1 << " ";
+  cout << 50 << endl;
+  for (int i = 0; i < 50; i++) {
+    cout << rand(0, 2) << " ";
   }
 }
