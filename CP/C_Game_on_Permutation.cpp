@@ -1,7 +1,6 @@
 /**
  *      codeforces: _joKer_0
- *      codechef:  joker_0000
- *      created: 06-04-2023 20:15:59
+ *      created: 17-08-2023 21:11:39
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -24,19 +23,37 @@ using namespace std; using namespace __gnu_pbds;
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
-typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+typedef tree<int, int,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set; //find_by_order(k), order_of_key(k)
 // clang-format on
 #define int long long
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
-  int a, b;
-  cin >> a >> b;
-  for (int k = 1; k <= 1e5; k++) {
-    ans = min(ans, (a + k - 1) / k + (b + k - 1) / k + k - 1);
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n);
+  for (auto &i : v)
+    cin >> i;
+  ordered_set ost;
+  for (int i = 0; i < n; i++) {
+    ost[v[i]] = i;
+    int x = ost.order_of_key(v[i]);
+    int ind = -1;
+    bool flag = true;
+    if (x == 0) {
+      flag = false;
+    }
+    for (int j = x - 1; j >= 0; j--) {
+      int inde = (*ost.find_by_order(j)).second;
+      if (inde < ind) {
+        flag = false;
+        break;
+      }
+      ind = inde;
+    }
+    if (flag) {
+      ans++;
+    }
   }
   cout << ans;
 }

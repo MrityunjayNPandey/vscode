@@ -1,7 +1,6 @@
 /**
  *      codeforces: _joKer_0
- *      codechef:  joker_0000
- *      created: 27-06-2023 22:14:25
+ *      created: 07-08-2023 21:40:53
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -29,41 +28,35 @@ typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_up
 #define int long long
 int Test, I, tnum;
 
-int func(vector<int> &v, int a, int b, int p, int n, int pinit, int k7sat, int k3sat) {
-  if (n < 0) {
-    return 1;
-  }
-  int ans = 0;
-  int temp = v[n];
-  int k7satn = k7sat, k3satn = k3sat;
-  if (n < 6 && k7sat) {
-    temp += v[6] / 2;
-    k7satn = 0;
-  }
-  if (n < 3 && k3sat) {
-    temp += v[2] / 2;
-    k3satn = 0;
-  }
-  if (p - temp >= 0) {
-    ans = func(v, a, b, p - temp, n - 1, pinit, k7satn, k3satn);
-    if (a)
-      func(v, a - 1, b, p, n - 1, pinit, k7sat, k3sat);
-  } else {
-    if (a)
-      ans = func(v, a - 1, b, p, n - 1, pinit, k7sat, k3sat);
-    if (pinit >= temp && b) {
-      ans = func(v, a, b - 1, pinit - temp, n - 1, pinit, k7satn, k3satn);
-    }
-  }
-  return ans;
-}
-
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
-  vector<int> v(11);
-  for (auto &i : v)
-    cin >> i;
-  cout << func(v, 3, 2, 10, 10, 10, 1, 1);
+  cin >> n;
+  vector<int> v1(n), v2, pref(n);
+  for (int i = 0; i < n; i++)
+    cin >> v1[i];
+  v2 = v1;
+  sort(all(v2));
+  int ind = -1;
+  pref[0] = v2[0];
+  for (int i = 1; i < n; i++)
+    pref[i] = pref[i - 1] + v2[i];
+  cnt = pref[n - 1];
+  map<int, int> mp;
+  for (int i = 0; i < n; i++) {
+    if (!mp.contains(v2[i]))
+      mp[v2[i]] = i;
+  }
+  for (int i = 0; i < n; i++) {
+    ind = mp[v1[i]];
+    if (ind == 0)
+      sum = cnt - n * v1[i];
+    else {
+      sum = cnt - (n - ind) * v1[i] - pref[ind - 1];
+      sum += ind * v1[i] - pref[ind - 1];
+    }
+    sum += n;
+    cout << sum << " ";
+  }
 }
 
 signed main() {
@@ -75,9 +68,10 @@ signed main() {
       cout.precision(16);
   cout << fixed;
   Test = 1;
+  cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
     solve();
-    // cout << endl;
+    cout << endl;
   }
 }

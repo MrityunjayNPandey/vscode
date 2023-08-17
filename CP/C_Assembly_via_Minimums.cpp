@@ -1,7 +1,6 @@
 /**
  *      codeforces: _joKer_0
- *      codechef:  joker_0000
- *      created: 06-04-2023 20:15:59
+ *      created: 07-08-2023 20:37:37
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -24,21 +23,27 @@ using namespace std; using namespace __gnu_pbds;
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
 const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
-typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set; //find_by_order(k), order_of_key(k)
 // clang-format on
 #define int long long
 int Test, I, tnum;
 
 void solve() {
-  int n = 0, m = 0, k = 0, ans = INF, cnt = 0, sum = 0;
-  int a, b;
-  cin >> a >> b;
-  for (int k = 1; k <= 1e5; k++) {
-    ans = min(ans, (a + k - 1) / k + (b + k - 1) / k + k - 1);
+  int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
+  cin >> n;
+  vector<int> v(n * (n - 1) / 2);
+  map<int, int> mp;
+  for (auto &i : v) {
+    cin >> i;
+    mp[i]++;
   }
-  cout << ans;
+  sort(all(v));
+  debug(v) k = n - 1;
+  for (int i = k; i < n * (n - 1) / 2; i += k) {
+    debug(k, i) cout << v[i - 1] << " ";
+    k--;
+  }
+  cout << v[n * (n - 1) / 2 - 1] << " " << v[n * (n - 1) / 2 - 1];
 }
 
 signed main() {
