@@ -122,12 +122,99 @@ void heapPermutation(int a[], int size, int n) {
   }
 }
 
-signed main() {
-  // free;
-  int t = 300000;
+// Function to check if there are any cyclic dependencies
+bool hasCyclicDependency(const vector<vector<int>> &adj, int v,
+                         vector<bool> &visited, vector<bool> &recStack) {
+  if (!visited[v]) {
+    visited[v] = true;
+    recStack[v] = true;
 
-  cout << 50 << endl;
-  for (int i = 0; i < 50; i++) {
-    cout << rand(0, 2) << " ";
+    for (const int &neighbor : adj[v]) {
+      if (!visited[neighbor] &&
+          hasCyclicDependency(adj, neighbor, visited, recStack))
+        return true;
+      else if (recStack[neighbor])
+        return true;
+    }
+  }
+  recStack[v] = false;
+  return false;
+}
+
+// Function to generate a random test case
+void generateTestCase(int &n, int &m, int &k, vector<int> &h,
+                      set<pair<int, int>> &dependencies) {
+  n = 1 + rand() % 200000;
+  m = rand() % (n * (n - 1) / 2 + 1);
+  k = 1 + rand() % 1000000000;
+
+  h.clear();
+  for (int i = 0; i < n; i++) {
+    h.push_back(rand() % k);
+  }
+
+  // Generate a random directed acyclic graph (DAG) to ensure no cyclic
+  // dependencies
+  vector<vector<int>> adj(n);
+  dependencies.clear();
+  while (dependencies.size() < m) {
+    int a = 1 + rand() % n;
+    int b = 1 + rand() % n;
+    if (a != b &&
+        find(adj[a - 1].begin(), adj[a - 1].end(), b) == adj[a - 1].end()) {
+      adj[a - 1].push_back(b);
+      dependencies.insert({a, b});
+    }
+  }
+
+  // Validate that the generated graph is acyclic
+  vector<bool> visited(n, false);
+  vector<bool> recStack(n, false);
+  for (int i = 0; i < n; i++) {
+    if (!visited[i] && hasCyclicDependency(adj, i, visited, recStack)) {
+      // If a cyclic dependency is found, regenerate the test case
+      generateTestCase(n, m, k, h, dependencies);
+      return;
+    }
+  }
+
+  // Write the test case to the input file
+  cout << n << " " << m << " " << k << endl;
+  for (int i = 0; i < n; i++) {
+    cout << h[i] << " ";
+  }
+  cout << endl;
+  for (const auto &dep : dependencies) {
+    cout << dep.first << " " << dep.second << endl;
+  }
+}
+
+// Function to generate expected output for a test case
+int generateExpectedOutput(int n, int m, int k, const vector<int> &h,
+                           const set<pair<int, int>> &dependencies) {
+  // Your solution to calculate the expected output goes here
+  // Implement the logic to solve the problem for this test case
+
+  // Replace this with the actual logic to calculate the expected output
+  int ans = 0;
+
+  return ans;
+}
+
+signed main() {
+  free;
+  int t = 300;
+  cout << t << endl;
+
+  for (int i = 0; i < t; i++) {
+    int n, m, k;
+    n = rand(1, 200);
+    m = rand(1, 200);
+    k = rand(n, 1000000);
+    vector<int> h;
+    set<pair<int, int>> dependencies;
+
+    generateTestCase(n, m, k, h, dependencies);
+    cout << generateExpectedOutput(n, m, k, h, dependencies) << endl;
   }
 }
