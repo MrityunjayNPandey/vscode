@@ -1,7 +1,6 @@
 /**
  *      codeforces: _joKer_0
- *      codechef:  joker_0000
- *      created: 10-11-2022 22:44:11
+ *      created: 25-09-2023 20:21:54
  **/
 // clang-format off
 #ifdef ONLINE_JUDGE
@@ -16,7 +15,6 @@ using namespace std; using namespace __gnu_pbds;
 #include "algo/debug.h"
 #else
 #define debug(...) 73;
-#define print(x) 73;
 #define dclear(x) 73;
 #endif
 #define free freopen("input.txt","r",stdin);freopen("output.txt","w",stdout);freopen("error.txt","w",stderr);
@@ -24,10 +22,8 @@ using namespace std; using namespace __gnu_pbds;
 #define rall(x) x.rbegin(), x.rend()
 #define pb push_back
 #define LOG(n) 63 - __builtin_clzll(n)
-const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = LLONG_MAX-INT_MAX;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
-typedef tree<pair<int, int>, null_type, less<pair<int, int> >, rb_tree_tag, tree_order_statistics_node_update> ordered_map;
-typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
+const long long MAX_N = 1e6 + 7; const long long MOD = 1e9 + 7; const long long mod = 998244353; const long long INF = INT_MAX;
+typedef tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set; //find_by_order(k), order_of_key(k)
 // clang-format on
 #define int long long
 int Test, I, tnum;
@@ -35,21 +31,33 @@ int Test, I, tnum;
 void solve() {
   int n = 0, m = 0, k = 0, ans = 0, cnt = 0, sum = 0;
   cin >> n;
-  vector<int> v(n), dp(n + 1);
-  for (auto &i : v)
-    cin >> i;
-  int ind = -1;
-  for (int i = n - 1; i >= 0; i--) {
-    if (v[i] > 0) {
-      dp[i] += v[i];
-    }
-    dp[i] += dp[i + 1];
+  vector<vector<int>> vv(n);
+  m = n;
+  map<int, vector<int>> mpv;
+  map<int, int> mps;
+  for (int i = 0; i < m; i++) {
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for (auto &j : v)
+      cin >> j, mpv[j].pb(i), mps[j]++;
+    vv[i] = v;
   }
-  for (int i = 0; i < n; i++) {
-    if ((i & 1) == 0) {
-      ans = max(ans, dp[i + 1] + v[i]);
-    } else
-      ans = max(ans, dp[i + 1]);
+  vector<int> vs;
+  for (auto &[l, r] : mps) {
+    vs.pb(l);
+  }
+  for (auto &i : vs) {
+    map<int, int> mpt = mps;
+    for (auto &j : mpv[i]) {
+      for (auto &k : vv[j]) {
+        mpt[k]--;
+        if (mpt[k] == 0) {
+          mpt.erase(k);
+        }
+      }
+    }
+    ans = max(ans, (int)mpt.size());
   }
   cout << ans;
 }
@@ -60,7 +68,9 @@ signed main() {
 #ifdef SUBLIME
   free
 #endif
-      Test = 1;
+      cout.precision(16);
+  cout << fixed;
+  Test = 1;
   cin >> Test;
   for (I = 1; I <= Test; I++) {
     dclear(I);
